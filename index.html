@@ -5,40 +5,41 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
 <link rel="apple-touch-icon" href="icon-180.png">
-<meta name="theme-color" content="#151B17">
+<meta name="theme-color" content="#172630">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Lucciola">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500;1,9..144,600&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
 <style>
-/* Stile fiabesco ma sobrio: bosco di notte, luce calda e dorata, foglie color ruggine, linee sottili */
+/* Fate: notte blu ardesia con grana, figure morbide color corallo col contorno rosso, ali turchesi, piante scure col filo di luce */
 :root{
-  --bg:#151B17; --surface:#212A23; --surface2:#2A342C; --soft:#263028; --ink:#F1E7CF; --muted:#BCB193;
-  --line:rgba(226,180,100,.32); --hair:rgba(241,231,207,.12);
-  --deep:#A5442A; --on-deep:#FFF6E6; --gold:#E3AE4F; --gold-ink:#E3AE4F; --on-gold:#17140F; --glow:#FFD58A;
-  --good:#9CCB6A; --bad:#E5775C; --bad-bg:rgba(190,70,40,.20); --sos:#B5391F;
-  --leaf:#1D2A1F; --leaf2:#4A2217; --vein:rgba(227,174,79,.16); --ff:#FFD98A;
-  --halo1:rgba(232,160,70,.17); --halo2:rgba(120,165,85,.11); --tabbg:rgba(17,22,18,.94); --shadow:rgba(0,0,0,.55);
-  --tex:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cg stroke='%23E8DDBF' stroke-opacity='.045' stroke-width='1' fill='none'%3E%3Cpath d='M10 40 L70 18M30 90 L95 70M120 30 L190 6M150 120 L230 95M8 170 L80 150M100 200 L170 176M180 210 L238 190M60 120 L118 104M200 60 L236 48M130 160 L176 146'/%3E%3C/g%3E%3C/svg%3E");
-  --f-display:"Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --bg:#172630; --surface:#20333D; --surface2:#2A404B; --soft:#243944; --ink:#F6EADF; --muted:#AFC0C4;
+  --line:rgba(127,227,230,.26); --hair:rgba(246,234,223,.10);
+  --deep:#B5412A; --on-deep:#FFF4EC; --gold:#F28A5E; --gold-ink:#F79C74; --on-gold:#2A130C; --glow:#7FE3D6; --logo:#F7B489;
+  --good:#7FD6B0; --bad:#F7926E; --bad-bg:rgba(240,120,90,.15); --sos:#C2412A;
+  --coral:#F0855E; --peach:#F6B48A; --edge:#D2492E; --teal:#4FCFC2; --rim:#7FE3E6; --mauve:#A47FB4; --plant:#0D1A21; --moon:#C8D6D3; --ff:#A8F5EA; --green:#72D98F; --fuchsia:#E46AA8; --pink:#F49BBE; --amber:#F7C27A;
+  --flat:rgba(4,10,14,.42); --tabbg:rgba(20,34,42,.95); --shadow:rgba(0,0,0,.5);
+  --tex:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.9  0 0 0 0 0.95  0 0 0 0 0.95  0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --f-display:"Young Serif", "Iowan Old Style", Georgia, serif;
   --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
   color-scheme:dark;
 }
-/* palette selezionabili: tre notti e una pergamena per il giorno (contrasto verificato) */
-:root[data-palette="notte"]{--bg:#12152A;--surface:#1C2140;--surface2:#252B50;--soft:#20264A;--muted:#B6B4D2;--deep:#7A4A9E;--leaf:#191E3A;--leaf2:#3A2243;--halo1:rgba(160,160,255,.13);--halo2:rgba(120,90,170,.12);--tabbg:rgba(16,19,38,.94)}
-:root[data-palette="brace"]{--bg:#1B1411;--surface:#2A1E19;--surface2:#33251F;--soft:#2F221C;--muted:#CDB194;--deep:#B0401F;--leaf:#28190F;--leaf2:#5A2414;--halo1:rgba(240,120,50,.19);--halo2:rgba(170,90,40,.12);--tabbg:rgba(24,17,14,.94)}
-:root[data-palette="pergamena"]{--bg:#EFE4CB;--surface:#FBF4E4;--surface2:#F4E9D2;--soft:#F5EAD2;--ink:#2A2016;--muted:#62502F;--line:rgba(140,95,30,.38);--hair:rgba(42,32,22,.14);
-  --deep:#8E3B22;--gold:#C08A2A;--gold-ink:#7A5110;--glow:#C88A1E;--good:#3F6E1E;--bad:#A8341D;--bad-bg:rgba(176,52,31,.12);--sos:#A8341D;
-  --leaf:#DFD0AA;--leaf2:#DDBB9C;--vein:rgba(140,95,30,.18);--ff:#E0A030;--halo1:rgba(227,166,59,.28);--halo2:rgba(120,150,80,.14);--tabbg:rgba(251,244,228,.96);--shadow:rgba(90,60,20,.22);
-  --tex:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cg stroke='%235A4020' stroke-opacity='.06' stroke-width='1' fill='none'%3E%3Cpath d='M10 40 L70 18M30 90 L95 70M120 30 L190 6M150 120 L230 95M8 170 L80 150M100 200 L170 176M180 210 L238 190M60 120 L118 104M200 60 L236 48M130 160 L176 146'/%3E%3C/g%3E%3C/svg%3E");
+/* palette selezionabili: tre notti e un'alba per il giorno (contrasto verificato) */
+:root[data-palette="abisso"]{--bg:#0F1F24;--surface:#182C32;--surface2:#213840;--soft:#1C3238;--muted:#A6BDBF;--plant:#07131A;--tabbg:rgba(14,28,33,.95)}
+:root[data-palette="malva"]{--bg:#221E2C;--surface:#2D2839;--surface2:#383246;--soft:#322C3F;--muted:#BDB1C6;--deep:#A84468;--line:rgba(196,160,214,.28);--plant:#14101C;--mauve:#C49AD6;--fuchsia:#EE7DB8;--tabbg:rgba(31,27,41,.95)}
+:root[data-palette="alba"]{--bg:#F3E9DF;--surface:#FCF6EF;--surface2:#EDE1D4;--soft:#F6EDE3;--ink:#1E2B31;--muted:#56626A;--line:rgba(30,43,49,.20);--hair:rgba(30,43,49,.10);
+  --deep:#B23E28;--gold:#E8714A;--gold-ink:#A63C22;--glow:#11695F;--logo:#C2492E;--good:#2E7A5C;--bad:#B0361F;--bad-bg:rgba(176,54,31,.10);--sos:#B0361F;
+  --edge:#C9402A;--teal:#3FB5A9;--green:#4DB86C;--fuchsia:#D2589A;--pink:#F3A2C3;--amber:#F5C37E;--rim:#F8FFFD;--mauve:#9A74A8;--plant:#A9BDBC;--moon:#EBD3B6;--ff:#3FB5A9;
+  --flat:rgba(70,45,30,.16);--tabbg:rgba(252,246,239,.96);--shadow:rgba(60,40,20,.18);
+  --tex:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.35  0 0 0 0 0.25  0 0 0 0 0.2  0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   color-scheme:light}
 
 *{box-sizing:border-box}
 html,body{height:100%}
-body{margin:0;background-color:var(--bg);background-image:radial-gradient(120% 60% at 85% -5%, var(--halo1), transparent 60%),radial-gradient(90% 50% at -10% 105%, var(--halo2), transparent 60%),var(--tex);
+body{margin:0;background-color:var(--bg);background-image:var(--tex),radial-gradient(70% 40% at 78% 8%, color-mix(in srgb, var(--rim) 10%, transparent), transparent 70%);
   color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
   -webkit-tap-highlight-color:transparent}
@@ -59,13 +60,15 @@ b{font-weight:700}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 @keyframes hop{0%{transform:translateY(10px);opacity:.4}100%{transform:none;opacity:1}}
 
-/* il bosco sullo sfondo: foglie scure e lucciole che si muovono piano */
+/* lo sfondo: una luna tenue, spirali color malva, erbe e steli a foglie di cuore col filo di luce, scintille */
 .forest{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .forest svg{position:absolute}
-.forest .l1{left:-70px;top:-40px;width:260px;transform:rotate(18deg)}
-.forest .l2{right:-90px;bottom:60px;width:300px;transform:rotate(200deg)}
-.forest .l3{right:-30px;top:140px;width:150px;transform:rotate(130deg);opacity:.7}
-.ff{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--ff);box-shadow:0 0 10px 3px color-mix(in srgb, var(--ff) 55%, transparent);opacity:.0;animation:drift 14s ease-in-out infinite, blink 5s ease-in-out infinite}
+.forest .gl{left:-24px;bottom:-8px;height:min(46vh,400px)}
+.forest .gr{right:-30px;bottom:-8px;height:min(60vh,520px)}
+.forest .moon{right:-60px;top:60px;width:240px;opacity:.5}
+.forest .sp1{right:14px;top:46vh;width:70px;opacity:.6}
+.forest .sp2{left:-12px;top:16vh;width:50px;opacity:.45}
+.ff{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--ff);box-shadow:0 0 10px 3px color-mix(in srgb, var(--ff) 55%, transparent);opacity:.0;animation:drift 14s ease-in-out infinite, blink 5s ease-in-out infinite}
 @keyframes drift{0%,100%{transform:translate(0,0)}33%{transform:translate(18px,-26px)}66%{transform:translate(-14px,-10px)}}
 @keyframes blink{0%,100%{opacity:.1}45%{opacity:.85}60%{opacity:.6}}
 
@@ -254,12 +257,72 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   padding:8px max(10px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px))}
 .tab{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:1px solid transparent;border-radius:14px;padding:6px 2px 5px;font-size:12px;font-weight:700;color:var(--muted);max-width:150px;width:100%;justify-self:center}
 .tab.on{color:var(--glow);background:var(--surface2);border-color:var(--line)}
+
+/* fate: figure morbide color corallo col contorno rosso disegnato a mano, ombre piatte, ali turchesi traslucide */
+h1,h2,h3{font-weight:400;letter-spacing:0}
+.logo{color:var(--logo);text-shadow:none;font-weight:400;font-style:normal;font-size:31px}
+.tagline{font-family:var(--f-body);font-style:normal;font-size:13px;letter-spacing:.02em}
+.intro h2{font-size:37px;font-weight:400}
+.intro h2 em{font-style:normal;color:var(--glow)}
+.page-h h2{font-size:31px;font-weight:400}
+.sec-h h3{font-weight:400;font-style:normal}
+.divider{font-style:normal}
+.mood,.row,.card,.pal,.boxcard{background:var(--surface);background-image:var(--tex);border:0;box-shadow:4px 5px 0 var(--flat)}
+.mood{border-radius:24px 20px 26px 18px / 20px 26px 18px 24px}
+.mood{--wc:var(--teal);--ic:var(--coral);background-color:color-mix(in srgb, var(--wc) 7%, var(--surface))}
+/* ali in tre colori e bollini in quattro: i cicli sfasati fanno sì che due carte vicine non si somiglino */
+.mood:nth-child(3n+2){--wc:var(--green)} .mood:nth-child(3n){--wc:var(--fuchsia)}
+.mood:nth-child(4n+2){--ic:var(--peach)} .mood:nth-child(4n+3){--ic:var(--pink)} .mood:nth-child(4n){--ic:var(--amber)}
+.mood::before{right:-4px;top:-2px;width:92px;height:78px;border-radius:0;background:var(--wc);opacity:.28;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 84'%3E%3Cpath d='M6 62 C18 34 50 6 80 4 C98 4 98 22 86 32 C68 48 36 58 6 62Z M8 66 C30 62 54 60 66 66 C76 72 66 80 52 78 C36 76 20 72 8 66Z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 84'%3E%3Cpath d='M6 62 C18 34 50 6 80 4 C98 4 98 22 86 32 C68 48 36 58 6 62Z M8 66 C30 62 54 60 66 66 C76 72 66 80 52 78 C36 76 20 72 8 66Z'/%3E%3C/svg%3E") center/contain no-repeat}
+.mood::after{content:"";position:absolute;right:-4px;top:-2px;width:92px;height:78px;background:color-mix(in srgb, var(--wc) 60%, #fff);opacity:.7;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 84'%3E%3Cg fill='none' stroke='%238FEFE6' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 62 C18 34 50 6 80 4 C98 4 98 22 86 32 C68 48 36 58 6 62Z M8 66 C30 62 54 60 66 66 C76 72 66 80 52 78 C36 76 20 72 8 66Z'/%3E%3Cpath d='M8 60 C30 42 54 24 82 12 M30 48 C38 36 48 26 58 16 M46 40 C60 36 74 30 88 22 M10 66 C30 66 46 68 60 72 M34 66 C38 70 42 74 46 76'/%3E%3Cpath d='M70 50 l1.4 3.6 3.6 1.4 -3.6 1.4 -1.4 3.6 -1.4 -3.6 -3.6 -1.4 3.6 -1.4Z M88 46 l1 2.4 2.4 1 -2.4 1 -1 2.4 -1 -2.4 -2.4 -1 2.4 -1Z' fill='%23C8FFF7' stroke='none'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 84'%3E%3Cg fill='none' stroke='%238FEFE6' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 62 C18 34 50 6 80 4 C98 4 98 22 86 32 C68 48 36 58 6 62Z M8 66 C30 62 54 60 66 66 C76 72 66 80 52 78 C36 76 20 72 8 66Z'/%3E%3Cpath d='M8 60 C30 42 54 24 82 12 M30 48 C38 36 48 26 58 16 M46 40 C60 36 74 30 88 22 M10 66 C30 66 46 68 60 72 M34 66 C38 70 42 74 46 76'/%3E%3Cpath d='M70 50 l1.4 3.6 3.6 1.4 -3.6 1.4 -1.4 3.6 -1.4 -3.6 -3.6 -1.4 3.6 -1.4Z M88 46 l1 2.4 2.4 1 -2.4 1 -1 2.4 -1 -2.4 -2.4 -1 2.4 -1Z' fill='%23C8FFF7' stroke='none'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
+.mood > *{position:relative;z-index:1}
+.mood svg{color:var(--on-gold);background:var(--ic);border:2px solid var(--edge);border-radius:58% 42% 52% 48% / 48% 56% 44% 52%;padding:7px;width:42px;height:42px;box-shadow:3px 3px 0 var(--flat)}
+.mood.wide svg{flex:none}
+.mood b{font-weight:400;font-size:20px;margin-top:4px}
+.danger{border:0;border-radius:20px 16px 20px 16px;box-shadow:4px 5px 0 var(--flat)}
+.row{border-radius:20px 16px 22px 16px / 16px 22px 16px 20px}
+.row b{font-weight:400;font-size:18.5px}
+.num{border:2px solid var(--edge);background:var(--coral);filter:none;border-radius:58% 42% 52% 48% / 48% 56% 44% 52%;box-shadow:3px 3px 0 var(--flat)}
+.row:nth-child(3n+2) .num{background:var(--peach)} .row:nth-child(3n) .num{background:var(--pink)}
+.row .go{color:var(--gold-ink)}
+.btn{border-radius:999px}
+.btn-main{background:var(--coral);color:var(--on-gold);border:2px solid var(--edge);box-shadow:4px 4px 0 var(--flat)}
+.btn-deep{background:var(--deep);border-color:transparent;box-shadow:4px 4px 0 var(--flat)}
+.btn-ghost{background:var(--surface2);border-color:transparent;box-shadow:3px 3px 0 var(--flat)}
+.btn-sos{box-shadow:4px 4px 0 var(--flat)}
+.chip{border-color:transparent;background:var(--surface2)}
+.chip.sos{background:var(--deep);color:var(--on-deep)}
+.opt{border-color:transparent;background:var(--surface2)}
+.opt.on{background:var(--coral);color:var(--on-gold);box-shadow:inset 0 0 0 2px var(--edge)}
+.pal.on,.choice .row.on{outline-color:var(--teal)}
+.card.soft{background:color-mix(in srgb, var(--teal) 14%, var(--surface));border:0}
+.insight{background:color-mix(in srgb, var(--teal) 16%, var(--surface));border:0;box-shadow:4px 5px 0 var(--flat)}
+.insight b{color:var(--glow)}
+.quote{font-style:normal;border-left-color:var(--coral);border-radius:0 16px 16px 0}
+.meter i{background:linear-gradient(90deg,var(--coral),var(--peach));box-shadow:none}
+.range .val{color:var(--peach)}
+input[type=range]{border-color:transparent}
+input[type=range]::-webkit-slider-thumb{background:var(--coral);border:2px solid var(--edge);box-shadow:0 0 0 6px color-mix(in srgb, var(--teal) 25%, transparent)}
+input[type=range]::-moz-range-thumb{background:var(--coral);border:2px solid var(--edge);box-shadow:none}
+textarea,input[type=text],input[type=tel]{border-color:transparent}
+.breath .ball{background:radial-gradient(circle at 42% 38%, #FFE3C4 0%, var(--peach) 45%, var(--coral) 100%);border:2px solid var(--edge);box-shadow:0 0 50px 10px color-mix(in srgb, var(--teal) 30%, transparent)}
+.breath .ring{border-color:color-mix(in srgb, var(--mauve) 60%, transparent)}
+.breath .say,.boxcard .big,.sw b{font-style:normal}
+.dot.on{background:var(--coral);border:2px solid var(--edge);color:var(--on-gold);box-shadow:0 0 16px color-mix(in srgb, var(--teal) 50%, transparent)}
+.chart .ln{stroke:var(--coral)}
+.chart .pt{fill:var(--glow);stroke:var(--surface)}
+.silly{color:var(--peach);border:0;box-shadow:4px 5px 0 var(--flat)}
+.tabbar{border-top:0}
+.tab.on{color:var(--glow);background:var(--surface2);border-color:transparent}
+.divider::before,.divider::after{background:var(--hair)}
 @media (prefers-reduced-motion:no-preference){.mascot .halo{animation:pulse 3.4s ease-in-out infinite}}
 @keyframes pulse{0%,100%{opacity:.75}50%{opacity:1}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.ff{opacity:.35}}
 </style>
 </head><body>
-<div class="forest" aria-hidden="true"><svg class="l1" viewBox="0 0 240 120"><path d="M0 60 C40 0 150 -10 240 50 C160 110 50 120 0 60Z" fill="var(--leaf)"/><path d="M0 60 C80 52 160 50 240 50 M60 57 C80 40 100 30 120 28 M60 57 C82 72 104 82 126 86 M130 53 C150 38 170 30 190 30 M130 53 C152 66 172 74 194 76" stroke="var(--vein)" stroke-width="1.5" fill="none"/></svg><svg class="l2" viewBox="0 0 240 120"><path d="M0 60 C40 0 150 -10 240 50 C160 110 50 120 0 60Z" fill="var(--leaf2)"/><path d="M0 60 C80 52 160 50 240 50 M60 57 C80 40 100 30 120 28 M60 57 C82 72 104 82 126 86 M130 53 C150 38 170 30 190 30 M130 53 C152 66 172 74 194 76" stroke="var(--vein)" stroke-width="1.5" fill="none"/></svg><svg class="l3" viewBox="0 0 240 120"><path d="M0 60 C40 0 150 -10 240 50 C160 110 50 120 0 60Z" fill="var(--leaf)"/><path d="M0 60 C80 52 160 50 240 50 M60 57 C80 40 100 30 120 28 M60 57 C82 72 104 82 126 86 M130 53 C150 38 170 30 190 30 M130 53 C152 66 172 74 194 76" stroke="var(--vein)" stroke-width="1.5" fill="none"/></svg><i class="ff" style="left:12%;top:22%;animation-delay:0s,1s"></i><i class="ff" style="left:80%;top:14%;animation-delay:3s,0s"></i><i class="ff" style="left:66%;top:48%;animation-delay:6s,2.5s"></i><i class="ff" style="left:24%;top:64%;animation-delay:2s,4s"></i><i class="ff" style="left:88%;top:72%;animation-delay:8s,1.5s"></i><i class="ff" style="left:42%;top:86%;animation-delay:4s,3s"></i><i class="ff" style="left:52%;top:30%;animation-delay:10s,0.5s"></i></div>
+<div class="forest" aria-hidden="true"><svg class="moon" viewBox="0 0 100 100"><defs><radialGradient id="mg"><stop offset=".55" stop-color="var(--moon)" stop-opacity=".22"/><stop offset=".7" stop-color="var(--moon)" stop-opacity=".12"/><stop offset="1" stop-color="var(--moon)" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="50" fill="url(#mg)"/></svg><svg class="sp1" viewBox="0 0 100 100"><path d="M52.0 50.0 L52.5 50.4 L52.8 50.9 L53.1 51.6 L53.2 52.3 L53.1 53.1 L52.9 54.0 L52.5 54.8 L51.8 55.6 L51.0 56.3 L50.0 56.9 L48.8 57.3 L47.6 57.5 L46.2 57.4 L44.8 57.1 L43.4 56.6 L42.1 55.8 L40.8 54.7 L39.8 53.3 L38.9 51.8 L38.3 50.0 L37.9 48.1 L37.9 46.1 L38.2 44.0 L38.9 42.0 L40.0 40.0 L41.4 38.1 L43.1 36.5 L45.2 35.1 L47.5 34.1 L50.0 33.4 L52.7 33.1 L55.4 33.3 L58.2 33.9 L60.9 35.0 L63.5 36.5 L65.8 38.5 L67.8 40.9 L69.5 43.7 L70.7 46.7 L71.5 50.0 L71.7 53.4 L71.4 56.9 L70.4 60.4 L69.0 63.8 L66.9 66.9 L64.3 69.7 L61.3 72.2 L57.8 74.1 L54.0 75.5 L50.0 76.3 L45.8 76.5 L41.6 76.0 L37.4 74.8 L33.4 72.9 L29.6 70.4 L26.3 67.2 L23.5 63.5 L21.2 59.3 L19.6 54.8 L18.8 50.0 L18.7 45.0 L19.4 40.1 L20.9 35.2 L23.2 30.5 L26.2 26.2 L29.9 22.4 L34.3 19.1 L39.1 16.6 L44.4 14.8 L50.0 13.9 L55.7 13.9 L61.5 14.8 L67.0 16.5 L72.4 19.2 L77.2 22.8 L81.6 27.1 L85.2 32.1 L88.0 37.6 L90.0 43.7 L91.0 50.0 L90.9 56.5 L89.9 63.0 L87.8 69.3 L84.7 75.2 L80.7 80.7 L75.8 85.5 L70.1 89.5 L63.9 92.7 L57.1 94.8 L50.0 95.8 L42.8 95.7 L35.5 94.5 L28.5 92.1 L21.9 88.6 L15.9 84.1 L10.6 78.7" fill="none" stroke="var(--mauve)" stroke-width="4" stroke-linecap="round"/></svg><svg class="sp2" viewBox="0 0 100 100"><path d="M52.0 50.0 L52.5 50.4 L52.8 50.9 L53.1 51.6 L53.2 52.3 L53.1 53.1 L52.9 54.0 L52.5 54.8 L51.8 55.6 L51.0 56.3 L50.0 56.9 L48.8 57.3 L47.6 57.5 L46.2 57.4 L44.8 57.1 L43.4 56.6 L42.1 55.8 L40.8 54.7 L39.8 53.3 L38.9 51.8 L38.3 50.0 L37.9 48.1 L37.9 46.1 L38.2 44.0 L38.9 42.0 L40.0 40.0 L41.4 38.1 L43.1 36.5 L45.2 35.1 L47.5 34.1 L50.0 33.4 L52.7 33.1 L55.4 33.3 L58.2 33.9 L60.9 35.0 L63.5 36.5 L65.8 38.5 L67.8 40.9 L69.5 43.7 L70.7 46.7 L71.5 50.0 L71.7 53.4 L71.4 56.9 L70.4 60.4 L69.0 63.8 L66.9 66.9 L64.3 69.7 L61.3 72.2 L57.8 74.1 L54.0 75.5 L50.0 76.3 L45.8 76.5 L41.6 76.0 L37.4 74.8 L33.4 72.9 L29.6 70.4 L26.3 67.2 L23.5 63.5 L21.2 59.3 L19.6 54.8 L18.8 50.0 L18.7 45.0 L19.4 40.1 L20.9 35.2 L23.2 30.5 L26.2 26.2 L29.9 22.4 L34.3 19.1 L39.1 16.6 L44.4 14.8 L50.0 13.9 L55.7 13.9 L61.5 14.8 L67.0 16.5 L72.4 19.2 L77.2 22.8 L81.6 27.1 L85.2 32.1 L88.0 37.6 L90.0 43.7 L91.0 50.0" fill="none" stroke="var(--fuchsia)" stroke-width="4" stroke-linecap="round"/></svg><svg class="gl" viewBox="0 0 160 400"><g transform="translate(-1.4 -1.2)" fill="var(--rim)" color="var(--rim)" opacity=".7"><path d="M4 400 Q14.4 230.0 30 60 Q24.0 230.0 20 400Z"/><path d="M34 400 Q26.8 285.0 16 170 Q34.6 285.0 47 400Z"/><path d="M74 400 Q87.6 320.0 108 240 Q94.19999999999999 320.0 85 400Z"/><path d="M-10 400 Q7.600000000000001 265.0 34 130 Q18.4 265.0 8 400Z"/><path d="M46 400 Q20 265.0 62 130" fill="none" stroke="currentColor" stroke-width="3"/><path transform="translate(40.0 361.4) rotate(-58) scale(2.4699999999999998)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(36.7 322.9) rotate(58) scale(2.3400000000000003)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(36.2 284.3) rotate(-58) scale(2.21)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(38.5 245.7) rotate(58) scale(2.08)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(43.6 207.1) rotate(-58) scale(1.9500000000000002)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(51.4 168.6) rotate(58) scale(1.8199999999999998)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(62.0 130.0) rotate(0) scale(1.8199999999999998)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path d="M100 400 Q118 335.0 120 270" fill="none" stroke="currentColor" stroke-width="3"/><path transform="translate(108.0 367.5) rotate(-58) scale(1.91625)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(114.0 335.0) rotate(58) scale(1.7325)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(118.0 302.5) rotate(-58) scale(1.54875)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(120.0 270.0) rotate(0) scale(1.47)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/></g><g fill="var(--plant)" color="var(--plant)"><path d="M4 400 Q14.4 230.0 30 60 Q24.0 230.0 20 400Z"/><path d="M34 400 Q26.8 285.0 16 170 Q34.6 285.0 47 400Z"/><path d="M74 400 Q87.6 320.0 108 240 Q94.19999999999999 320.0 85 400Z"/><path d="M-10 400 Q7.600000000000001 265.0 34 130 Q18.4 265.0 8 400Z"/><path d="M46 400 Q20 265.0 62 130" fill="none" stroke="currentColor" stroke-width="3"/><path transform="translate(40.0 361.4) rotate(-58) scale(2.4699999999999998)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(36.7 322.9) rotate(58) scale(2.3400000000000003)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(36.2 284.3) rotate(-58) scale(2.21)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(38.5 245.7) rotate(58) scale(2.08)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(43.6 207.1) rotate(-58) scale(1.9500000000000002)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(51.4 168.6) rotate(58) scale(1.8199999999999998)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(62.0 130.0) rotate(0) scale(1.8199999999999998)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path d="M100 400 Q118 335.0 120 270" fill="none" stroke="currentColor" stroke-width="3"/><path transform="translate(108.0 367.5) rotate(-58) scale(1.91625)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(114.0 335.0) rotate(58) scale(1.7325)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(118.0 302.5) rotate(-58) scale(1.54875)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(120.0 270.0) rotate(0) scale(1.47)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/></g></svg><svg class="gr" viewBox="0 0 180 520"><g transform="translate(-1.4 -1.2)" fill="var(--rim)" color="var(--rim)" opacity=".7"><path d="M156 520 Q140.0 280.0 116 40 Q150.8 280.0 174 520Z"/><path d="M126 520 Q134.8 360.0 148 200 Q143.20000000000002 360.0 140 520Z"/><path d="M178 520 Q151.6 335.0 112 150 Q161.2 335.0 194 520Z"/><path d="M92 520 Q81.6 425.0 66 330 Q88.19999999999999 425.0 103 520Z"/><path d="M140 520 Q170 315.0 112 110" fill="none" stroke="currentColor" stroke-width="3"/><path transform="translate(146.1 468.8) rotate(-58) scale(2.6774999999999998)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(149.5 417.5) rotate(58) scale(2.5549999999999997)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(150.1 366.2) rotate(-58) scale(2.4325)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(148.0 315.0) rotate(58) scale(2.3099999999999996)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(143.1 263.8) rotate(-58) scale(2.1875)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(135.5 212.5) rotate(58) scale(2.065)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(125.1 161.2) rotate(-58) scale(1.9425000000000001)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(112.0 110.0) rotate(0) scale(1.9599999999999997)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path d="M58 520 Q42 420.0 36 320" fill="none" stroke="currentColor" stroke-width="3"/><path transform="translate(52.0 480.0) rotate(-58) scale(2.0460000000000003)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(46.8 440.0) rotate(58) scale(1.8920000000000001)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(42.4 400.0) rotate(-58) scale(1.7380000000000002)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(38.8 360.0) rotate(58) scale(1.584)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(36.0 320.0) rotate(0) scale(1.54)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/></g><g fill="var(--plant)" color="var(--plant)"><path d="M156 520 Q140.0 280.0 116 40 Q150.8 280.0 174 520Z"/><path d="M126 520 Q134.8 360.0 148 200 Q143.20000000000002 360.0 140 520Z"/><path d="M178 520 Q151.6 335.0 112 150 Q161.2 335.0 194 520Z"/><path d="M92 520 Q81.6 425.0 66 330 Q88.19999999999999 425.0 103 520Z"/><path d="M140 520 Q170 315.0 112 110" fill="none" stroke="currentColor" stroke-width="3"/><path transform="translate(146.1 468.8) rotate(-58) scale(2.6774999999999998)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(149.5 417.5) rotate(58) scale(2.5549999999999997)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(150.1 366.2) rotate(-58) scale(2.4325)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(148.0 315.0) rotate(58) scale(2.3099999999999996)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(143.1 263.8) rotate(-58) scale(2.1875)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(135.5 212.5) rotate(58) scale(2.065)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(125.1 161.2) rotate(-58) scale(1.9425000000000001)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(112.0 110.0) rotate(0) scale(1.9599999999999997)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path d="M58 520 Q42 420.0 36 320" fill="none" stroke="currentColor" stroke-width="3"/><path transform="translate(52.0 480.0) rotate(-58) scale(2.0460000000000003)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(46.8 440.0) rotate(58) scale(1.8920000000000001)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(42.4 400.0) rotate(-58) scale(1.7380000000000002)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(38.8 360.0) rotate(58) scale(1.584)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/><path transform="translate(36.0 320.0) rotate(0) scale(1.54)" d="M0 0 C-6 -4 -9 -10 -5 -13.5 C-2 -15.5 0 -12.5 0 -10.5 C0 -12.5 2 -15.5 5 -13.5 C9 -10 6 -4 0 0Z"/></g></svg><i class="ff" style="left:18%;top:24%;animation-delay:0s,1s"></i><i class="ff" style="left:72%;top:36%;animation-delay:4s,2s"></i><i class="ff" style="left:34%;top:74%;animation-delay:2s,4s"></i><i class="ff" style="left:88%;top:18%;animation-delay:7s,1s"></i><i class="ff" style="left:56%;top:58%;animation-delay:9s,3s"></i></div>
 <main id="app"></main>
 <script>
 (function(){
@@ -551,7 +614,7 @@ I18N.en = {
     {b:"Marsha M. Linehan, DBT Skills Training Manual", s:"DBT", u:"Crisis survival skills: STOP, TIP (with precautions), self-soothing with the five senses, improving the moment."},
     {b:"Viktor E. Frankl, Man's Search for Meaning", s:"Logotherapy", u:"Turning the question of meaning around, the paths to meaning (doing, loving, the attitude towards what can't be changed), “someone or something waiting for you”."}
   ],
-  palettes:{bosco:["Forest","Night green and amber light"], notte:["Night","Deep blue and moonlight silver"], brace:["Embers","Warm brown and rust leaves"], pergamena:["Parchment","Old paper, for daylight"]},
+  palettes:{ardesia:["Slate","Blue night, coral and turquoise wings"], abisso:["Deep","Dark teal, like still water"], malva:["Mauve","Dusky violet and spirals"], alba:["Dawn","Warm peach, for daylight"]},
   saluti:["Hi, I'm here.", "Slowly.", "One step at a time.", "Breathe, I'm here.", "How's today?", "A little is enough."],
   ui:{
     tagline:"a small light in the dark",
@@ -814,7 +877,7 @@ I18N.it = {
     {b:"Marsha M. Linehan, Manuale DBT", s:"DBT", u:"Le abilità di sopravvivenza alla crisi: STOP, TIP (con le precauzioni), calmarsi con i cinque sensi, migliorare il momento."},
     {b:"Viktor E. Frankl, Uno psicologo nei Lager", s:"Logoterapia", u:"Il rovesciamento della domanda sul senso, le vie del senso (fare, amare, l'atteggiamento davanti a ciò che non si può cambiare), «qualcuno o qualcosa che ti aspetta»."}
   ],
-  palettes:{bosco:["Bosco","Verde notte e luce d'ambra"], notte:["Notte","Blu profondo e argento lunare"], brace:["Brace","Bruno caldo e foglie di ruggine"], pergamena:["Pergamena","Carta antica, per la luce del giorno"]},
+  palettes:{ardesia:["Ardesia","Notte blu, corallo e ali turchesi"], abisso:["Abisso","Petrolio scuro, come l'acqua ferma"], malva:["Malva","Viola del crepuscolo e spirali"], alba:["Alba","Pesca caldo, per il giorno"]},
   saluti:["Ciao, sono qui.", "Piano piano.", "Un passo alla volta.", "Respira, ci sono.", "Oggi com'è?", "Anche poco va bene."],
   ui:{
     tagline:"una piccola luce nel buio",
@@ -901,7 +964,7 @@ I18N.it = {
 /* ---------- stato salvato ---------- */
 const KEY = "lucciola.v1";     // non cambiarla mai dopo la prima pubblicazione: è dove stanno i dati dell'utente
 const app = document.getElementById("app");
-function fresh(){ return {lang:"en", country:"", palette:"bosco", onboarded:false, moods:[], records:[], passi:[], pending:null, tasks:[], box:[], values:{}, senso:{}, plan:{contacts:[]}, draft:{}, custom:[], autoBackup:true, backupFile:false, lastFile:""}; }
+function fresh(){ return {lang:"en", country:"", palette:"ardesia", onboarded:false, moods:[], records:[], passi:[], pending:null, tasks:[], box:[], values:{}, senso:{}, plan:{contacts:[]}, draft:{}, custom:[], autoBackup:true, backupFile:false, lastFile:""}; }
 function load(){ try{ const r = localStorage.getItem(KEY); if(r) return Object.assign(fresh(), JSON.parse(r)); }catch(e){} return fresh(); }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); return true; }catch(e){ return false; } }
 let S = load();
@@ -1003,73 +1066,82 @@ const ICON = {
 };
 
 /* ---------- la mascotte: Lucciola ---------- */
-// mood: hi · happy · calm · listen · cheer · sleep. Corpo scuro con bordo dorato, ali di velo, pancia che si accende.
+// mood: hi · happy · calm · listen · cheer · sleep. Figura morbida color corallo col contorno rosso e ombre piatte,
+// ali turchesi traslucide con nervature e scintille, antenne a spirale color malva, pancia che si accende.
 let mid = 0;
 function mascot(mood, size){
   const id = "m" + (++mid);
-  const D = "#2B2622", DS = "#15120F", R = "rgba(232,180,90,.85)", C = "#F5E6C4";
-  const lum = mood === "sleep" ? .4 : mood === "cheer" ? 1 : .85;
+  const CO = "#F0855E", PE = "#F7AE78", SH = "#D9643F", ED = "#C9402A", EY = "#3A1A16", WG = "#4FCFC2", WL = "#9AF2E8", MV = "#B48AC4";
+  const lum = mood === "sleep" ? .45 : mood === "cheer" ? 1 : .85;
   const arm = {
-    hi:    ["M56 100 Q45 108 43 120", "M84 98 Q99 88 103 72"],
-    cheer: ["M56 98 Q41 88 37 72", "M84 98 Q99 88 103 72"],
-    listen:["M56 100 Q57 113 66 113", "M84 100 Q83 113 74 113"]
-  }[mood] || ["M56 100 Q45 108 43 120", "M84 100 Q95 108 97 120"];
-  const arms = arm.map(d => `<path d="${d}" stroke="${D}" stroke-width="4.2" stroke-linecap="round" fill="none"/><path d="${d}" stroke="${R}" stroke-width="1" stroke-linecap="round" fill="none" opacity=".6"/>`).join("");
-  const eye = (x, y) => `<ellipse cx="${x}" cy="${y}" rx="3.8" ry="4.6" fill="${C}"/><circle cx="${x + .6}" cy="${y + .8}" r="2.2" fill="${DS}"/><circle cx="${x + 1.4}" cy="${y - .6}" r=".8" fill="#fff"/>`;
-  const shut = (x, y) => `<path d="M${x - 4.5} ${y} Q${x} ${y + 4} ${x + 4.5} ${y}" fill="none" stroke="${C}" stroke-width="1.7" stroke-linecap="round"/><path d="M${x - 4} ${y + 1.6} l-1.4 1.6 M${x} ${y + 2.8} l0 2 M${x + 4} ${y + 1.6} l1.4 1.6" stroke="${C}" stroke-width="1" stroke-linecap="round" opacity=".8"/>`;
+    hi:    ["M58 100 Q46 108 43 121", "M82 98 Q97 88 101 72"],
+    cheer: ["M58 98 Q43 88 39 72", "M82 98 Q97 88 101 72"],
+    listen:["M58 101 Q58 113 66 114", "M82 101 Q82 113 74 114"]
+  }[mood] || ["M58 100 Q47 110 45 122", "M82 100 Q93 110 95 122"];
+  // braccia morbide: tratto rosso sotto, corallo sopra, così resta il contorno
+  const arms = arm.map(d => `<path d="${d}" stroke="${ED}" stroke-width="8" stroke-linecap="round" fill="none"/><path d="${d}" stroke="${CO}" stroke-width="5" stroke-linecap="round" fill="none"/>`).join("");
+  const eye = (x, y) => `<ellipse cx="${x}" cy="${y}" rx="2.6" ry="3.3" fill="${EY}"/><circle cx="${x + .9}" cy="${y - 1.2}" r=".9" fill="#fff"/>`;
+  const shut = (x, y) => `<path d="M${x - 3.6} ${y} Q${x} ${y + 3.2} ${x + 3.6} ${y}" fill="none" stroke="${EY}" stroke-width="1.7" stroke-linecap="round"/>`;
+  const glad = (x, y) => `<path d="M${x - 3.6} ${y + 1} Q${x} ${y - 3.4} ${x + 3.6} ${y + 1}" fill="none" stroke="${EY}" stroke-width="1.8" stroke-linecap="round"/>`;
+  const smile = `<path d="M65.5 67.5 Q70 71.5 74.5 67.5" fill="none" stroke="${EY}" stroke-width="1.7" stroke-linecap="round"/>`;
   let face;
-  if(mood === "cheer") face = `<path d="M57.5 63 Q62 58.5 66.5 63 M73.5 63 Q78 58.5 82.5 63" fill="none" stroke="${C}" stroke-width="1.8" stroke-linecap="round"/><ellipse cx="70" cy="71.5" rx="3.4" ry="2.8" fill="#7A2A1A" stroke="${C}" stroke-width="1"/>`;
-  else if(mood === "calm") face = shut(62, 61) + shut(78, 61) + `<path d="M67 71 Q70 73 73 71" fill="none" stroke="${C}" stroke-width="1.5" stroke-linecap="round"/>`;
-  else if(mood === "sleep") face = shut(62, 62) + shut(78, 62) + `<ellipse cx="70" cy="72" rx="1.8" ry="2.2" fill="#7A2A1A" stroke="${C}" stroke-width=".9"/>`;
-  else if(mood === "listen") face = eye(62, 62) + eye(78, 62) + `<path d="M57 55.5 L66 53.5 M83 55.5 L74 53.5" stroke="${C}" stroke-width="1.4" stroke-linecap="round" opacity=".85"/><path d="M67 71.5 Q70 72.5 73 71.5" fill="none" stroke="${C}" stroke-width="1.5" stroke-linecap="round"/>`;
-  else face = eye(62, 62) + eye(78, 62) + `<path d="M66 70 Q70 73.5 74 70" fill="none" stroke="${C}" stroke-width="1.6" stroke-linecap="round"/>`;
-  const cheeks = `<circle cx="57" cy="68.5" r="3.2" fill="rgba(225,110,70,.35)"/><circle cx="83" cy="68.5" r="3.2" fill="rgba(225,110,70,.35)"/>`;
-  const spark = (x, y, r) => `<circle cx="${x}" cy="${y}" r="${r * 2.6}" fill="#FFD58A" opacity=".22"/><circle cx="${x}" cy="${y}" r="${r}" fill="#FFF0C2"/>`;
-  let extras = "";
-  if(mood === "cheer") extras = spark(28, 50, 2.4) + spark(114, 40, 2) + spark(120, 118, 1.8) + spark(22, 112, 1.6);
-  else if(mood === "hi") extras = spark(116, 56, 2);
-  else if(mood === "sleep") extras = `<text x="98" y="42" font-family="Georgia,serif" font-style="italic" font-size="16" fill="${C}" opacity=".75">z</text><text x="108" y="30" font-family="Georgia,serif" font-style="italic" font-size="12" fill="${C}" opacity=".6">z</text>`;
-  const abd = "M70 84 Q91 86 93 111 Q93 143 70 147 Q47 143 47 111 Q49 86 70 84 Z";
+  if(mood === "cheer") face = glad(62, 59) + glad(78, 59) + `<path d="M64.5 66 Q70 74.5 75.5 66Z" fill="${EY}"/><path d="M67 70 Q70 72.4 73 70" fill="#E5604A"/>`;
+  else if(mood === "calm" || mood === "sleep") face = shut(62, 59) + shut(78, 59) + (mood === "sleep" ? `<ellipse cx="70" cy="68.5" rx="1.8" ry="1.4" fill="${EY}"/>` : smile);
+  else if(mood === "listen") face = `<path d="M58 51.5 Q62 49.5 65.5 51 M74.5 51 Q78 49.5 82 51.5" stroke="${ED}" stroke-width="1.8" stroke-linecap="round" fill="none"/>` + eye(62, 59) + eye(78, 59) + `<ellipse cx="70" cy="68.5" rx="2" ry="1.6" fill="${EY}"/>`;
+  else face = eye(62, 59) + eye(78, 59) + smile;
+  const cheeks = `<ellipse cx="56.5" cy="65" rx="4.2" ry="2.8" fill="#EE6A50" opacity=".55"/><ellipse cx="83.5" cy="65" rx="4.2" ry="2.8" fill="#EE6A50" opacity=".55"/>`;
+  const star = (x, y, r) => `<path d="M${x} ${y - r} Q${x + r * .18} ${y - r * .18} ${x + r} ${y} Q${x + r * .18} ${y + r * .18} ${x} ${y + r} Q${x - r * .18} ${y + r * .18} ${x - r} ${y} Q${x - r * .18} ${y - r * .18} ${x} ${y - r}Z" fill="#C8FFF7"/>`;
+  let extras = star(22, 70, 2.6) + star(118, 96, 2.2);
+  if(mood === "cheer") extras += star(30, 40, 4) + star(112, 34, 3.4) + star(124, 128, 3) + star(16, 118, 2.6);
+  else if(mood === "hi") extras += star(116, 54, 3.4);
+  else if(mood === "sleep") extras = `<text x="98" y="42" font-family="Georgia,serif" font-style="italic" font-size="16" fill="${WL}" opacity=".8">z</text><text x="108" y="30" font-family="Georgia,serif" font-style="italic" font-size="12" fill="${WL}" opacity=".65">z</text>`;
+  const wing = `<path d="M61 88 C48 66 22 50 13 60 C5 70 22 88 61 94Z" fill="url(#${id}w)" fill-opacity=".5" stroke="${WL}" stroke-width="1.3" stroke-linejoin="round"/>
+      <path d="M61 97 C46 98 26 108 30 120 C34 130 52 114 62 101Z" fill="${WG}" fill-opacity=".34" stroke="${WL}" stroke-width="1.2" stroke-linejoin="round"/>
+      <path d="M60 90 C44 76 30 66 17 62 M45 80 C41 72 35 66 28 61 M41 84 C31 82 23 78 15 71 M60 99 C48 104 38 112 32 118 M48 103 C46 109 42 115 38 119" stroke="${WL}" stroke-width=".8" fill="none" stroke-linecap="round" opacity=".8"/>`.replace(/\n\s+/g, "");
+  const abd = "M70 82 Q92 86 92 112 Q91 142 70 148 Q49 142 48 112 Q48 86 70 82 Z";
+  const head = "M70 38 C83 38 92 47 92 60 C92 73 82 81 70 81 C57 81 48 72 48 60 C48 47 57 38 70 38Z";
   return `<svg class="mascot" viewBox="0 0 140 160" width="${size}" height="${Math.round(size*160/140)}" role="img" aria-label="Lucciola, la mascotte">
     <defs>
-      <radialGradient id="${id}g"><stop offset="0" stop-color="#FFE7A3" stop-opacity="${.85 * lum}"/><stop offset=".45" stop-color="#FFB547" stop-opacity="${.32 * lum}"/><stop offset="1" stop-color="#FF9A30" stop-opacity="0"/></radialGradient>
-      <radialGradient id="${id}b" cx=".5" cy=".35" r=".75"><stop offset="0" stop-color="#FFF8D6"/><stop offset=".55" stop-color="#FFD36A"/><stop offset="1" stop-color="#E08A2A"/></radialGradient>
+      <radialGradient id="${id}g"><stop offset="0" stop-color="#9AF2E8" stop-opacity="${.55 * lum}"/><stop offset=".5" stop-color="#4FCFC2" stop-opacity="${.18 * lum}"/><stop offset="1" stop-color="#4FCFC2" stop-opacity="0"/></radialGradient>
+      <radialGradient id="${id}b" cx=".5" cy=".55" r=".6"><stop offset="0" stop-color="#FFF6D6"/><stop offset=".55" stop-color="#FFD79A" stop-opacity=".9"/><stop offset="1" stop-color="#FFC27A" stop-opacity="0"/></radialGradient>
+      <linearGradient id="${id}w" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7BE08E"/><stop offset="1" stop-color="${WG}"/></linearGradient>
       <clipPath id="${id}a"><path d="${abd}"/></clipPath>
+      <clipPath id="${id}h"><path d="${head}"/></clipPath>
+      <filter id="${id}n" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="1.3" numOctaves="2" seed="7" result="n"/><feColorMatrix in="n" values="0 0 0 0 1  0 0 0 0 .95  0 0 0 0 .9  0 0 0 .3 -.11" result="s"/><feComposite in="s" in2="SourceGraphic" operator="in" result="d"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="d"/></feMerge></filter>
     </defs>
-    <circle class="halo" cx="70" cy="122" r="${mood === "cheer" ? 62 : 52}" fill="url(#${id}g)"/>
-    <g fill="rgba(245,230,196,.14)" stroke="rgba(245,230,196,.55)" stroke-width="1.1">
-      <ellipse cx="44" cy="86" rx="28" ry="11" transform="rotate(-30 44 86)"/><ellipse cx="96" cy="86" rx="28" ry="11" transform="rotate(30 96 86)"/>
+    <circle class="halo" cx="70" cy="118" r="${mood === "cheer" ? 62 : 52}" fill="url(#${id}g)"/>
+    <g filter="url(#${id}n)">
+      ${wing}<g transform="translate(140 0) scale(-1 1)">${wing}</g>
+      ${extras}${arms}
+      <path d="${abd}" fill="${CO}"/>
+      <g clip-path="url(#${id}a)">
+        <path d="M82 84 Q98 110 84 150 L100 150 L100 84Z" fill="${SH}"/>
+        <ellipse cx="68" cy="132" rx="22" ry="18" fill="url(#${id}b)" opacity="${mood === "sleep" ? .55 : 1}"/>
+      </g>
+      <path d="${abd}" fill="none" stroke="${ED}" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="M63 40 Q60 28 52 22 M77 40 Q80 28 88 22" fill="none" stroke="${ED}" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M52 22 C47 21 46 15 50 14 C53 13 55 17 52 18 M88 22 C93 21 94 15 90 14 C87 13 85 17 88 18" fill="none" stroke="${MV}" stroke-width="2" stroke-linecap="round"/>
+      <path d="${head}" fill="${PE}"/>
+      <g clip-path="url(#${id}h)"><path d="M84 40 Q96 62 80 82 L98 82 L98 40Z" fill="${CO}"/></g>
+      <path d="${head}" fill="none" stroke="${ED}" stroke-width="2.4"/>
+      <path d="M56 50 Q61 43 68 42" stroke="#FFE2C8" stroke-width="2.4" stroke-linecap="round" fill="none" opacity=".75"/>
+      ${cheeks}${face}
     </g>
-    <path d="M60 92 Q44 84 22 72 M44 86 Q36 80 30 84 M80 92 Q96 84 118 72 M96 86 Q104 80 110 84" stroke="rgba(245,230,196,.35)" stroke-width=".8" fill="none"/>
-    ${extras}${arms}
-    <path d="${abd}" fill="${D}"/>
-    <g clip-path="url(#${id}a)">
-      <ellipse cx="70" cy="134" rx="30" ry="24" fill="url(#${id}b)" opacity="${mood === "sleep" ? .55 : 1}"/>
-      <path d="M48 103 Q70 109 92 103 M47 116 Q70 122 93 116" stroke="${DS}" stroke-width="1.6" fill="none" opacity=".75"/>
-    </g>
-    <path d="${abd}" fill="none" stroke="${R}" stroke-width="1.3"/>
-    <path d="M63 42 Q58 26 50 19 M77 42 Q82 26 90 19" fill="none" stroke="${D}" stroke-width="2.2" stroke-linecap="round"/>
-    <circle cx="50" cy="19" r="6" fill="#FFD58A" opacity=".25"/><circle cx="50" cy="19" r="2.8" fill="#FFE6A8"/>
-    <circle cx="90" cy="19" r="6" fill="#FFD58A" opacity=".25"/><circle cx="90" cy="19" r="2.8" fill="#FFE6A8"/>
-    <circle cx="70" cy="62" r="23" fill="${D}"/>
-    <circle cx="70" cy="62" r="23" fill="none" stroke="${R}" stroke-width="1.3"/>
-    <path d="M55 51 Q61 43 70 42" stroke="rgba(255,230,180,.35)" stroke-width="2" stroke-linecap="round" fill="none"/>
-    ${cheeks}${face}
   </svg>`;
 }
 
-
 /* ---------- palette di colori (nomi nelle lingue) ---------- */
 const PALETTES = [
-  {id:"bosco", bg:"#151B17", deep:"#A5442A", ink:"#F1E7CF"},
-  {id:"notte", bg:"#12152A", deep:"#7A4A9E", ink:"#F1E7CF"},
-  {id:"brace", bg:"#1B1411", deep:"#B0401F", ink:"#F1E7CF"},
-  {id:"pergamena", bg:"#EFE4CB", deep:"#8E3B22", ink:"#2A2016"}
+  {id:"ardesia", bg:"#172630", deep:"#B5412A", ink:"#F6EADF"},
+  {id:"abisso", bg:"#0F1F24", deep:"#B5412A", ink:"#F6EADF"},
+  {id:"malva", bg:"#221E2C", deep:"#A84468", ink:"#F6EADF"},
+  {id:"alba", bg:"#F3E9DF", deep:"#B23E28", ink:"#1E2B31"}
 ];
 function applyPalette(){
   try{
+    if(!PALETTES.some(p => p.id === S.palette)) S.palette = PALETTES[0].id;   // palette di versioni precedenti
     document.documentElement.setAttribute("data-palette", S.palette);
-    const p = PALETTES.find(p => p.id === S.palette) || PALETTES[0];
+    const p = PALETTES.find(p => p.id === S.palette);
     document.querySelector('meta[name="theme-color"]').setAttribute("content", p.bg);
   }catch(e){}
 }
