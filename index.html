@@ -89,13 +89,12 @@ button.chip:active{transform:translateY(1px)}
 .intro h2 em{font-style:italic;color:var(--glow)}
 .intro p{margin:8px 0 0;color:var(--muted)}
 .intro .mascot{animation:float 5s ease-in-out infinite}
-/* la lucciola della home si tocca: un fumettino "Ciao!" lo suggerisce, poi parla a fumetti */
+/* la lucciola della home si tocca: un puntino luminoso lo suggerisce, poi parla a fumetti */
 .mbtn{position:relative;background:none;border:0;padding:0;border-radius:20px;justify-self:end}
-.mbtn .hint{position:absolute;right:10px;top:-28px;z-index:1;background:var(--surface2);color:var(--ink);font-size:13px;font-weight:700;line-height:1;padding:7px 10px;border-radius:12px 12px 12px 3px;box-shadow:0 2px 0 var(--flat);white-space:nowrap}
-.mbtn .hint::after{content:"";position:absolute;right:-3px;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--glow);box-shadow:0 0 0 3px color-mix(in srgb, var(--glow) 25%, transparent)}
+.mbtn .tap{position:absolute;right:20px;top:8px;z-index:1;width:10px;height:10px;border-radius:50%;background:var(--glow);box-shadow:0 0 0 4px color-mix(in srgb, var(--glow) 25%, transparent)}
 .mbtn:active .mascot{transform:scale(.96)}
-@media (prefers-reduced-motion:no-preference){.mbtn .hint{animation:nudge 4s ease-in-out infinite}.mbtn .hint::after{animation:pulse 2s ease-in-out infinite}}
-@keyframes nudge{0%,70%,100%{transform:none}78%{transform:translateY(-4px) rotate(-3deg)}86%{transform:translateY(0) rotate(2deg)}}
+@media (prefers-reduced-motion:no-preference){.mbtn .tap{animation:tap 2.4s ease-in-out infinite}}
+@keyframes tap{0%,100%{box-shadow:0 0 0 3px color-mix(in srgb, var(--glow) 30%, transparent)}50%{box-shadow:0 0 0 9px color-mix(in srgb, var(--glow) 0%, transparent)}}
 .chi{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;margin:4px 0 18px}
 .chi .mascot{animation:hop .5s ease}
 .bub{position:relative;background:var(--surface);border-radius:18px;padding:14px 16px;box-shadow:0 3px 0 var(--flat);margin-top:8px}
@@ -631,7 +630,7 @@ I18N.en = {
     welcomeH:"Hi, I'm Lucciola.", welcome1:"I'm a small light for hard moments. Inside there are tools from psychology (cognitive therapy, ACT, mindfulness, DBT) to look at heavy thoughts from another angle and remind you that even the darkest moments pass.",
     welcome2:"<b>I'm not therapy</b> and I don't replace a doctor or a psychologist. If you've been struggling for a long time, talking to a professional can make a difference.",
     welcome3:"If you're in danger, call your local emergency number ({em}). The “Help” button at the top is always there.", welcomePriv:"Everything you write stays only on this phone.", welcomeOk:"Got it, let's start", welcomeLang:"Preferisci l'italiano?",
-    chiHint:"Hi!", chiAria:"Who is Lucciola?", chiQ:"Hi! Do you want to know who I am?", chiYes:"Yes, tell me", chiNo:"Not now", chiNext:"Next", chiEnd:"Thank you, Lucciola",
+    chiAria:"Who is Lucciola?", chiQ:"Hi! Do you want to know who I am?", chiYes:"Yes, tell me", chiNo:"Not now", chiNext:"Next", chiEnd:"Thank you, Lucciola",
     now:"Right now", homeH:"How do you <em>feel</em>?", homeP:"Pick whatever is closest to this moment. It doesn't need to be exact.",
     nonso:"I don't know what I feel", nonsoSub:"I'll help you figure it out with three questions", dangerH:"I'm having thoughts of hurting myself", dangerSub:"Help now, numbers and people",
     pendingL:"Your small step", pendingP:"You predicted {n}/10 relief.", pendingBtn:"Done? Tell me how it went", insightL:"This will pass", orIfOk:"or, if things are okay", logMood:"Log my mood", fillBox:"Fill the box",
@@ -895,7 +894,7 @@ I18N.it = {
     welcomeH:"Ciao, sono Lucciola.", welcome1:"Sono una piccola luce per i momenti difficili. Dentro ci sono strumenti presi dalla psicologia (terapia cognitiva, ACT, mindfulness, DBT) per guardare i pensieri pesanti da un altro punto di vista e ricordarti che anche i momenti più bui passano.",
     welcome2:"<b>Non sono una terapia</b> e non sostituisco un medico o uno psicologo. Se stai male da tanto tempo, parlarne con un professionista può cambiare le cose.",
     welcome3:"Se sei in pericolo, chiama il numero di emergenza ({em}). Il pulsante «Aiuto» in alto è sempre lì.", welcomePriv:"Tutto quello che scrivi resta solo su questo telefono.", welcomeOk:"Ho capito, iniziamo", welcomeLang:"Prefer English?",
-    chiHint:"Ciao!", chiAria:"Chi è Lucciola?", chiQ:"Ciao! Vuoi sapere chi sono?", chiYes:"Sì, dimmi", chiNo:"Non ora", chiNext:"Avanti", chiEnd:"Grazie, Lucciola",
+    chiAria:"Chi è Lucciola?", chiQ:"Ciao! Vuoi sapere chi sono?", chiYes:"Sì, dimmi", chiNo:"Non ora", chiNext:"Avanti", chiEnd:"Grazie, Lucciola",
     now:"Adesso", homeH:"Come ti <em>senti</em>?", homeP:"Scegli quello che somiglia di più a questo momento. Non serve essere precisi.",
     nonso:"Non so cosa sento", nonsoSub:"Ti aiuto a capirlo con tre domande", dangerH:"Ho pensieri di farmi del male", dangerSub:"Aiuto subito, numeri e persone",
     pendingL:"Il tuo piccolo passo", pendingP:"Avevi previsto {n}/10 di sollievo.", pendingBtn:"Fatto? Dimmi com'è andata", insightL:"Questo passerà", orIfOk:"oppure, se va abbastanza bene", logMood:"Segna l'umore", fillBox:"Riempi la scatola",
@@ -1249,7 +1248,7 @@ function home(){
     ${!S.onboarded ? benvenuto() : ""}
     <section class="intro">
       <div><span class="label">${esc(t("now"))}</span><h2>${t("homeH")}</h2><p>${esc(t("homeP"))}</p></div>
-      ${S.onboarded ? `<button class="mbtn" id="chi" aria-label="${esc(t("chiAria"))}"><span class="hint" aria-hidden="true">${esc(t("chiHint"))}</span>${mascot("hi", 84)}</button>` : mascot("hi", 84)}
+      ${S.onboarded ? `<button class="mbtn" id="chi" aria-label="${esc(t("chiAria"))}"><span class="tap" aria-hidden="true"></span>${mascot("hi", 84)}</button>` : mascot("hi", 84)}
     </section>
     <div class="moods">
       ${SIT.map(x => `<button class="mood" data-s="${x.id}">${sic(x.id)}<b>${esc(sitText(x.id).n)}</b><span>${esc(sitText(x.id).sub)}</span></button>`).join("")}
