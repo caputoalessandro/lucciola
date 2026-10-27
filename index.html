@@ -20,7 +20,7 @@
   --line:rgba(127,227,230,.26); --hair:rgba(246,234,223,.10);
   --deep:#B5412A; --on-deep:#FFF4EC; --gold:#F28A5E; --gold-ink:#F79C74; --on-gold:#2A130C; --glow:#7FE3D6; --logo:#F7B489;
   --good:#7FD6B0; --bad:#F7926E; --bad-bg:rgba(240,120,90,.15); --sos:#C2412A;
-  --coral:#F0855E; --peach:#F6B48A; --edge:#D2492E; --teal:#4FCFC2; --rim:#7FE3E6; --mauve:#A47FB4; --plant:#0D1A21; --moon:#C8D6D3; --ff:#A8F5EA; --sky:#A9CDF2; --green:#72D98F; --fuchsia:#E46AA8; --pink:#F49BBE; --amber:#F7C27A;
+  --coral:#F0855E; --peach:#F6B48A; --edge:#D2492E; --teal:#4FCFC2; --rim:#7FE3E6; --mauve:#A47FB4; --plant:#0D1A21; --moon:#C8D6D3; --ff:#A8F5EA; --green:#72D98F; --fuchsia:#E46AA8; --pink:#F49BBE; --amber:#F7C27A;
   --flat:rgba(4,10,14,.28); --tabbg:rgba(20,34,42,.95); --shadow:rgba(0,0,0,.5);
   --tex:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.9  0 0 0 0 0.95  0 0 0 0 0.95  0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --f-display:"Young Serif", "Iowan Old Style", Georgia, serif;
@@ -32,7 +32,7 @@
 :root[data-palette="malva"]{--bg:#221E2C;--surface:#2D2839;--surface2:#383246;--soft:#322C3F;--muted:#BDB1C6;--deep:#A84468;--line:rgba(196,160,214,.28);--plant:#14101C;--mauve:#C49AD6;--fuchsia:#EE7DB8;--tabbg:rgba(31,27,41,.95)}
 :root[data-palette="alba"]{--bg:#F3E9DF;--surface:#FCF6EF;--surface2:#EDE1D4;--soft:#F6EDE3;--ink:#1E2B31;--muted:#56626A;--line:rgba(30,43,49,.20);--hair:rgba(30,43,49,.10);
   --deep:#B23E28;--gold:#E8714A;--gold-ink:#A63C22;--glow:#11695F;--logo:#C2492E;--good:#2E7A5C;--bad:#B0361F;--bad-bg:rgba(176,54,31,.10);--sos:#B0361F;
-  --edge:#C9402A;--teal:#3FB5A9;--green:#4DB86C;--fuchsia:#D2589A;--pink:#F3A2C3;--amber:#F5C37E;--rim:#F8FFFD;--mauve:#9A74A8;--plant:#A9BDBC;--moon:#EBD3B6;--ff:#3FB5A9;--sky:#5B8FC4;
+  --edge:#C9402A;--teal:#3FB5A9;--green:#4DB86C;--fuchsia:#D2589A;--pink:#F3A2C3;--amber:#F5C37E;--rim:#F8FFFD;--mauve:#9A74A8;--plant:#A9BDBC;--moon:#EBD3B6;--ff:#3FB5A9;
   --flat:rgba(70,45,30,.10);--tabbg:rgba(252,246,239,.96);--shadow:rgba(60,40,20,.18);
   --tex:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.35  0 0 0 0 0.25  0 0 0 0 0.2  0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   color-scheme:light}
@@ -89,12 +89,9 @@ button.chip:active{transform:translateY(1px)}
 .intro h2 em{font-style:italic;color:var(--glow)}
 .intro p{margin:8px 0 0;color:var(--muted)}
 .intro .mascot{animation:float 5s ease-in-out infinite}
-/* la lucciola della home si tocca: una freccia blu pastello che ondeggia lo suggerisce, poi parla a fumetti */
+/* la lucciola della home si tocca e parla a fumetti */
 .mbtn{position:relative;background:none;border:0;padding:0;border-radius:20px;justify-self:end}
-.mbtn .tap{position:absolute;left:-12px;bottom:-26px;width:58px;height:50px;overflow:visible;color:var(--sky);transform:rotate(-28deg)}
 .mbtn:active .mascot{transform:scale(.96)}
-@media (prefers-reduced-motion:no-preference){.mbtn .tap{animation:tap 2.6s ease-in-out infinite}}
-@keyframes tap{0%,100%{transform:rotate(-28deg)}50%{transform:rotate(-28deg) translate(5px,-4px)}}
 .chi{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;margin:4px 0 18px}
 .chi .mascot{animation:hop .5s ease}
 .bub{position:relative;background:var(--surface);border-radius:18px;padding:14px 16px;box-shadow:0 3px 0 var(--flat);margin-top:8px}
@@ -1248,7 +1245,7 @@ function home(){
     ${!S.onboarded ? benvenuto() : ""}
     <section class="intro">
       <div><span class="label">${esc(t("now"))}</span><h2>${t("homeH")}</h2><p>${esc(t("homeP"))}</p></div>
-      ${S.onboarded ? `<button class="mbtn" id="chi" aria-label="${esc(t("chiAria"))}">${mascot("hi", 84)}<svg class="tap" viewBox="0 0 70 60" aria-hidden="true"><path d="M6 54 C10 34 24 22 50 18 M40 10 L52 17.5 L43 28" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>` : mascot("hi", 84)}
+      ${S.onboarded ? `<button class="mbtn" id="chi" aria-label="${esc(t("chiAria"))}">${mascot("hi", 84)}</button>` : mascot("hi", 84)}
     </section>
     <div class="moods">
       ${SIT.map(x => `<button class="mood" data-s="${x.id}">${sic(x.id)}<b>${esc(sitText(x.id).n)}</b><span>${esc(sitText(x.id).sub)}</span></button>`).join("")}
