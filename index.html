@@ -1,0 +1,1638 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lucciola</title>
+<meta name="description" content="Lucciola: una piccola luce per i momenti difficili. Strumenti da CBT, ACT, mindfulness e DBT, diario dell'umore e scatola della speranza.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="theme-color" content="#151B17">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Lucciola">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500;1,9..144,600&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Stile fiabesco ma sobrio: bosco di notte, luce calda e dorata, foglie color ruggine, linee sottili */
+:root{
+  --bg:#151B17; --surface:#212A23; --surface2:#2A342C; --soft:#263028; --ink:#F1E7CF; --muted:#BCB193;
+  --line:rgba(226,180,100,.32); --hair:rgba(241,231,207,.12);
+  --deep:#A5442A; --on-deep:#FFF6E6; --gold:#E3AE4F; --gold-ink:#E3AE4F; --on-gold:#17140F; --glow:#FFD58A;
+  --good:#9CCB6A; --bad:#E5775C; --bad-bg:rgba(190,70,40,.20); --sos:#B5391F;
+  --leaf:#1D2A1F; --leaf2:#4A2217; --vein:rgba(227,174,79,.16); --ff:#FFD98A;
+  --halo1:rgba(232,160,70,.17); --halo2:rgba(120,165,85,.11); --tabbg:rgba(17,22,18,.94); --shadow:rgba(0,0,0,.55);
+  --tex:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cg stroke='%23E8DDBF' stroke-opacity='.045' stroke-width='1' fill='none'%3E%3Cpath d='M10 40 L70 18M30 90 L95 70M120 30 L190 6M150 120 L230 95M8 170 L80 150M100 200 L170 176M180 210 L238 190M60 120 L118 104M200 60 L236 48M130 160 L176 146'/%3E%3C/g%3E%3C/svg%3E");
+  --f-display:"Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  color-scheme:dark;
+}
+/* palette selezionabili: tre notti e una pergamena per il giorno (contrasto verificato) */
+:root[data-palette="notte"]{--bg:#12152A;--surface:#1C2140;--surface2:#252B50;--soft:#20264A;--muted:#B6B4D2;--deep:#7A4A9E;--leaf:#191E3A;--leaf2:#3A2243;--halo1:rgba(160,160,255,.13);--halo2:rgba(120,90,170,.12);--tabbg:rgba(16,19,38,.94)}
+:root[data-palette="brace"]{--bg:#1B1411;--surface:#2A1E19;--surface2:#33251F;--soft:#2F221C;--muted:#CDB194;--deep:#B0401F;--leaf:#28190F;--leaf2:#5A2414;--halo1:rgba(240,120,50,.19);--halo2:rgba(170,90,40,.12);--tabbg:rgba(24,17,14,.94)}
+:root[data-palette="pergamena"]{--bg:#EFE4CB;--surface:#FBF4E4;--surface2:#F4E9D2;--soft:#F5EAD2;--ink:#2A2016;--muted:#62502F;--line:rgba(140,95,30,.38);--hair:rgba(42,32,22,.14);
+  --deep:#8E3B22;--gold:#C08A2A;--gold-ink:#7A5110;--glow:#C88A1E;--good:#3F6E1E;--bad:#A8341D;--bad-bg:rgba(176,52,31,.12);--sos:#A8341D;
+  --leaf:#DFD0AA;--leaf2:#DDBB9C;--vein:rgba(140,95,30,.18);--ff:#E0A030;--halo1:rgba(227,166,59,.28);--halo2:rgba(120,150,80,.14);--tabbg:rgba(251,244,228,.96);--shadow:rgba(90,60,20,.22);
+  --tex:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cg stroke='%235A4020' stroke-opacity='.06' stroke-width='1' fill='none'%3E%3Cpath d='M10 40 L70 18M30 90 L95 70M120 30 L190 6M150 120 L230 95M8 170 L80 150M100 200 L170 176M180 210 L238 190M60 120 L118 104M200 60 L236 48M130 160 L176 146'/%3E%3C/g%3E%3C/svg%3E");
+  color-scheme:light}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background-color:var(--bg);background-image:radial-gradient(120% 60% at 85% -5%, var(--halo1), transparent 60%),radial-gradient(90% 50% at -10% 105%, var(--halo2), transparent 60%),var(--tex);
+  color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  -webkit-tap-highlight-color:transparent}
+#app{position:relative;z-index:1;max-width:560px;margin:0 auto;padding-block:max(20px,env(safe-area-inset-top,0px)) 120px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,a:focus-visible,textarea:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;text-wrap:balance;margin:0;line-height:1.12;letter-spacing:-.005em}
+h2{overflow-wrap:anywhere;hyphens:auto}
+h3{font-size:20px}
+p{margin:0 0 10px}
+a{color:inherit}
+b{font-weight:700}
+.label{font-family:var(--f-body);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-ink)}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.pop{animation:pop .35s ease}
+@keyframes pop{from{transform:translateY(6px);opacity:0}to{transform:none;opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes hop{0%{transform:translateY(10px);opacity:.4}100%{transform:none;opacity:1}}
+
+/* il bosco sullo sfondo: foglie scure e lucciole che si muovono piano */
+.forest{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.forest svg{position:absolute}
+.forest .l1{left:-70px;top:-40px;width:260px;transform:rotate(18deg)}
+.forest .l2{right:-90px;bottom:60px;width:300px;transform:rotate(200deg)}
+.forest .l3{right:-30px;top:140px;width:150px;transform:rotate(130deg);opacity:.7}
+.ff{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--ff);box-shadow:0 0 10px 3px color-mix(in srgb, var(--ff) 55%, transparent);opacity:.0;animation:drift 14s ease-in-out infinite, blink 5s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translate(0,0)}33%{transform:translate(18px,-26px)}66%{transform:translate(-14px,-10px)}}
+@keyframes blink{0%,100%{opacity:.1}45%{opacity:.85}60%{opacity:.6}}
+
+/* barra superiore */
+.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;row-gap:12px;margin-bottom:20px}
+.brand{display:flex;align-items:center;gap:6px}
+.logo{font-family:var(--f-display);font-style:italic;font-weight:600;font-size:30px;letter-spacing:-.01em;color:var(--glow);text-shadow:0 0 22px color-mix(in srgb, var(--glow) 40%, transparent);white-space:nowrap}
+.stats{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:14px;font-weight:700;color:var(--ink)}
+button.chip:active{transform:translateY(1px)}
+.chip svg{width:16px;height:16px}
+.chip.sos{background:var(--bad-bg);color:var(--bad);border-color:color-mix(in srgb, var(--bad) 60%, transparent)}
+.icon-btn{padding:7px 9px}
+
+/* prima pagina: come stai */
+.intro{display:grid;grid-template-columns:1fr auto;align-items:end;gap:6px;margin:4px 0 18px}
+.intro h2{font-size:36px;font-weight:500}
+.intro h2 em{font-style:italic;color:var(--glow)}
+.intro p{margin:8px 0 0;color:var(--muted)}
+.intro .mascot{animation:float 5s ease-in-out infinite}
+.moods{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.mood{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;background:var(--surface);border:1px solid var(--hair);border-radius:18px;padding:14px 14px 13px;min-height:122px;position:relative;overflow:hidden;box-shadow:0 14px 26px -20px var(--shadow);transition:border-color .2s, transform .15s}
+.mood::before{content:"";position:absolute;right:-30px;top:-30px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle, color-mix(in srgb, var(--glow) 18%, transparent), transparent 70%)}
+.mood:active{transform:scale(.98);border-color:var(--line)}
+.mood svg{width:30px;height:30px;color:var(--gold)}
+.mood b{font-family:var(--f-display);font-size:19px;font-weight:600;line-height:1.1}
+.mood span{font-size:13.5px;color:var(--muted);line-height:1.3}
+.mood.wide{grid-column:1/-1;flex-direction:row;align-items:center;gap:14px;min-height:0}
+.mood.wide .t{display:flex;flex-direction:column;gap:2px}
+.danger{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--bad-bg);border:1px solid color-mix(in srgb, var(--bad) 55%, transparent);border-radius:16px;padding:13px 14px;margin:6px 0 4px;color:var(--ink)}
+.danger svg{width:22px;height:22px;color:var(--bad);flex:none}
+.danger b{display:block;font-size:16px}
+.danger span{font-size:13.5px;color:var(--muted)}
+.divider{display:flex;align-items:center;gap:12px;margin:26px 0 14px;color:var(--muted);font-family:var(--f-display);font-style:italic;font-size:17px}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* pulsanti */
+.btn{border:1px solid var(--line);border-radius:16px;padding:15px 16px;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-align:center;text-decoration:none;line-height:1.25;transition:transform .12s}
+.btn-main{background:var(--gold);color:var(--on-gold);border-color:transparent;box-shadow:0 10px 26px -14px var(--gold)}
+.btn-deep{background:var(--deep);color:var(--on-deep);border-color:rgba(255,215,160,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 12px 26px -16px var(--deep)}
+.btn-ghost{background:var(--surface);color:var(--ink)}
+.btn-sos{background:var(--sos);color:#FFF6EE;border-color:transparent}
+.btn:active{transform:translateY(1px) scale(.99)}
+.btn:disabled{opacity:.4}
+.btn small{display:block;font-weight:400;font-size:13px;opacity:.88}
+.btn .stackt{display:flex;flex-direction:column;align-items:center}
+.btns{display:grid;gap:12px}
+.btns2{display:grid;grid-template-columns:1fr 1.6fr;gap:10px;margin-top:18px}
+.link{background:none;border:0;padding:6px 0;font-weight:700;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px;color:var(--gold-ink)}
+
+/* elenco */
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:24px 0 10px;flex-wrap:wrap}
+.sec-h h3{font-weight:500;font-style:italic}
+.list{display:grid;gap:10px}
+.row{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:12px;width:100%;text-align:left;background:var(--surface);border:1px solid var(--hair);border-radius:18px;box-shadow:0 14px 26px -20px var(--shadow);padding:11px 14px;color:var(--ink)}
+.row:active{transform:scale(.99);border-color:var(--line)}
+.num{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:20px;border:1px solid var(--line);background:var(--surface2);filter:sepia(.3) saturate(.8)}
+.row .t{min-width:0}
+.row b{font-family:var(--f-display);font-weight:600;font-size:18px;display:block;line-height:1.2}
+.row .sub{color:var(--muted);font-size:14px;display:block;line-height:1.3}
+.row .go{font-size:22px;color:var(--gold)}
+.foot{margin-top:28px;color:var(--muted);font-size:13px;display:grid;gap:6px}
+
+/* dettaglio */
+.back{background:none;border:0;padding:8px 0;color:var(--gold-ink);font-weight:700;display:flex;align-items:center;gap:6px;font-size:15px;margin-bottom:10px}
+.page-h{margin-bottom:18px}
+.page-h h2{font-size:31px;font-weight:500;margin-top:6px}
+.page-h p{margin:8px 0 0;color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--hair);border-radius:20px;box-shadow:0 16px 30px -22px var(--shadow);padding:16px 17px;margin-bottom:16px}
+.card.soft{background:var(--soft);border-color:var(--line)}
+.card h3{margin-bottom:8px}
+.card > :last-child{margin-bottom:0}
+.react{display:flex;justify-content:center;margin:4px 0 10px}
+.react .mascot{animation:hop .5s ease}
+.meter{height:5px;border-radius:3px;background:var(--surface2);overflow:hidden;margin:8px 0 18px}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--glow));box-shadow:0 0 10px var(--glow)}
+
+/* campi */
+textarea,input[type=text],input[type=tel]{width:100%;font:inherit;font-size:17px;color:var(--ink);background:var(--surface2);border:1px solid var(--line);border-radius:14px;padding:12px 14px;resize:vertical}
+textarea::placeholder,input::placeholder{color:var(--muted);opacity:.75}
+textarea{min-height:110px}
+.field{display:grid;gap:6px;margin-bottom:16px}
+.field > span{font-weight:700}
+.hint{font-size:14px;color:var(--muted)}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.opt{border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);padding:8px 14px;font-size:15px;font-weight:700}
+.opt.on{background:var(--gold);color:var(--on-gold);border-color:transparent}
+.opt:active{transform:translateY(1px)}
+.choice{display:grid;gap:10px;margin-bottom:16px}
+.choice .row{grid-template-columns:44px 1fr}
+.choice .row.on{outline:2px solid var(--gold);outline-offset:2px;background:var(--soft)}
+.range{display:grid;gap:4px;margin-bottom:16px}
+.range .val{font-family:var(--f-display);font-size:42px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums;color:var(--glow)}
+.range .val small{font-family:var(--f-body);font-size:16px;font-weight:700;color:var(--muted);margin-left:8px}
+.range .ends{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:4px;background:var(--surface2);border:1px solid var(--line);margin:14px 0 4px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 40% 35%, #FFF3CF, var(--glow) 45%, var(--gold));border:0;box-shadow:0 0 16px var(--glow)}
+input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:var(--glow);border:0;box-shadow:0 0 16px var(--glow)}
+
+/* avviso di rischio */
+.risk{display:none;background:var(--bad-bg);border:1px solid var(--bad);border-radius:14px;padding:12px 14px;margin-bottom:16px}
+.risk.on{display:block}
+.risk b{display:block;margin-bottom:6px}
+
+/* domande che girano */
+.qcard{background:transparent;border:1px dashed var(--line);border-radius:14px;padding:12px 14px;margin-bottom:12px}
+.qcard p{margin:0 0 6px;font-weight:700}
+
+/* prima e dopo */
+.bars{display:grid;gap:12px}
+.bar{display:grid;grid-template-columns:70px 1fr 44px;align-items:center;gap:10px;font-size:14px}
+.bar .tr{height:12px;border:1px solid var(--hair);border-radius:6px;background:var(--surface2);overflow:hidden}
+.bar .tr i{display:block;height:100%;background:var(--muted);opacity:.7}
+.bar .tr i.after{background:linear-gradient(90deg,var(--gold),var(--glow));opacity:1}
+.bar b{text-align:right;font-variant-numeric:tabular-nums}
+
+/* respiro */
+.breath{position:relative;height:270px;display:grid;place-items:center;margin:8px 0 14px}
+.breath .ring{width:220px;height:220px;border-radius:50%;border:1px dashed var(--line);position:absolute}
+.breath .ball{width:100px;height:100px;border-radius:50%;background:radial-gradient(circle at 42% 38%, #FFF6D8 0%, #FFD58A 50%, #E3AE4F 100%);box-shadow:0 0 50px 12px rgba(255,200,110,.30);transform:scale(.8);transition-property:transform;transition-timing-function:ease-in-out}
+.breath .say{position:absolute;bottom:0;font-family:var(--f-display);font-style:italic;font-weight:500;font-size:26px;text-align:center;color:var(--ink)}
+.timer{font-size:15px;text-align:center;color:var(--muted);margin-bottom:12px;font-variant-numeric:tabular-nums}
+
+/* lente: cielo */
+.sky{position:relative;height:210px;border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:14px;
+  background:radial-gradient(1.5px 1.5px at 20% 30%, #FFF8E0 50%, transparent 51%),radial-gradient(1.5px 1.5px at 70% 18%, #FFF8E0 50%, transparent 51%),radial-gradient(1px 1px at 45% 70%, #FFF8E0 50%, transparent 51%),radial-gradient(1px 1px at 85% 60%, #FFF8E0 50%, transparent 51%),radial-gradient(1.5px 1.5px at 10% 80%, #FFF8E0 50%, transparent 51%),linear-gradient(#0E1430,#283462)}
+.cloud{position:absolute;left:8%;right:8%;top:44px;background:rgba(246,238,220,.94);color:#1B1A16;border-radius:60px;padding:16px 18px;text-align:center;font-weight:700;box-shadow:0 0 30px rgba(246,238,220,.25);transition:transform 4s ease-in,opacity 4s ease-in;overflow-wrap:anywhere}
+.cloud.go{transform:translateX(120%) translateY(-30px);opacity:0}
+.sun{position:absolute;left:16px;right:16px;bottom:14px;font-family:var(--f-display);font-style:italic;font-size:17px;color:#FFE3A3;text-align:center}
+/* lente: voce buffa */
+.silly{font-family:var(--f-display);font-size:25px;font-weight:600;line-height:1.5;text-align:center;padding:18px 10px;border:1px solid var(--line);border-radius:18px;background:var(--surface2);color:var(--glow);margin-bottom:12px;overflow-wrap:anywhere}
+.silly .w{display:inline-block;white-space:nowrap}
+.silly .c{display:inline-block}
+.silly.onde .c{animation:wave 1.2s ease-in-out infinite}
+.silly.lento .c{animation:slow 3s ease-in-out infinite}
+.silly.minuscolo{font-size:13px}
+@keyframes wave{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes slow{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.6)}}
+.quote{font-family:var(--f-display);font-style:italic;font-size:20px;font-weight:500;background:var(--soft);border-left:3px solid var(--gold);padding:10px 14px;border-radius:0 12px 12px 0;margin-bottom:12px;overflow-wrap:anywhere}
+
+/* puntini da toccare (getta l'ancora) */
+.dots{display:flex;justify-content:center;gap:10px;margin:10px 0 16px;flex-wrap:wrap}
+.dot{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--surface2);color:var(--ink);font-size:16px}
+.dot.on{background:radial-gradient(circle at 42% 38%, #FFF6D8, var(--glow) 60%);color:#1B1A16;box-shadow:0 0 18px color-mix(in srgb, var(--glow) 60%, transparent);border-color:transparent}
+
+/* diario */
+.chart{width:100%;height:auto;display:block}
+.chart .gl{stroke:var(--hair);stroke-width:1}
+.chart text{fill:var(--muted);font-size:10px;font-family:var(--f-body)}
+.chart .ln{stroke:var(--gold);stroke-width:2.5;fill:none;stroke-linejoin:round;stroke-linecap:round}
+.chart .pt{fill:var(--glow);stroke:var(--surface);stroke-width:2}
+.insight{background:linear-gradient(135deg, color-mix(in srgb, var(--gold) 16%, transparent), transparent);border:1px solid var(--gold);border-radius:20px;padding:16px 17px;margin-bottom:16px}
+.insight b{color:var(--glow)}
+
+/* scatola */
+.boxcard{background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:0 0 40px -18px var(--glow);padding:22px;margin-bottom:16px;text-align:center}
+.boxcard img{max-width:100%;max-height:300px;border-radius:12px;display:block;margin:0 auto 12px}
+.boxcard .big{font-family:var(--f-display);font-style:italic;font-size:25px;font-weight:500;line-height:1.3;overflow-wrap:anywhere}
+.thumb{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);object-fit:cover}
+.del{background:none;border:0;font-size:20px;padding:6px;color:var(--muted)}
+.task{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--hair)}
+.task:last-child{border-bottom:0}
+.task input{width:24px;height:24px;accent-color:var(--gold)}
+.task.done span{text-decoration:line-through;color:var(--muted)}
+
+/* impostazioni */
+.pals{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.pal{display:flex;flex-direction:column;gap:8px;text-align:left;background:var(--surface);border:1px solid var(--hair);border-radius:16px;padding:10px;color:var(--ink)}
+.pal.on{outline:2px solid var(--gold);outline-offset:2px}
+.sw{position:relative;height:62px;border-radius:10px;border:1px solid var(--line);display:flex;align-items:center;padding:0 12px;overflow:hidden}
+.sw i{position:absolute;right:0;top:0;bottom:0;width:34%}
+.sw b{font-family:var(--f-display);font-style:italic;font-size:24px;position:relative}
+.pt2{display:flex;flex-direction:column;min-width:0}
+.pt2 b{font-family:var(--f-display);font-size:17px}
+.pt2 span{color:var(--muted);font-size:13px}
+.stack{display:grid;gap:12px;margin-bottom:12px}
+.msg{min-height:1.5em;color:var(--muted);font-size:14px}
+
+/* barra delle sezioni */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:7;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:var(--tabbg);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid var(--line);
+  padding:8px max(10px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px))}
+.tab{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:1px solid transparent;border-radius:14px;padding:6px 2px 5px;font-size:12px;font-weight:700;color:var(--muted);max-width:150px;width:100%;justify-self:center}
+.tab.on{color:var(--glow);background:var(--surface2);border-color:var(--line)}
+@media (prefers-reduced-motion:no-preference){.mascot .halo{animation:pulse 3.4s ease-in-out infinite}}
+@keyframes pulse{0%,100%{opacity:.75}50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.ff{opacity:.35}}
+</style>
+</head><body>
+<div class="forest" aria-hidden="true"><svg class="l1" viewBox="0 0 240 120"><path d="M0 60 C40 0 150 -10 240 50 C160 110 50 120 0 60Z" fill="var(--leaf)"/><path d="M0 60 C80 52 160 50 240 50 M60 57 C80 40 100 30 120 28 M60 57 C82 72 104 82 126 86 M130 53 C150 38 170 30 190 30 M130 53 C152 66 172 74 194 76" stroke="var(--vein)" stroke-width="1.5" fill="none"/></svg><svg class="l2" viewBox="0 0 240 120"><path d="M0 60 C40 0 150 -10 240 50 C160 110 50 120 0 60Z" fill="var(--leaf2)"/><path d="M0 60 C80 52 160 50 240 50 M60 57 C80 40 100 30 120 28 M60 57 C82 72 104 82 126 86 M130 53 C150 38 170 30 190 30 M130 53 C152 66 172 74 194 76" stroke="var(--vein)" stroke-width="1.5" fill="none"/></svg><svg class="l3" viewBox="0 0 240 120"><path d="M0 60 C40 0 150 -10 240 50 C160 110 50 120 0 60Z" fill="var(--leaf)"/><path d="M0 60 C80 52 160 50 240 50 M60 57 C80 40 100 30 120 28 M60 57 C82 72 104 82 126 86 M130 53 C150 38 170 30 190 30 M130 53 C152 66 172 74 194 76" stroke="var(--vein)" stroke-width="1.5" fill="none"/></svg><i class="ff" style="left:12%;top:22%;animation-delay:0s,1s"></i><i class="ff" style="left:80%;top:14%;animation-delay:3s,0s"></i><i class="ff" style="left:66%;top:48%;animation-delay:6s,2.5s"></i><i class="ff" style="left:24%;top:64%;animation-delay:2s,4s"></i><i class="ff" style="left:88%;top:72%;animation-delay:8s,1.5s"></i><i class="ff" style="left:42%;top:86%;animation-delay:4s,3s"></i><i class="ff" style="left:52%;top:30%;animation-delay:10s,0.5s"></i></div>
+<main id="app"></main>
+<script>
+(function(){
+/* =====================================================================
+   CONTENUTI
+   Le tecniche vengono dai libri di riferimento (vedi FONTI); i testi sono
+   scritti da zero: dai libri si prendono solo i metodi, mai le frasi.
+   ===================================================================== */
+
+// Numeri di aiuto: verificali periodicamente (ultimo controllo: ottobre 2026)
+const HELP = [
+  {n:"Emergenza · 112", sub:"Numero unico, sempre attivo. Se sei in pericolo adesso.", tel:"112", sos:true},
+  {n:"Telefono Amico Italia", sub:"02 2327 2327 · ogni giorno, 10–24", tel:"0223272327"},
+  {n:"Samaritans Onlus", sub:"06 77208977 · ogni giorno, 13–22", tel:"0677208977"},
+  {n:"Telefono Azzurro", sub:"19696 · bambini e ragazzi, 24 ore su 24", tel:"19696"}
+];
+
+const FONTI = [
+  {b:"David D. Burns, Feeling Good", s:"CBT", u:"Le 10 distorsioni cognitive, la tecnica delle tre colonne (pensiero, distorsione, risposta), il doppio standard, il foglio di previsione del piacere, i piccoli passi contro il «non fare niente», il capitolo sulla disperazione."},
+  {b:"D. Greenberger e C. A. Padesky, Mind Over Mood (2ª ed.)", s:"CBT", u:"Il registro dei pensieri in 7 colonne, il «pensiero caldo», le domande per trovare prove contrarie e un pensiero equilibrato, la misura in percentuale di emozioni e convinzioni."},
+  {b:"Russ Harris, La trappola della felicità", s:"ACT", u:"La defusione (i pensieri sono storie, «Grazie, mente», le voci buffe, dare un nome alla storia), l'espansione in 4 passi, «getta l'ancora» per le crisi, i valori nelle 4 aree della vita."},
+  {b:"Williams, Teasdale, Segal, Kabat-Zinn, The Mindful Way through Depression", s:"MBCT", u:"Lo spazio di respiro in 3 passi, i pensieri come eventi mentali, le «porte» dopo lo spazio di respiro, le domande di gentilezza verso se stessi, piacere e padronanza."},
+  {b:"Marsha M. Linehan, Manuale DBT", s:"DBT", u:"Le abilità di sopravvivenza alla crisi: STOP, TIP (con le precauzioni), calmarsi con i cinque sensi, migliorare il momento."},
+  {b:"Viktor E. Frankl, Uno psicologo nei Lager", s:"Logoterapia", u:"Il rovesciamento della domanda sul senso, le vie del senso (fare, amare, l'atteggiamento davanti a ciò che non si può cambiare), «qualcuno o qualcosa che ti aspetta»."}
+];
+
+// Le 10 distorsioni (Burns). Spiegazioni ed esempi originali.
+const TRAPPOLE = [
+  {id:"bn", n:"Tutto o niente", e:"⚫", d:"Vedi le cose in bianco o nero: se non è perfetto, è un fallimento.", x:"«Ho sbagliato una domanda, l'esame è andato malissimo.»", q:"C'è una via di mezzo tra perfetto e disastro?"},
+  {id:"gen", n:"Generalizzare", e:"♾️", d:"Un fatto negativo diventa una regola: sempre, mai, tutti, nessuno.", x:"«Non mi ha risposto. Nessuno mi cerca mai.»", q:"Davvero sempre? Trova anche una sola eccezione."},
+  {id:"fil", n:"Filtro mentale", e:"🔍", d:"Ti fissi su un dettaglio negativo e il resto sparisce.", x:"«Dieci complimenti e una critica: penso solo alla critica.»", q:"Cosa stai lasciando fuori dal quadro?"},
+  {id:"pos", n:"Il bello non conta", e:"🙈", d:"Le cose positive vengono scartate: «è stata fortuna», «lo fanno tutti».", x:"«Mi hanno fatto i complimenti, ma lo dicono per gentilezza.»", q:"Se capitasse a un amico, diresti anche a lui che non conta?"},
+  {id:"conc", n:"Conclusioni affrettate", e:"🔮", d:"Leggi nel pensiero degli altri o prevedi il futuro, sempre in negativo.", x:"«Pensa che io sia una noia.» «Andrà male di sicuro.»", q:"Che prove hai? Ci sono altre spiegazioni possibili?"},
+  {id:"ing", n:"Ingigantire", e:"🔭", d:"Gli errori diventano catastrofi e i tuoi pregi diventano piccolissimi.", x:"«Se sbaglio questa presentazione la mia carriera è finita.»", q:"Quanto conterà tra un mese? E tra un anno?"},
+  {id:"emo", n:"Ragionamento emotivo", e:"🌧️", d:"«Mi sento così, quindi è vero.» Ma le emozioni non sono fatti.", x:"«Mi sento un peso per tutti, quindi lo sono.»", q:"Se non sentissi questa emozione, cosa diresti dei fatti?"},
+  {id:"dov", n:"Dovrei, devo", e:"☝️", d:"Regole rigide su come dovresti essere tu o gli altri. Portano colpa e frustrazione.", x:"«Dovrei già stare meglio.» «Non avrei dovuto dirlo.»", q:"Cosa cambia se dici «mi piacerebbe» invece di «dovrei»?"},
+  {id:"eti", n:"Etichette", e:"🏷️", d:"Invece di «ho sbagliato questo», ti metti un'etichetta su tutta la persona.", x:"«Sono un fallimento.» «Sono un disastro.»", q:"Una persona è molto di più di un'azione. Cosa hai fatto, concretamente?"},
+  {id:"col", n:"È colpa mia", e:"🎯", d:"Ti prendi la responsabilità di cose che non dipendono (solo) da te.", x:"«Se è di cattivo umore è per colpa mia.»", q:"Quali altri fattori hanno contribuito?"}
+];
+
+const EMOZIONI = ["tristezza","ansia","paura","rabbia","colpa","vergogna","vuoto","solitudine","stanchezza","delusione","calma","gratitudine","speranza","gioia"];
+
+// domande per trovare prove contrarie (ispirate a Mind Over Mood, riscritte)
+const CONTRO_Q = [
+  "Ti è mai capitato che questo pensiero non fosse vero, anche solo una volta?",
+  "Se una persona che ami pensasse questo di sé, cosa le faresti notare?",
+  "Cosa direbbe di questo pensiero qualcuno che ti conosce bene e ti vuole bene?",
+  "C'è qualche piccolo fatto che non torna e che stai mettendo da parte?",
+  "Quali tuoi punti di forza stai ignorando in questo momento?",
+  "Ci sei già passato o passata? Com'è andata, alla fine?",
+  "Se il pensiero fosse vero, quale sarebbe l'esito più probabile (non il peggiore)?"
+];
+
+// LE LENTI: lo stesso pensiero visto da punti di vista diversi
+const LENTI = [
+  {id:"narratore", e:"📖", n:"Il narratore", s:"ACT · Harris", k:"narratore"},
+  {id:"amico", e:"🤝", n:"L'amico", s:"CBT · Burns, il doppio standard", q:"Se una persona a cui vuoi bene ti confidasse questo stesso pensiero su di sé, cosa le risponderesti? Scrivilo come se parlassi a lei.", ph:"Le direi che…"},
+  {id:"scienziato", e:"🔬", n:"Lo scienziato", s:"CBT · Mind Over Mood", q:"Guarda solo i fatti, come farebbe un ricercatore. Quali prove lo confermano? Quali no? Un giudice accetterebbe queste prove?", ph:"I fatti sono…"},
+  {id:"buffa", e:"🎈", n:"La voce buffa", s:"ACT · Harris", k:"buffa"},
+  {id:"cielo", e:"☁️", n:"Il cielo", s:"MBCT · pensieri come eventi mentali", k:"cielo"},
+  {id:"futuro", e:"⏳", n:"Tu tra dieci anni", s:"CBT · prospettiva nel tempo", q:"Immagina la persona che sarai tra dieci anni, che ripensa a questo giorno. Cosa ti direbbe? Quanto peserà questo pensiero, allora?", ph:"Mi direbbe…"},
+  {id:"cura", e:"💛", n:"Chi ti vuole bene", s:"Compassione · MBCT", q:"Pensa a qualcuno che ti vuole bene davvero (anche una persona che non c'è più, o un personaggio). Se sapesse che stai pensando questo, cosa ti direbbe?", ph:"Mi direbbe…"},
+  {id:"senso", e:"🧭", n:"Il senso", s:"Logoterapia · Frankl", q:"Frankl proponeva di rovesciare la domanda: non «cosa mi aspetto io dalla vita?», ma «cosa si aspetta la vita da me, adesso?». C'è una persona, un compito o una cosa piccola che ha bisogno di te oggi?", ph:"Oggi c'è…"}
+];
+
+// SITUAZIONI → strumenti consigliati (la "mappa" dalla persona alla tecnica). Sono i pulsanti della prima pagina.
+const SITUAZIONI = [
+  {id:"ansia", n:"Ansia", sub:"Ho paura che succeda qualcosa", tools:["respiro","smonta","espansione"],
+   v:"L'ansia cerca di proteggerti immaginando il peggio. Ha senso che tu la senta. Prima calmiamo il corpo, poi guardiamo il pensiero con calma."},
+  {id:"loop", n:"Rimugino", sub:"La testa gira sempre in tondo", tools:["spazio3","lenti","ancora"],
+   v:"Rimuginare dà l'impressione di risolvere qualcosa, ma di solito gira a vuoto. Non devi trovare la risposta adesso: proviamo a scendere dal treno dei pensieri per un momento."},
+  {id:"dolore", n:"Tristezza", sub:"Mi pesa il cuore", tools:["espansione","gentilezza","sensi"],
+   v:"Ci sono dolori che hanno senso: dicono che qualcosa per te contava. Non devi farli sparire. Possiamo provare a fargli spazio e a prenderci cura di te mentre ci sono."},
+  {id:"vuoto", n:"Senza forze", sub:"Non riesco a fare nulla", tools:["passo","pezzi","gentilezza"],
+   v:"Quando l'umore è basso la motivazione non arriva prima di agire: arriva dopo. Non serve un'impresa, basta un passo piccolissimo."},
+  {id:"giudizio", n:"Mi giudico", sub:"Pensieri duri su di me", tools:["lenti","smonta","trappole"],
+   v:"La voce critica sembra la verità, ma è solo una parte della storia. Non devi crederle e non devi nemmeno combatterla: proviamo a guardarla da un'altra parte."},
+  {id:"onda", n:"Un'onda forte", sub:"Panico, emozione fortissima", tools:["ancora","respiro","tip","stop"],
+   v:"Quando l'emozione è così forte non serve ragionare: prima si torna con i piedi per terra. Le onde salgono, arrivano a un picco e poi scendono. Anche questa."},
+  {id:"rabbia", n:"Rabbia", sub:"Sento che sto per esplodere", tools:["stop","tip","respiro","smonta"],
+   v:"La rabbia dice che qualcosa ti è sembrato ingiusto o ti ha ferito. È un'emozione legittima: il punto non è spegnerla, ma non lasciare che decida al posto tuo. Prima si rallenta, poi si sceglie."},
+  {id:"senso", n:"Smarrimento", sub:"Niente sembra avere senso", tools:["senso","valori","scatola"],
+   v:"Quando tutto sembra senza senso, la domanda è pesante. Non serve una risposta per tutta la vita: basta trovare qualcosa che conta oggi, anche piccola."}
+];
+// icone a tratto sottile per i pulsanti della prima pagina
+const SIC = {
+  ansia:'<path d="M2.5 12h4l2-4.5 3 10 3-8.5 2 3h5"/>',
+  loop:'<path d="M12.3 12.2c.6-.6 1.6 0 1.3 1-.4 1.4-2.5 1.6-3.4.4-1.3-1.6-.2-4.2 2-4.4 3-.3 4.8 2.8 3.6 5.4-1.4 3.1-5.6 3.9-8.1 1.7-3-2.6-2.4-7.6 1.1-9.4 3.9-2 8.8.3 9.7 4.6"/>',
+  dolore:'<path d="M12 3.5c2.8 4.2 5.8 7.3 5.8 10.7a5.8 5.8 0 0 1-11.6 0c0-3.4 3-6.5 5.8-10.7Z"/><path d="M9.3 14.6a2.8 2.8 0 0 0 2.4 2.6"/>',
+  vuoto:'<path d="M9 11h6v9.5H9z"/><path d="M12 11V8.6"/><path d="M12 3.6c1.1 1.2 1.4 2.4 0 3.6-1.4-1.2-1.1-2.4 0-3.6Z" opacity=".55"/><path d="M7 20.5h10"/>',
+  giudizio:'<ellipse cx="12" cy="9.5" rx="5" ry="6"/><path d="M12 15.5v5M9 20.5h6"/><path d="M10 7.2a2.6 2.6 0 0 1 2-1.5"/>',
+  onda:'<path d="M2.5 14c2.2 0 2.6-4.5 5.6-4.5 3.3 0 2.6 6 6.1 6 2.5 0 2.4-3.2 4.3-3.2 1 0 1.8.6 2.5 1.4"/><path d="M2.5 19c2.4 0 3-2 5-2s2.6 2 5 2 3-2 5-2 2.4 1 4 1.6"/>',
+  rabbia:'<path d="M12 3c1.2 3.2 5.3 5.2 5.3 10.2a5.3 5.3 0 0 1-10.6 0c0-2.6 1.5-4.2 2.6-5.2 0 2 .9 3.2 2.1 3.2 0-3-1.2-5.4.6-8.2Z"/>',
+  senso:'<circle cx="12" cy="12" r="8.5"/><path d="M14.8 9.2 13 13l-3.8 1.8L11 11Z"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>',
+  nonso:'<path d="M3 8.5h11M6.5 12.5H21M3 16.5h9.5M15.5 16.5H20"/>',
+  crisi:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/>'
+};
+const sic = (k) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${SIC[k]}</svg>`;
+
+// «Non so cosa sento»: tre domande semplici che indicano lo stato più vicino
+const CAPIRE = [
+  {q:"Com'è il corpo, adesso?", a:[
+    {t:"Agitato, teso, il cuore va veloce", p:{ansia:1, onda:1, rabbia:1}},
+    {t:"Pesante, stanco, spento", p:{vuoto:1.5, dolore:1}},
+    {t:"Normale, ma dentro c'è qualcosa", p:{loop:1, dolore:.5, senso:.5}}]},
+  {q:"E i pensieri, cosa fanno?", a:[
+    {t:"Corrono avanti: «e se poi…?»", p:{ansia:2}},
+    {t:"Tornano indietro, sempre sulle stesse cose", p:{loop:2}},
+    {t:"Parlano male di me", p:{giudizio:2}},
+    {t:"Se la prendono con qualcuno o qualcosa", p:{rabbia:2}},
+    {t:"Sono quasi fermi, vuoti", p:{vuoto:1.5, senso:.5}}]},
+  {q:"Di cosa avresti più bisogno?", a:[
+    {t:"Calmarmi", p:{ansia:1, onda:1.5, rabbia:.5}},
+    {t:"Spegnere un po' la testa", p:{loop:1.5}},
+    {t:"Un po' di conforto", p:{dolore:2}},
+    {t:"Trovare la forza di fare qualcosa", p:{vuoto:1.5}},
+    {t:"Capire perché vado avanti", p:{senso:2}}]}
+];
+
+// TUTTI GLI STRUMENTI (la base di conoscenza)
+const TOOLS = {
+  smonta:{e:"🧩", n:"Smonta il pensiero", s:"CBT", src:"Burns, Feeling Good (cap. 3–4) · Greenberger e Padesky, Mind Over Mood (cap. 6–9)",
+    what:"Un registro dei pensieri guidato in 8 passi: scrivi la situazione, l'emozione e il pensiero più pesante, riconosci le trappole, cerca le prove a favore e contro e arriva a un pensiero più equilibrato. Alla fine misuri di nuovo quanto ci credi.",
+    when:"Pensieri negativi su di te, sugli altri o sul futuro. Funziona meglio quando l'emozione è sotto 7 su 10.", not:"Nel picco di una crisi: prima usa «Getta l'ancora» o «Respiro lento».", min:"10 minuti"},
+  lenti:{e:"🔎", n:"Le lenti", s:"CBT · ACT · MBCT · Frankl", src:"Burns · Greenberger e Padesky · Harris · Williams e colleghi · Frankl",
+    what:"Lo stesso pensiero visto con 8 lenti diverse: il narratore, l'amico, lo scienziato, la voce buffa, il cielo, tu tra dieci anni, chi ti vuole bene, il senso. Non devi convincerti di niente: basta trovare la lente che lo rende più leggero.",
+    when:"Un pensiero che ti si è attaccato addosso.", not:"Se una lente ti sembra che sminuisca qualcosa di serio, saltala.", min:"5–10 minuti"},
+  trappole:{e:"🪤", n:"Le 10 trappole della mente", s:"CBT", src:"Burns, Feeling Good (cap. 3)",
+    what:"Le distorsioni cognitive più comuni, con esempi e una domanda per smontarle. Imparare a riconoscerle è metà del lavoro.",
+    when:"Per imparare, con calma, in un momento tranquillo.", not:"", min:"5 minuti"},
+  respiro:{e:"🫧", n:"Respiro lento", s:"DBT · ACT", src:"Linehan, Manuale DBT (TIP, respirazione ritmata) · Harris (cap. 20)",
+    what:"Una bolla che si gonfia e si sgonfia: inspiri per 4 secondi ed espiri per 6. Se l'espirazione è più lunga dell'inspirazione il corpo rallenta.",
+    when:"Agitazione, ansia, panico, prima di dormire.", not:"Se ti gira la testa, respira normalmente e riprova più piano.", min:"1–5 minuti"},
+  spazio3:{e:"⏳", n:"Spazio di respiro in 3 passi", s:"MBCT", src:"Williams, Teasdale, Segal, Kabat-Zinn, The Mindful Way through Depression (cap. 9)",
+    what:"Tre minuti a forma di clessidra: ti accorgi di cosa c'è (pensieri, emozioni, corpo), raccogli l'attenzione sul respiro, poi la allarghi a tutto il corpo. Alla fine scegli cosa fare.",
+    when:"Quando rimugini o ti senti col pilota automatico.", not:"", min:"3 minuti"},
+  ancora:{e:"⚓", n:"Getta l'ancora", s:"ACT", src:"Harris, La trappola della felicità (Consigli per i momenti di crisi)",
+    what:"Nella tempesta prima ci si àncora al presente: piedi a terra, 5 cose che vedi, 5 suoni, 5 cose che tocchi, il respiro. Poi dai un nome a quello che sta succedendo.",
+    when:"Crisi, emozioni travolgenti, panico, ricordi che ti trascinano via.", not:"", min:"3–5 minuti"},
+  espansione:{e:"🫶", n:"Fai spazio all'emozione", s:"ACT", src:"Harris, La trappola della felicità (cap. 13)",
+    what:"Quattro passi per smettere di lottare con un'emozione: la osservi nel corpo, ci respiri dentro, le fai spazio e la lasci stare lì. Non serve a farla sparire, serve a farla pesare meno.",
+    when:"Tristezza, ansia o dolore che non si possono «risolvere» subito.", not:"", min:"4 minuti"},
+  stop:{e:"✋", n:"STOP", s:"DBT", src:"Linehan, Manuale DBT (sopravvivere alla crisi)",
+    what:"Quattro lettere per non agire d'impulso quando l'emozione spinge forte: Stop, Torna indietro di un passo, Osserva, Procedi con consapevolezza.",
+    when:"Quando stai per fare qualcosa di cui potresti pentirti.", not:"", min:"1 minuto"},
+  tip:{e:"🧊", n:"TIP: calma il corpo in fretta", s:"DBT", src:"Linehan, Manuale DBT (abilità TIP)",
+    what:"Quattro modi per cambiare in pochi minuti la chimica del corpo: Temperatura (acqua fredda sul viso), esercizio Intenso, respiro ritmato (Paced) e rilassamento muscolare (Paired).",
+    when:"Emozione a 8–10 su 10, quando non riesci a pensare.", not:"Acqua fredda: no se hai problemi di cuore, pressione bassa o disturbi alimentari. Chiedi prima al medico.", min:"5 minuti"},
+  sensi:{e:"🌸", n:"Calmati con i 5 sensi", s:"DBT", src:"Linehan, Manuale DBT (calmarsi con i cinque sensi)",
+    what:"Idee per consolarti attraverso vista, udito, olfatto, gusto e tatto. Scegline una e falla con calma, come faresti per una persona cara.",
+    when:"Tristezza, solitudine, stanchezza, dopo una crisi.", not:"", min:"5–15 minuti"},
+  gentilezza:{e:"☕", n:"Prenditi cura di te adesso", s:"MBCT", src:"Williams e colleghi, The Mindful Way through Depression (cap. 9)",
+    what:"Quattro domande gentili per i momenti in cui l'umore crolla all'improvviso: cosa ti farebbe bene, adesso, finché questo momento passa?",
+    when:"Al risveglio con l'umore a terra, giornate pesanti.", not:"", min:"3 minuti"},
+  passo:{e:"👣", n:"Un piccolo passo", s:"Attivazione comportamentale", src:"Burns, Feeling Good (cap. 5: foglio di previsione del piacere) · Williams e colleghi (cap. 9: piacere e padronanza)",
+    what:"Scegli una micro-azione da 5 minuti, prevedi quanto ti farà stare meglio, falla e poi segna com'è andata davvero. Di solito va meglio del previsto, e l'app te lo mostra con i tuoi dati.",
+    when:"Apatia, stanchezza, giornate «a letto».", not:"", min:"5 minuti"},
+  pezzi:{e:"🪜", n:"Spezza in pezzetti", s:"CBT", src:"Burns, Feeling Good (cap. 5: piccoli passi)",
+    what:"Un compito che sembra enorme diviso in pezzi da 5–10 minuti. Ne fai uno alla volta e li spunti.",
+    when:"Procrastinazione, senso di sopraffazione.", not:"", min:"5 minuti"},
+  valori:{e:"🧭", n:"La bussola dei valori", s:"ACT", src:"Harris, La trappola della felicità (cap. 24–27)",
+    what:"Che persona vuoi essere nelle relazioni, nel lavoro o studio, nella salute e nel tempo libero? Per ogni area scrivi cosa conta per te e un passo piccolissimo in quella direzione.",
+    when:"In un momento tranquillo, per orientarti. Poi lo rileggi nei momenti difficili.", not:"", min:"15 minuti"},
+  senso:{e:"✨", n:"Cosa ti chiede la vita", s:"Logoterapia", src:"Frankl, Uno psicologo nei Lager",
+    what:"Frankl osservò che chi aveva un «perché», qualcuno o qualcosa che lo aspettava, trovava la forza di sopportare quasi ogni «come». Qui cerchi il tuo perché, nelle tre vie del senso.",
+    when:"Quando niente sembra avere senso.", not:"", min:"10 minuti"},
+  scatola:{e:"📦", n:"La scatola della speranza", s:"Pratica clinica", src:"Strumento diffuso nella pratica clinica (hope box)",
+    what:"Motivi per andare avanti, ricordi belli, persone, messaggi dal te dei giorni buoni, foto. Li raccogli quando stai bene e li apri quando stai male.",
+    when:"Riempila nei giorni buoni, aprila in quelli brutti.", not:"", min:"quando vuoi"},
+  piano:{e:"🛟", n:"Il mio piano di sicurezza", s:"Pratica clinica", src:"Piano di sicurezza di Stanley e Brown, usato nella prevenzione del suicidio",
+    what:"Un piano scritto a mente lucida per i momenti peggiori: i segnali di allarme, cosa ti calma, chi chiamare, come rendere l'ambiente sicuro.",
+    when:"Compilalo in un momento tranquillo, magari con qualcuno di fiducia.", not:"", min:"15 minuti"}
+};
+const TOOL_GROUPS = [
+  {n:"Quando l'onda è altissima", ids:["ancora","respiro","tip","stop"]},
+  {n:"Pensieri pesanti", ids:["lenti","smonta","trappole","spazio3"]},
+  {n:"Emozioni difficili", ids:["espansione","gentilezza","sensi"]},
+  {n:"Rimettersi in moto", ids:["passo","pezzi"]},
+  {n:"Senso e direzione", ids:["senso","valori","scatola","piano"]}
+];
+
+// Strumenti guidati a passi (testi originali)
+const GUIDE = {
+  stop:{steps:[
+    {h:"S · Stop", b:"Fermati. Non fare niente per un momento, neanche un gesto. Le emozioni forti spingono ad agire subito: tu puoi aspettare."},
+    {h:"T · Torna indietro di un passo", b:"Allontanati dalla situazione, anche solo con un respiro lungo. Se puoi, esci dalla stanza. Ti stai dando tempo, non stai scappando."},
+    {h:"O · Osserva", b:"Cosa succede dentro di te? Cosa pensi, cosa senti nel corpo? E fuori, cosa sta succedendo davvero? Osserva soltanto, senza giudicare.", t:30},
+    {h:"P · Procedi con consapevolezza", b:"Chiediti: cosa voglio ottenere davvero? Quale scelta migliora la situazione invece di peggiorarla? Scegli quella."}
+  ]},
+  tip:{intro:"Quando l'emozione è a 8, 9 o 10 la mente fa fatica a ragionare. Queste tecniche passano dal corpo e abbassano l'attivazione in pochi minuti.",
+    warn:"L'acqua fredda rallenta il battito del cuore. Se hai problemi di cuore, pressione bassa, disturbi alimentari o prendi farmaci per il cuore, salta il primo passo e chiedi prima al medico.",
+    steps:[
+    {h:"T · Temperatura", b:"Riempi una ciotola di acqua fredda e immergi il viso trattenendo il fiato, oppure appoggia sugli occhi e sulle guance un panno bagnato freddissimo o del ghiaccio avvolto in un panno. Circa 30 secondi.", t:30},
+    {h:"I · Esercizio intenso", b:"Muoviti forte per qualche minuto: corsa sul posto, salti, scale, flessioni. Scarichi l'energia che l'emozione ha accumulato nel corpo.", t:120},
+    {h:"P · Respiro ritmato", b:"Rallenta il respiro facendo l'espirazione più lunga dell'inspirazione, per esempio 4 secondi dentro e 6 fuori.", go:"respiro"},
+    {h:"P · Muscoli: stringi e lascia", b:"Mentre inspiri stringi un gruppo di muscoli (pugni, spalle, pancia, gambe) per 5 secondi. Mentre espiri lascia andare tutto e senti la differenza. Ripeti con tutto il corpo.", t:60}
+  ]},
+  sensi:{intro:"Trattati come tratteresti una persona cara che sta male. Scorri i cinque sensi e scegline uno da fare adesso.",
+    steps:[
+    {h:"👀 Vista", b:"Guarda il cielo dalla finestra, una foto che ami, una candela, le piante, un video di animali. Lascia riposare gli occhi su qualcosa di bello."},
+    {h:"👂 Udito", b:"Una canzone che ti calma, il rumore della pioggia o del mare, la voce di una persona cara, un podcast tranquillo."},
+    {h:"👃 Olfatto", b:"Il profumo del caffè o di una tisana, una crema che ti piace, l'aria fresca dalla finestra, un fiore."},
+    {h:"👅 Gusto", b:"Qualcosa di caldo da bere, un pezzetto di cioccolato, un frutto. Assaporalo lentamente, un boccone alla volta."},
+    {h:"✋ Tatto", b:"Una coperta morbida, una doccia calda, accarezzare un animale, mani sotto l'acqua tiepida, un abbraccio."},
+    {h:"Scegline uno", b:"Quale ti attira di più, anche poco? Fallo adesso, con calma, senza fretta di sentirti meglio."}
+  ]},
+  gentilezza:{intro:"Quando l'umore crolla, la tentazione è chiedersi «perché?». Prova invece queste domande, una alla volta.",
+    steps:[
+    {h:"Adesso", b:"Come potrei essere gentile con me, proprio in questo momento?"},
+    {h:"Un regalo", b:"Qual è la cosa più utile che potrei regalarmi adesso? Anche piccola: un bicchiere d'acqua, una pausa, uscire cinque minuti."},
+    {h:"Finché passa", b:"Non so quanto durerà questo umore. Come posso prendermi cura di me finché non passa?"},
+    {h:"Come per un amico", b:"Cosa farei per una persona cara che si sente così? Posso fare la stessa cosa per me?"}
+  ], write:true},
+  espansione:{intro:"Non devi far sparire l'emozione. Prova a smettere di lottare: è come il galleggiare nelle sabbie mobili, che sembra sbagliato ma funziona.",
+    steps:[
+    {h:"1 · Osserva", b:"Passa in rassegna il corpo dalla testa ai piedi. Dove senti l'emozione? Un nodo in gola, un peso sul petto, lo stomaco chiuso? Scegli la sensazione più forte e osservala con curiosità: che forma ha, è calda o fredda, si muove?", t:60},
+    {h:"2 · Respira", b:"Fai qualche respiro lento e profondo, svuotando bene i polmoni. Immagina che il respiro arrivi proprio lì, dentro e intorno a quella sensazione.", t:45},
+    {h:"3 · Fai spazio", b:"Immagina che il respiro crei spazio intorno alla sensazione, come se ti allargassi. Se la sensazione si ingrandisce, le dai ancora più spazio.", t:45},
+    {h:"4 · Lascia che ci sia", b:"Non ti piace e non la vuoi, ma può restare. Se la mente commenta, dille «Grazie, mente» e torna al corpo. Poi guarda se c'è un'altra sensazione e ricomincia.", t:60}
+  ]},
+  spazio3:{intro:"Siediti o stai in piedi con la schiena dritta. Se vuoi, chiudi gli occhi. Tre passi, circa un minuto ciascuno: prima largo, poi stretto, poi di nuovo largo.",
+    steps:[
+    {h:"1 · Accorgiti", b:"Cosa c'è adesso? Quali pensieri passano? Prova a dirli a parole, come eventi della mente. Quali emozioni ci sono, anche quelle spiacevoli? Cosa senti nel corpo, dove c'è tensione?", t:60},
+    {h:"2 · Raccogli", b:"Porta tutta l'attenzione al respiro, nella pancia: si alza quando entra l'aria, si abbassa quando esce. Usa il respiro come un'àncora nel presente.", t:60},
+    {h:"3 · Allarga", b:"Allarga l'attenzione dal respiro a tutto il corpo, alla postura, al viso. Se c'è fastidio, respiraci dentro e lascialo stare. Va bene così: è già qui, puoi permettergli di esserci.", t:60}
+  ], doors:true}
+};
+
+// micro-azioni per «Un piccolo passo»
+const MICRO = [
+  {n:"Corpo", e:"🚿", a:["Bere un bicchiere d'acqua","Lavarmi la faccia","Fare una doccia","Aprire la finestra e respirare","Uscire 5 minuti","Fare 10 allungamenti","Mangiare qualcosa"]},
+  {n:"Piacere", e:"🎵", a:["Ascoltare una canzone che amo","Bere una cosa calda con calma","Guardare foto belle","Leggere due pagine","Disegnare o scarabocchiare","Accarezzare un animale"]},
+  {n:"Padronanza", e:"✅", a:["Rifare il letto","Lavare tre piatti","Rispondere a un messaggio","Buttare la spazzatura","Mettere in ordine un angolo","Vestirmi"]},
+  {n:"Connessione", e:"💬", a:["Scrivere «ciao» a qualcuno","Mandare una foto a un amico","Chiamare una persona cara","Salutare un vicino","Ringraziare qualcuno"]}
+];
+
+const BOX_TIPI = [
+  {id:"motivo", e:"🌱", n:"Un motivo per andare avanti"},
+  {id:"ricordo", e:"📷", n:"Un ricordo bello"},
+  {id:"persona", e:"🫂", n:"Una persona"},
+  {id:"messaggio", e:"✉️", n:"Un messaggio per me"},
+  {id:"aiuta", e:"🧰", n:"Una cosa che mi aiuta"}
+];
+
+const PIANO_F = [
+  {k:"segnali", n:"I miei segnali di allarme", ph:"Pensieri, emozioni, situazioni che mi dicono che sto scivolando…"},
+  {k:"calma", n:"Cose che posso fare per calmarmi", ph:"Fare una doccia calda, uscire a camminare, musica…"},
+  {k:"luoghi", n:"Persone e posti che mi distraggono", ph:"Il bar sotto casa, la biblioteca, mia cugina…"},
+  {k:"pro", n:"Professionisti e servizi", ph:"Medico di famiglia, psicologo, Centro di Salute Mentale, pronto soccorso…"},
+  {k:"sicuro", n:"Come rendo l'ambiente più sicuro", ph:"Allontanare ciò che potrei usare per farmi del male, dare i farmaci a qualcuno…"},
+  {k:"motivo", n:"Il mio motivo più importante per vivere", ph:"Per chi o per cosa vale la pena…"}
+];
+
+const VALORI_AREE = [
+  {k:"rel", e:"🫂", n:"Relazioni", q:"Che persona vuoi essere con partner, famiglia, amici?"},
+  {k:"lav", e:"🛠️", n:"Lavoro e studio", q:"Cosa vuoi portare in quello che fai? Che qualità vuoi coltivare?"},
+  {k:"cre", e:"🌿", n:"Crescita e salute", q:"Come vuoi prenderti cura del tuo corpo, della mente, della spiritualità?"},
+  {k:"lib", e:"🎨", n:"Tempo libero", q:"Cosa ti piace, ti diverte, ti ricarica? Cosa vorresti fare di più?"}
+];
+
+const SALUTI = ["Ciao, sono qui.", "Piano piano.", "Un passo alla volta.", "Respira, ci sono.", "Oggi com'è?", "Anche poco va bene."];
+
+/* ---------- stato salvato ---------- */
+const KEY = "lucciola.v1";     // non cambiarla mai dopo la prima pubblicazione: è dove stanno i dati dell'utente
+const app = document.getElementById("app");
+function fresh(){ return {palette:"bosco", onboarded:false, moods:[], records:[], passi:[], pending:null, tasks:[], box:[], values:{}, senso:{}, plan:{contacts:[]}, draft:{}, custom:[]}; }
+function load(){ try{ const r = localStorage.getItem(KEY); if(r) return Object.assign(fresh(), JSON.parse(r)); }catch(e){} return fresh(); }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); return true; }catch(e){ return false; } }
+let S = load();
+if(!S.plan.contacts) S.plan.contacts = [];
+
+/* ---------- utilità ---------- */
+const $ = (h) => { const t = document.createElement("template"); t.innerHTML = h.trim(); return t.content.firstElementChild; };
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pick = (a) => a[Math.floor(Math.random() * a.length)];
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+function today(d){ d = d || new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function fmtDay(iso){ try{ return new Date(iso).toLocaleDateString("it-IT", {day:"numeric", month:"long"}); }catch(e){ return iso; } }
+function fmtWhen(iso){ try{ const d = new Date(iso); return d.toLocaleDateString("it-IT", {weekday:"short", day:"numeric", month:"short"}) + " · " + d.toLocaleTimeString("it-IT", {hour:"2-digit", minute:"2-digit"}); }catch(e){ return iso; } }
+function daysBetween(a, b){ const d = (x) => { const t = new Date(x); t.setHours(0,0,0,0); return t; }; return Math.round((d(b) - d(a)) / 864e5); }
+function moodWord(v){ return v <= 2 ? "Molto giù" : v <= 4 ? "Giù" : v <= 6 ? "Così così" : v <= 8 ? "Bene" : "Molto bene"; }
+
+// parole che fanno pensare a un rischio: l'app mostra subito come chiedere aiuto
+const RISK = /(suicid|uccider[mt]i|ammazzar[mt]i|farla finita|togliermi la vita|non voglio pi[uù] vivere|voglio morire|vorrei morire|farmi del male|tagliarmi|meglio morto|meglio morta|meglio se non ci fossi|sparire per sempre)/i;
+function riskBox(){ return `<div class="risk" id="risk"><b>Quello che hai scritto mi preoccupa.</b>Se stai pensando di farti del male non devi affrontarlo senza nessuno. <button class="link" data-crisi>Vedi come chiedere aiuto adesso →</button></div>`; }
+function watchRisk(v){
+  const box = v.querySelector("#risk"); if(!box) return;
+  const check = () => { const txt = [...v.querySelectorAll("textarea,input[type=text]")].map(x => x.value).join(" "); box.classList.toggle("on", RISK.test(txt)); };
+  v.querySelectorAll("textarea,input[type=text]").forEach(x => x.addEventListener("input", check));
+  check();
+}
+
+const ICON = {
+  back:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',
+  home:'<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7v9H3Z"/><path d="M9 20v-6h6v6"/></svg>',
+  book:'<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3Z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg>',
+  tools:'<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><circle cx="17" cy="17" r="3.6"/></svg>',
+  box:'<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round" aria-hidden="true"><path d="M3 8 12 4l9 4v9l-9 4-9-4Z"/><path d="M3 8l9 4 9-4M12 12v9"/></svg>',
+  gear:'<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg>',
+  heart:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z" fill="currentColor"/></svg>'
+};
+
+/* ---------- la mascotte: Lucciola ---------- */
+// mood: hi · happy · calm · listen · cheer · sleep. Corpo scuro con bordo dorato, ali di velo, pancia che si accende.
+let mid = 0;
+function mascot(mood, size){
+  const id = "m" + (++mid);
+  const D = "#2B2622", DS = "#15120F", R = "rgba(232,180,90,.85)", C = "#F5E6C4";
+  const lum = mood === "sleep" ? .4 : mood === "cheer" ? 1 : .85;
+  const arm = {
+    hi:    ["M56 100 Q45 108 43 120", "M84 98 Q99 88 103 72"],
+    cheer: ["M56 98 Q41 88 37 72", "M84 98 Q99 88 103 72"],
+    listen:["M56 100 Q57 113 66 113", "M84 100 Q83 113 74 113"]
+  }[mood] || ["M56 100 Q45 108 43 120", "M84 100 Q95 108 97 120"];
+  const arms = arm.map(d => `<path d="${d}" stroke="${D}" stroke-width="4.2" stroke-linecap="round" fill="none"/><path d="${d}" stroke="${R}" stroke-width="1" stroke-linecap="round" fill="none" opacity=".6"/>`).join("");
+  const eye = (x, y) => `<ellipse cx="${x}" cy="${y}" rx="3.8" ry="4.6" fill="${C}"/><circle cx="${x + .6}" cy="${y + .8}" r="2.2" fill="${DS}"/><circle cx="${x + 1.4}" cy="${y - .6}" r=".8" fill="#fff"/>`;
+  const shut = (x, y) => `<path d="M${x - 4.5} ${y} Q${x} ${y + 4} ${x + 4.5} ${y}" fill="none" stroke="${C}" stroke-width="1.7" stroke-linecap="round"/><path d="M${x - 4} ${y + 1.6} l-1.4 1.6 M${x} ${y + 2.8} l0 2 M${x + 4} ${y + 1.6} l1.4 1.6" stroke="${C}" stroke-width="1" stroke-linecap="round" opacity=".8"/>`;
+  let face;
+  if(mood === "cheer") face = `<path d="M57.5 63 Q62 58.5 66.5 63 M73.5 63 Q78 58.5 82.5 63" fill="none" stroke="${C}" stroke-width="1.8" stroke-linecap="round"/><ellipse cx="70" cy="71.5" rx="3.4" ry="2.8" fill="#7A2A1A" stroke="${C}" stroke-width="1"/>`;
+  else if(mood === "calm") face = shut(62, 61) + shut(78, 61) + `<path d="M67 71 Q70 73 73 71" fill="none" stroke="${C}" stroke-width="1.5" stroke-linecap="round"/>`;
+  else if(mood === "sleep") face = shut(62, 62) + shut(78, 62) + `<ellipse cx="70" cy="72" rx="1.8" ry="2.2" fill="#7A2A1A" stroke="${C}" stroke-width=".9"/>`;
+  else if(mood === "listen") face = eye(62, 62) + eye(78, 62) + `<path d="M57 55.5 L66 53.5 M83 55.5 L74 53.5" stroke="${C}" stroke-width="1.4" stroke-linecap="round" opacity=".85"/><path d="M67 71.5 Q70 72.5 73 71.5" fill="none" stroke="${C}" stroke-width="1.5" stroke-linecap="round"/>`;
+  else face = eye(62, 62) + eye(78, 62) + `<path d="M66 70 Q70 73.5 74 70" fill="none" stroke="${C}" stroke-width="1.6" stroke-linecap="round"/>`;
+  const cheeks = `<circle cx="57" cy="68.5" r="3.2" fill="rgba(225,110,70,.35)"/><circle cx="83" cy="68.5" r="3.2" fill="rgba(225,110,70,.35)"/>`;
+  const spark = (x, y, r) => `<circle cx="${x}" cy="${y}" r="${r * 2.6}" fill="#FFD58A" opacity=".22"/><circle cx="${x}" cy="${y}" r="${r}" fill="#FFF0C2"/>`;
+  let extras = "";
+  if(mood === "cheer") extras = spark(28, 50, 2.4) + spark(114, 40, 2) + spark(120, 118, 1.8) + spark(22, 112, 1.6);
+  else if(mood === "hi") extras = spark(116, 56, 2);
+  else if(mood === "sleep") extras = `<text x="98" y="42" font-family="Georgia,serif" font-style="italic" font-size="16" fill="${C}" opacity=".75">z</text><text x="108" y="30" font-family="Georgia,serif" font-style="italic" font-size="12" fill="${C}" opacity=".6">z</text>`;
+  const abd = "M70 84 Q91 86 93 111 Q93 143 70 147 Q47 143 47 111 Q49 86 70 84 Z";
+  return `<svg class="mascot" viewBox="0 0 140 160" width="${size}" height="${Math.round(size*160/140)}" role="img" aria-label="Lucciola, la mascotte">
+    <defs>
+      <radialGradient id="${id}g"><stop offset="0" stop-color="#FFE7A3" stop-opacity="${.85 * lum}"/><stop offset=".45" stop-color="#FFB547" stop-opacity="${.32 * lum}"/><stop offset="1" stop-color="#FF9A30" stop-opacity="0"/></radialGradient>
+      <radialGradient id="${id}b" cx=".5" cy=".35" r=".75"><stop offset="0" stop-color="#FFF8D6"/><stop offset=".55" stop-color="#FFD36A"/><stop offset="1" stop-color="#E08A2A"/></radialGradient>
+      <clipPath id="${id}a"><path d="${abd}"/></clipPath>
+    </defs>
+    <circle class="halo" cx="70" cy="122" r="${mood === "cheer" ? 62 : 52}" fill="url(#${id}g)"/>
+    <g fill="rgba(245,230,196,.14)" stroke="rgba(245,230,196,.55)" stroke-width="1.1">
+      <ellipse cx="44" cy="86" rx="28" ry="11" transform="rotate(-30 44 86)"/><ellipse cx="96" cy="86" rx="28" ry="11" transform="rotate(30 96 86)"/>
+    </g>
+    <path d="M60 92 Q44 84 22 72 M44 86 Q36 80 30 84 M80 92 Q96 84 118 72 M96 86 Q104 80 110 84" stroke="rgba(245,230,196,.35)" stroke-width=".8" fill="none"/>
+    ${extras}${arms}
+    <path d="${abd}" fill="${D}"/>
+    <g clip-path="url(#${id}a)">
+      <ellipse cx="70" cy="134" rx="30" ry="24" fill="url(#${id}b)" opacity="${mood === "sleep" ? .55 : 1}"/>
+      <path d="M48 103 Q70 109 92 103 M47 116 Q70 122 93 116" stroke="${DS}" stroke-width="1.6" fill="none" opacity=".75"/>
+    </g>
+    <path d="${abd}" fill="none" stroke="${R}" stroke-width="1.3"/>
+    <path d="M63 42 Q58 26 50 19 M77 42 Q82 26 90 19" fill="none" stroke="${D}" stroke-width="2.2" stroke-linecap="round"/>
+    <circle cx="50" cy="19" r="6" fill="#FFD58A" opacity=".25"/><circle cx="50" cy="19" r="2.8" fill="#FFE6A8"/>
+    <circle cx="90" cy="19" r="6" fill="#FFD58A" opacity=".25"/><circle cx="90" cy="19" r="2.8" fill="#FFE6A8"/>
+    <circle cx="70" cy="62" r="23" fill="${D}"/>
+    <circle cx="70" cy="62" r="23" fill="none" stroke="${R}" stroke-width="1.3"/>
+    <path d="M55 51 Q61 43 70 42" stroke="rgba(255,230,180,.35)" stroke-width="2" stroke-linecap="round" fill="none"/>
+    ${cheeks}${face}
+  </svg>`;
+}
+
+/* ---------- palette di colori ---------- */
+const PALETTES = [
+  {id:"bosco",     name:"Bosco",     sub:"Verde notte e luce d'ambra",      bg:"#151B17", deep:"#A5442A", ink:"#F1E7CF"},
+  {id:"notte",     name:"Notte",     sub:"Blu profondo e argento lunare",   bg:"#12152A", deep:"#7A4A9E", ink:"#F1E7CF"},
+  {id:"brace",     name:"Brace",     sub:"Bruno caldo e foglie di ruggine", bg:"#1B1411", deep:"#B0401F", ink:"#F1E7CF"},
+  {id:"pergamena", name:"Pergamena", sub:"Carta antica, per la luce del giorno", bg:"#EFE4CB", deep:"#8E3B22", ink:"#2A2016"}
+];
+function applyPalette(){
+  try{
+    document.documentElement.setAttribute("data-palette", S.palette);
+    const p = PALETTES.find(p => p.id === S.palette) || PALETTES[0];
+    document.querySelector('meta[name="theme-color"]').setAttribute("content", p.bg);
+  }catch(e){}
+}
+
+/* ---------- navigazione: il gesto "indietro" del telefono segue le schermate ---------- */
+// home 0 · sezioni 1 · dettagli 2 · esercizi 3. Ogni voce della cronologia ricorda la sua profondità,
+// così "indietro" torna sempre al livello sopra e solo dalla home l'app si chiude.
+const DEPTH = {home:0, diario:1, strumenti:1, scatola:1, settings:1, crisi:1, triage:1, capire:1,
+  checkin:2, risposta:2, info:2, record:2, boxadd:2, boxopen:2, piano:2, fonti:2,
+  smonta:3, lenti:3, guida:3, respiro:3, ancora:3, passo:3, pezzi:3, valori:3, senso:3, trappole:3};
+let hist = [0], fromPop = false, skipPop = null;
+function screen(st){
+  if(fromPop) return;
+  const d = DEPTH[st.s], i = hist.length - 1;
+  try{
+    if(d > hist[i]){ hist.push(d); st.i = hist.length - 1; history.pushState(st, ""); return; }
+    let k = 0; while(i - k > 0 && hist[i - k - 1] >= d) k++;
+    if(k === 0){ hist[i] = d; st.i = i; history.replaceState(st, ""); return; }
+    hist.length = i - k + 1; hist[hist.length - 1] = d; st.i = hist.length - 1;
+    skipPop = st; history.go(-k);
+  }catch(e){}
+}
+function showState(st){
+  st = st || {s:"home"};
+  const f = {diario, strumenti, scatola, settings, crisi, capire, checkin, piano, fonti, boxadd, boxopen, smonta, lenti, respiro, ancora, passo, pezzi, valori, senso, trappole};
+  if(st.s === "triage") triage(st.id);
+  else if(st.s === "risposta" && SITUAZIONI.find(x => x.id === st.id)) risposta(st.id, st.v);
+  else if(st.s === "info" && TOOLS[st.id]) info(st.id);
+  else if(st.s === "guida" && GUIDE[st.id]) guida(st.id);
+  else if(st.s === "record" && findEntry(st.id)) record(st.id);
+  else if(f[st.s]) f[st.s]();
+  else home();
+}
+window.addEventListener("popstate", (e) => {
+  if(skipPop){ const st = skipPop; skipPop = null; try{ history.replaceState(st, ""); }catch(err){} return; }
+  const st = e.state || {s:"home"};
+  hist.length = Math.max(1, (st.i || 0) + 1);
+  fromPop = true;
+  try{ showState(st); } finally { fromPop = false; }
+});
+
+let timers = [];
+function clearTimers(){ timers.forEach(t => { clearInterval(t); clearTimeout(t); }); timers = []; }
+function mount(v){
+  clearTimers();
+  app.innerHTML = ""; app.appendChild(v);
+  v.querySelectorAll(".pop .tabbar").forEach(el => app.appendChild(el));
+  v.querySelectorAll("[data-crisi]").forEach(b => b.onclick = crisi);
+  window.scrollTo(0, 0);
+}
+
+/* ---------- barra delle sezioni in basso ---------- */
+function tabBar(active){
+  const tabs = [["home","Oggi",ICON.home,home],["diario","Diario",ICON.book,diario],["strumenti","Strumenti",ICON.tools,strumenti],["scatola","Scatola",ICON.box,scatola]];
+  const bar = $(`<nav class="tabbar" aria-label="Sezioni">${tabs.map(([id, l, ic]) => `<button class="tab ${id === active ? "on" : ""}" data-t="${id}" ${id === active ? 'aria-current="page"' : ""}>${ic}<span>${l}</span></button>`).join("")}</nav>`);
+  bar.querySelectorAll(".tab").forEach(b => b.onclick = () => { if(b.dataset.t !== active) tabs.find(t => t[0] === b.dataset.t)[3](); else window.scrollTo({top:0, behavior:"smooth"}); });
+  return bar;
+}
+function topBar(){
+  return `<header class="top">
+    <div class="brand">${mascot("happy", 40)}<h1 class="logo">Lucciola</h1></div>
+    <div class="stats"><button class="chip sos" data-crisi aria-label="Aiuto subito">${ICON.heart}Aiuto</button><button class="chip icon-btn" id="gear" aria-label="Impostazioni">${ICON.gear}</button></div>
+  </header>`;
+}
+function wireTop(v){ const g = v.querySelector("#gear"); if(g) g.onclick = settings; }
+const backBtn = (label) => `<button class="back" id="bk">${ICON.back} ${esc(label || "Indietro")}</button>`;
+function rangeField(id, label, val, max, ends, word){
+  return `<div class="range"><span style="font-weight:700">${esc(label)}</span>
+    <div class="val"><span id="${id}-v">${val}</span>${max === 100 ? "%" : ""}<small id="${id}-w">${word ? esc(word(val)) : ""}</small></div>
+    <input type="range" id="${id}" min="0" max="${max}" step="${max === 100 ? 5 : 1}" value="${val}" aria-label="${esc(label)}">
+    <div class="ends"><span>${esc(ends[0])}</span><span>${esc(ends[1])}</span></div></div>`;
+}
+function wireRange(v, id, onch, word){
+  const r = v.querySelector("#" + id); if(!r) return;
+  r.oninput = () => { v.querySelector("#" + id + "-v").textContent = r.value; if(word) v.querySelector("#" + id + "-w").textContent = word(+r.value); onch(+r.value); };
+}
+
+/* ---------- PRIMA APERTURA ---------- */
+function benvenuto(){
+  return `<section class="card soft">
+    <div class="react">${mascot("hi", 110)}</div>
+    <h3>Ciao, sono Lucciola.</h3>
+    <p>Sono una piccola luce per i momenti difficili. Dentro ci sono strumenti presi dalla psicologia (terapia cognitiva, ACT, mindfulness, DBT) per guardare i pensieri pesanti da un altro punto di vista e ricordarti che anche i momenti più bui passano.</p>
+    <p><b>Non sono una terapia</b> e non sostituisco un medico o uno psicologo. Se stai male da tanto tempo, parlarne con un professionista può cambiare le cose.</p>
+    <p>Se sei in pericolo, chiama il <b>112</b>. Il pulsante «Aiuto» in alto è sempre lì.</p>
+    <p class="small muted">Tutto quello che scrivi resta solo su questo telefono.</p>
+    <button class="btn btn-deep" id="ok">Ho capito, iniziamo</button>
+  </section>`;
+}
+
+/* ---------- HOME: come ti senti? ---------- */
+function home(){
+  screen({s:"home"});
+  const p = S.pending, ins = insight();
+  const v = $(`<div class="pop">
+    ${topBar()}
+    ${!S.onboarded ? benvenuto() : ""}
+    <section class="intro">
+      <div><span class="label">Adesso</span><h2>Come ti <em>senti</em>?</h2><p>Scegli quello che somiglia di più a questo momento. Non serve essere precisi.</p></div>
+      ${mascot("hi", 84)}
+    </section>
+    <div class="moods">
+      ${SITUAZIONI.map(x => `<button class="mood" data-s="${x.id}">${sic(x.id)}<b>${esc(x.n)}</b><span>${esc(x.sub)}</span></button>`).join("")}
+      <button class="mood wide" id="nonso">${sic("nonso")}<span class="t"><b>Non so cosa sento</b><span>Ti aiuto a capirlo con tre domande</span></span></button>
+    </div>
+    <button class="danger" data-crisi>${sic("crisi")}<span><b>Ho pensieri di farmi del male</b><span>Aiuto subito, numeri e persone</span></span></button>
+    ${p ? `<section class="card" style="margin-top:20px"><span class="label">Il tuo piccolo passo</span><h3 style="margin:6px 0 4px">${esc(p.a)}</h3><p class="muted small">Avevi previsto ${p.pred}/10 di sollievo.</p><button class="btn btn-deep" id="pend">Fatto? Dimmi com'è andata</button></section>` : ""}
+    ${ins ? `<section class="insight" style="margin-top:20px"><span class="label">Questo passerà</span><p style="margin:6px 0 0">${ins}</p></section>` : ""}
+    <div class="divider">oppure, se va abbastanza bene</div>
+    <div class="row2"><button class="btn btn-ghost" id="umore">Segna l'umore</button><button class="btn btn-ghost" id="box">Riempi la scatola</button></div>
+    <footer class="foot"><span>Lucciola non è una terapia e non sostituisce un professionista.</span><span>In pericolo? Chiama il 112.</span></footer>
+  </div>`);
+  wireTop(v);
+  const ok = v.querySelector("#ok"); if(ok) ok.onclick = () => { S.onboarded = true; save(); home(); };
+  v.querySelectorAll("[data-s]").forEach(b => b.onclick = () => triage(b.dataset.s));
+  v.querySelector("#nonso").onclick = capire;
+  v.querySelector("#umore").onclick = checkin;
+  v.querySelector("#box").onclick = boxadd;
+  const pe = v.querySelector("#pend"); if(pe) pe.onclick = passo;
+  v.appendChild(tabBar("home"));
+  mount(v);
+}
+function toolRow(id){ const t = TOOLS[id]; return `<button class="row" data-tool="${id}"><span class="num">${t.e}</span><span class="t"><b>${esc(t.n)}</b><span class="sub">${esc(t.s)} · ${esc(t.min)}</span></span><span class="go">›</span></button>`; }
+function wireToolRows(v){ v.querySelectorAll("[data-tool]").forEach(b => b.onclick = () => runTool(b.dataset.tool)); }
+function runTool(id){
+  const f = {smonta, lenti, respiro, ancora, passo, pezzi, valori, senso, trappole, scatola, piano};
+  if(f[id]) f[id](); else if(GUIDE[id]) guida(id); else info(id);
+}
+
+/* ---------- quanto è forte ---------- */
+let triageV = 6;
+function triage(id){
+  const x = SITUAZIONI.find(s => s.id === id);
+  if(!x) return home();
+  screen({s:"triage", id});
+  const v = $(`<div class="pop">
+    ${backBtn("Come ti senti")}
+    <div class="page-h"><span class="label">${esc(x.n)} · ${esc(x.sub)}</span><h2>Quanto è forte, adesso?</h2><p>Non c'è una risposta giusta: è solo per capire da dove partire.</p></div>
+    <div class="react">${mascot("listen", 96)}</div>
+    ${rangeField("int", "Da 0 a 10", triageV, 10, ["appena", "fortissimo"])}
+    <button class="btn btn-deep" id="go">Continua</button>
+  </div>`);
+  v.querySelector("#bk").onclick = home;
+  wireRange(v, "int", n => triageV = n);
+  v.querySelector("#go").onclick = () => risposta(id, triageV);
+  mount(v);
+}
+
+/* ---------- non so cosa sento ---------- */
+function capire(){
+  screen({s:"capire"});
+  let k = 0; const sc = {}, scelte = [];
+  function step(){
+    if(k >= CAPIRE.length) return esito();
+    const Q = CAPIRE[k];
+    const v = $(`<div class="pop">
+      ${backBtn("Come ti senti")}
+      <span class="label">Domanda ${k + 1} di ${CAPIRE.length}</span>
+      <div class="meter"><i style="width:${(k + 1) / CAPIRE.length * 100}%"></i></div>
+      ${k === 0 ? `<div class="card soft"><p style="margin:0">Non sapere cosa si prova è normale: a volte le emozioni arrivano tutte insieme, mescolate. Proviamo a separarle un po'.</p></div>` : ""}
+      <h2 style="font-size:28px;font-weight:500;margin-bottom:14px">${esc(Q.q)}</h2>
+      <div class="choice">${Q.a.map((a, i) => `<button class="row" data-i="${i}"><span class="num" style="filter:none">${String.fromCharCode(65 + i)}</span><span class="t"><b style="font-size:17px">${esc(a.t)}</b></span></button>`).join("")}</div>
+      ${k > 0 ? `<button class="link" id="prev">‹ Domanda precedente</button>` : ""}
+    </div>`);
+    v.querySelector("#bk").onclick = home;
+    v.querySelectorAll("[data-i]").forEach(b => b.onclick = () => {
+      const a = Q.a[+b.dataset.i]; scelte[k] = a;
+      Object.keys(a.p).forEach(s => sc[s] = (sc[s] || 0) + a.p[s]);
+      k++; step();
+    });
+    const pv = v.querySelector("#prev"); if(pv) pv.onclick = () => { k--; const a = scelte[k]; Object.keys(a.p).forEach(s => sc[s] -= a.p[s]); step(); };
+    mount(v);
+  }
+  function esito(){
+    const best = Object.keys(sc).filter(s => sc[s] > 0).sort((a, b) => sc[b] - sc[a]);
+    const x = SITUAZIONI.find(s => s.id === best[0]), y = SITUAZIONI.find(s => s.id === best[1]);
+    const v = $(`<div class="pop">
+      ${backBtn("Come ti senti")}
+      <div class="page-h"><span class="label">Forse è così</span><h2>Sembra soprattutto <em style="color:var(--glow)">${esc(x.n.toLowerCase())}</em>.</h2><p>${esc(x.sub)}. Se non ti ci ritrovi, va bene: sei tu a sapere com'è.</p></div>
+      <div class="react">${mascot("listen", 96)}</div>
+      <div class="btns">
+        <button class="btn btn-deep" id="si">Sì, è così</button>
+        ${y ? `<button class="btn btn-ghost" id="alt">Più che altro: ${esc(y.n.toLowerCase())}</button>` : ""}
+        <button class="btn btn-ghost" id="no">Scelgo io</button>
+      </div>
+    </div>`);
+    v.querySelector("#bk").onclick = home;
+    v.querySelector("#si").onclick = () => triage(x.id);
+    const al = v.querySelector("#alt"); if(al) al.onclick = () => triage(y.id);
+    v.querySelector("#no").onclick = home;
+    mount(v);
+  }
+  step();
+}
+
+function risposta(id, val){
+  if(val == null) val = 6;
+  screen({s:"risposta", id, v:val});
+  const x = SITUAZIONI.find(s => s.id === id);
+  let tools = x.tools.slice(), alta = val >= 8 && id !== "onda";
+  if(alta) tools = ["ancora","respiro"].concat(tools.filter(t => t !== "ancora" && t !== "respiro"));
+  const v = $(`<div class="pop">
+    ${backBtn("Cambia risposta")}
+    <div class="page-h"><span class="label">${esc(x.n)} · ${val}/10</span><h2>Ha senso che tu ti senta così.</h2></div>
+    <div class="react">${mascot("listen", 96)}</div>
+    <div class="card soft"><p>${esc(x.v)}</p>${alta ? `<p><b>È un'onda molto alta (${val}/10).</b> Prima calmiamo il corpo con l'àncora o il respiro; i pensieri li guardiamo dopo.</p>` : ""}</div>
+    <div class="sec-h"><h3>Ti propongo</h3><span class="label">Scegli quello che ti attira</span></div>
+    <div class="list">${tools.map(toolRow).join("")}</div>
+    ${val >= 9 ? `<div class="card" style="margin-top:16px"><p style="margin:0">Se senti di non farcela, parlare con qualcuno adesso è la scelta più forte. <button class="link" data-crisi>Numeri di aiuto →</button></p></div>` : ""}
+  </div>`);
+  v.querySelector("#bk").onclick = () => triage(id);
+  wireToolRows(v);
+  mount(v);
+}
+
+/* ---------- CRISI ---------- */
+function crisi(){
+  screen({s:"crisi"});
+  const c = S.plan.contacts || [];
+  const v = $(`<div class="pop">
+    ${backBtn("Indietro")}
+    <div class="page-h"><span class="label">Aiuto subito</span><h2>Non devi affrontarlo senza nessuno.</h2><p>Mi dispiace che tu stia così male. Chiedere aiuto è la cosa giusta, ed è un gesto di forza.</p></div>
+    <div class="react">${mascot("listen", 96)}</div>
+    <div class="btns">
+      ${HELP.map(h => `<a class="btn ${h.sos ? "btn-sos" : "btn-ghost"}" href="tel:${h.tel}"><span class="stackt">${esc(h.n)}<small>${esc(h.sub)}</small></span></a>`).join("")}
+    </div>
+    ${c.length ? `<div class="sec-h"><h3>Le mie persone</h3></div><div class="btns">${c.map(p => `<a class="btn btn-deep" href="tel:${esc(p.t.replace(/[^\d+]/g, ""))}"><span class="stackt">Chiama ${esc(p.n)}<small>${esc(p.t)}</small></span></a>`).join("")}</div>` : ""}
+    <div class="card soft" style="margin-top:20px">
+      <p>Quando il dolore è così forte la mente dice che non passerà mai e che non c'è via d'uscita. <b>È il dolore che parla</b>: non è una previsione affidabile. Molte persone che si sono sentite così oggi sono contente di essere rimaste.</p>
+      <p style="margin:0">Se puoi, non restare senza nessuno accanto con questi pensieri: vai dove c'è qualcuno, oppure chiama.</p>
+    </div>
+    <div class="sec-h"><h3>Mentre aspetti</h3></div>
+    <div class="list">${["ancora","respiro","piano","scatola"].map(toolRow).join("")}</div>
+    <p class="small muted" style="margin-top:16px">Numeri e orari possono cambiare: verificati a ottobre 2026. Se il numero non risponde, chiama il 112 o vai al pronto soccorso.</p>
+  </div>`);
+  v.querySelector("#bk").onclick = () => history.back();
+  wireToolRows(v);
+  mount(v);
+}
+
+/* ---------- UMORE ---------- */
+function checkin(){
+  screen({s:"checkin"});
+  let val = 5, em = [];
+  const v = $(`<div class="pop">
+    ${backBtn("Indietro")}
+    <div class="page-h"><span class="label">Diario</span><h2>Come ti senti adesso?</h2><p>Bastano dieci secondi. Col tempo vedrai che gli stati d'animo cambiano.</p></div>
+    <div class="react" id="mm">${mascot("happy", 90)}</div>
+    ${rangeField("mood", "Umore", val, 10, ["0 · a terra", "10 · benissimo"], moodWord)}
+    <span style="font-weight:700">Cosa c'è dentro?</span><p class="hint">Tocca anche più di una.</p>
+    <div class="opts">${EMOZIONI.map(e => `<button class="opt" data-e="${e}">${e}</button>`).join("")}</div>
+    <label class="field"><span>Una nota (facoltativa)</span><textarea id="note" placeholder="Cos'è successo oggi?"></textarea></label>
+    ${riskBox()}
+    <button class="btn btn-deep" id="sv">Segna</button>
+  </div>`);
+  v.querySelector("#bk").onclick = () => history.back();
+  wireRange(v, "mood", x => { val = x; v.querySelector("#mm").innerHTML = mascot(x <= 3 ? "listen" : x >= 7 ? "cheer" : "happy", 90); }, moodWord);
+  v.querySelectorAll("[data-e]").forEach(b => b.onclick = () => { const e = b.dataset.e; em = em.includes(e) ? em.filter(x => x !== e) : em.concat(e); b.classList.toggle("on"); });
+  v.querySelector("#sv").onclick = () => {
+    S.moods.push({id:uid(), d:new Date().toISOString(), v:val, em, note:v.querySelector("#note").value.trim()});
+    save(); dopoCheckin(val);
+  };
+  watchRisk(v);
+  mount(v);
+}
+function dopoCheckin(val){
+  const v = $(`<div class="pop">
+    <div class="page-h"><span class="label">Segnato</span><h2>${val <= 3 ? "Grazie di avermelo detto." : val >= 7 ? "Che bello. Tienilo a mente." : "Segnato."}</h2></div>
+    <div class="react">${mascot(val <= 3 ? "listen" : val >= 7 ? "cheer" : "happy", 110)}</div>
+    ${val <= 3 ? `<div class="card soft"><p style="margin:0">È una giornata pesante. Vuoi provare qualcosa insieme? Anche cinque minuti possono aiutare.</p></div><div class="btns"><button class="btn btn-deep" id="aiuto">Sì, proviamo</button><button class="btn btn-ghost" id="dia">Per ora no</button></div>`
+    : val >= 7 ? `<div class="card soft"><p style="margin:0">Nei giorni buoni puoi aggiungere qualcosa alla scatola della speranza: servirà nei giorni brutti.</p></div><div class="btns"><button class="btn btn-deep" id="box">Aggiungi alla scatola</button><button class="btn btn-ghost" id="dia">Vai al diario</button></div>`
+    : `<div class="btns"><button class="btn btn-deep" id="dia">Vai al diario</button></div>`}
+  </div>`);
+  const a = v.querySelector("#aiuto"); if(a) a.onclick = home;
+  const b = v.querySelector("#box"); if(b) b.onclick = boxadd;
+  v.querySelector("#dia").onclick = diario;
+  mount(v);
+}
+
+/* «Questo passerà»: cerca nei dati un momento basso seguito da una risalita */
+function insight(){
+  const m = S.moods.slice().sort((a, b) => a.d < b.d ? -1 : 1);
+  for(let i = m.length - 1; i >= 0; i--){
+    if(m[i].v > 4) continue;
+    const up = m.slice(i + 1).find(x => x.v >= m[i].v + 3);
+    if(up){
+      const g = daysBetween(m[i].d, up.d);
+      const when = g <= 0 ? "Poche ore dopo" : g === 1 ? "Il giorno dopo" : `${g} giorni dopo`;
+      return `Il ${esc(fmtDay(m[i].d))} il tuo umore era a <b>${m[i].v}/10</b>. ${when} era a <b>${up.v}/10</b>. Gli stati d'animo cambiano, anche quando sembra di no.`;
+    }
+  }
+  const done = S.passi.filter(p => p.real != null);
+  if(done.length >= 2){
+    const avg = (k) => (done.reduce((s, p) => s + p[k], 0) / done.length).toFixed(1).replace(".", ",");
+    const pr = done.reduce((s, p) => s + p.pred, 0), re = done.reduce((s, p) => s + p.real, 0);
+    if(re > pr) return `Nei tuoi piccoli passi prevedevi in media <b>${avg("pred")}/10</b> di sollievo, ma poi è stato <b>${avg("real")}/10</b>. Quando l'umore è basso la mente sottovaluta quanto le cose possono aiutare.`;
+  }
+  return "";
+}
+
+/* ---------- DIARIO ---------- */
+function allEntries(){
+  const out = [];
+  S.moods.forEach(m => out.push({id:m.id, d:m.d, k:"umore", e:String(m.v), t:moodWord(m.v) + (m.em.length ? " · " + m.em.join(", ") : ""), sub:m.note}));
+  S.records.forEach(r => out.push({id:r.id, d:r.d, k:r.type, e:r.type === "smonta" ? "🧩" : "🔎", t:r.th, sub:r.type === "smonta" ? "Smonta il pensiero · da " + r.bel + "% a " + r.bel2 + "%" : "Le lenti · da " + r.before + "% a " + r.after + "%"}));
+  S.passi.forEach(p => out.push({id:p.id, d:p.d, k:"passo", e:"👣", t:p.a, sub:p.real != null ? `Previsto ${p.pred}/10 · è stato ${p.real}/10` : "Non completato"}));
+  return out.sort((a, b) => a.d < b.d ? 1 : -1);
+}
+function findEntry(id){ return allEntries().find(x => x.id === id); }
+function chart(){
+  const days = 30, pts = [];
+  for(let i = days - 1; i >= 0; i--){
+    const d = new Date(); d.setDate(d.getDate() - i); const k = today(d);
+    const ms = S.moods.filter(m => today(new Date(m.d)) === k);
+    pts.push(ms.length ? ms.reduce((s, m) => s + m.v, 0) / ms.length : null);
+  }
+  const W = 320, H = 150, px = (i) => 14 + i * (W - 28) / (days - 1), py = (v) => 14 + (10 - v) * (H - 34) / 10;
+  let path = "", dots = "";
+  pts.forEach((v, i) => { if(v == null) return; path += (path ? " L" : "M") + px(i).toFixed(1) + " " + py(v).toFixed(1); dots += `<circle class="pt" cx="${px(i).toFixed(1)}" cy="${py(v).toFixed(1)}" r="4.5"/>`; });
+  const grid = [0, 5, 10].map(v => `<line class="gl" x1="14" x2="${W - 14}" y1="${py(v)}" y2="${py(v)}"/><text x="2" y="${py(v) + 4}">${v}</text>`).join("");
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Umore degli ultimi 30 giorni">${grid}<path class="ln" d="${path}"/>${dots}<text x="14" y="${H - 4}">30 giorni fa</text><text x="${W - 14}" y="${H - 4}" text-anchor="end">oggi</text></svg>`;
+}
+function diario(){
+  screen({s:"diario"});
+  const ins = insight(), list = allEntries().slice(0, 50);
+  const v = $(`<div class="pop">
+    ${topBar()}
+    <div class="page-h"><span class="label">Diario</span><h2>Il tuo cammino</h2><p>Qui vedi come cambia l'umore e cosa hai fatto per te.</p></div>
+    <button class="btn btn-deep" id="umore">Segna l'umore di adesso</button>
+    <div class="card" style="margin-top:18px"><span class="label">Umore · ultimi 30 giorni</span>${S.moods.length ? chart() : `<p class="muted" style="margin:8px 0 0">Ancora nessun dato. Segna l'umore ogni tanto: tra qualche giorno vedrai la curva.</p>`}</div>
+    ${ins ? `<section class="insight"><span class="label">Questo passerà</span><p style="margin:6px 0 0">${ins}</p></section>` : ""}
+    <div class="sec-h"><h3>Momenti segnati</h3><span class="label">${list.length}</span></div>
+    <div class="list">${list.length ? list.map(x => `<button class="row entry" data-id="${x.id}"><span class="num">${esc(x.e)}</span><span class="t"><b>${esc(x.t || "—")}</b><span class="sub">${esc(fmtWhen(x.d))}${x.sub ? " · " + esc(x.sub) : ""}</span></span><span class="go">›</span></button>`).join("") : `<p class="muted">Niente ancora. Va bene così.</p>`}</div>
+  </div>`);
+  wireTop(v);
+  v.querySelector("#umore").onclick = checkin;
+  v.querySelectorAll(".entry").forEach(b => b.onclick = () => record(b.dataset.id));
+  v.appendChild(tabBar("diario"));
+  mount(v);
+}
+function record(id){
+  screen({s:"record", id});
+  const m = S.moods.find(x => x.id === id), r = S.records.find(x => x.id === id), p = S.passi.find(x => x.id === id);
+  let body = "";
+  if(m) body = `<div class="card"><span class="label">Umore</span><div class="range"><div class="val">${m.v}<small>${esc(moodWord(m.v))}</small></div></div>${m.em.length ? `<p><b>Emozioni:</b> ${esc(m.em.join(", "))}</p>` : ""}${m.note ? `<p>${esc(m.note)}</p>` : ""}</div>`;
+  else if(r && r.type === "smonta"){
+    const dis = (r.dis || []).map(d => (TRAPPOLE.find(t => t.id === d) || {}).n).filter(Boolean);
+    body = `<div class="card"><span class="label">Situazione</span><p>${esc(r.sit || "—")}</p><span class="label">Emozioni</span><p>${esc((r.em || []).join(", ") || "—")} · da ${r.int}% a ${r.int2}%</p><span class="label">Il pensiero</span><div class="quote">${esc(r.th)}</div>${dis.length ? `<span class="label">Trappole</span><p>${esc(dis.join(", "))}</p>` : ""}<span class="label">Prove a favore</span><p>${esc(r.pro || "—")}</p><span class="label">Prove contro</span><p>${esc(r.con || "—")}</p><span class="label">Pensiero equilibrato</span><div class="quote">${esc(r.alt || "—")}</div>${beforeAfter(r.bel, r.bel2, "Ci credevo")}</div>`;
+  } else if(r){
+    body = `<div class="card"><span class="label">Il pensiero</span><div class="quote">${esc(r.th)}</div>${LENTI.filter(l => r.ans && r.ans[l.id]).map(l => `<span class="label">${l.e} ${esc(l.n)}${r.best === l.id ? " · la più utile" : ""}</span><p>${esc(r.ans[l.id])}</p>`).join("")}${beforeAfter(r.before, r.after, "Ci credevo")}</div>`;
+  } else if(p) body = `<div class="card"><span class="label">Piccolo passo</span><h3 style="margin:6px 0">${esc(p.a)}</h3><p>Previsto: <b>${p.pred}/10</b>${p.real != null ? ` · è stato: <b>${p.real}/10</b>` : " · non completato"}</p></div>`;
+  const v = $(`<div class="pop">
+    ${backBtn("Diario")}
+    <div class="page-h"><span class="label">${esc(fmtWhen((m || r || p).d))}</span><h2>Un momento segnato</h2></div>
+    ${body}
+    <button class="btn btn-ghost" id="del">Elimina</button>
+  </div>`);
+  v.querySelector("#bk").onclick = diario;
+  v.querySelector("#del").onclick = () => {
+    if(!confirm("Eliminare questo momento dal diario?")) return;
+    S.moods = S.moods.filter(x => x.id !== id); S.records = S.records.filter(x => x.id !== id); S.passi = S.passi.filter(x => x.id !== id);
+    save(); diario();
+  };
+  mount(v);
+}
+function beforeAfter(a, b, lab){
+  return `<div class="bars" style="margin-top:12px"><div class="bar"><span>Prima</span><span class="tr"><i style="width:${a}%"></i></span><b>${a}%</b></div><div class="bar"><span>Dopo</span><span class="tr"><i class="after" style="width:${b}%"></i></span><b>${b}%</b></div></div><p class="hint" style="margin-top:6px">${esc(lab)} quanto?</p>`;
+}
+
+/* ---------- STRUMENTI ---------- */
+function strumenti(){
+  screen({s:"strumenti"});
+  const v = $(`<div class="pop">
+    ${topBar()}
+    <div class="page-h"><span class="label">Strumenti</span><h2>La cassetta degli attrezzi</h2><p>Ogni strumento viene da un metodo studiato. Tocca per sapere cos'è, da dove viene e quando usarlo.</p></div>
+    ${TOOL_GROUPS.map(g => `<div class="sec-h"><h3>${esc(g.n)}</h3></div><div class="list">${g.ids.map(id => `<button class="row" data-info="${id}"><span class="num">${TOOLS[id].e}</span><span class="t"><b>${esc(TOOLS[id].n)}</b><span class="sub">${esc(TOOLS[id].s)} · ${esc(TOOLS[id].min)}</span></span><span class="go">›</span></button>`).join("")}</div>`).join("")}
+    <footer class="foot"><button class="link small" id="fonti">Da quali libri vengono questi strumenti?</button></footer>
+  </div>`);
+  wireTop(v);
+  v.querySelectorAll("[data-info]").forEach(b => b.onclick = () => info(b.dataset.info));
+  v.querySelector("#fonti").onclick = fonti;
+  v.appendChild(tabBar("strumenti"));
+  mount(v);
+}
+function info(id){
+  screen({s:"info", id});
+  const t = TOOLS[id];
+  const v = $(`<div class="pop">
+    ${backBtn("Strumenti")}
+    <div class="page-h"><span class="label">${esc(t.s)} · ${esc(t.min)}</span><h2>${t.e} ${esc(t.n)}</h2></div>
+    <div class="card"><h3>Cos'è</h3><p>${esc(t.what)}</p></div>
+    <div class="card"><h3>Quando usarlo</h3><p>${esc(t.when)}</p>${t.not ? `<p class="muted"><b>Attenzione:</b> ${esc(t.not)}</p>` : ""}</div>
+    <div class="card soft"><span class="label">Da dove viene</span><p style="margin:6px 0 0">${esc(t.src)}</p></div>
+    <button class="btn btn-deep" id="go">Inizia</button>
+  </div>`);
+  v.querySelector("#bk").onclick = strumenti;
+  v.querySelector("#go").onclick = () => runTool(id);
+  mount(v);
+}
+function fonti(){
+  screen({s:"fonti"});
+  const v = $(`<div class="pop">
+    ${backBtn("Indietro")}
+    <div class="page-h"><span class="label">Fonti</span><h2>I libri dietro Lucciola</h2><p>Dai libri vengono i metodi. I testi dell'app sono scritti da zero, con parole nuove.</p></div>
+    ${FONTI.map(f => `<div class="card"><span class="label">${esc(f.s)}</span><h3 style="margin:6px 0">${esc(f.b)}</h3><p>${esc(f.u)}</p></div>`).join("")}
+    <div class="card soft"><p style="margin:0">La scatola della speranza e il piano di sicurezza (Stanley e Brown) sono strumenti diffusi nella pratica clinica. Lucciola non è un dispositivo medico e non sostituisce una cura.</p></div>
+  </div>`);
+  v.querySelector("#bk").onclick = () => history.back();
+  mount(v);
+}
+
+/* ---------- SMONTA IL PENSIERO (registro dei pensieri) ---------- */
+const SM_N = 8;
+function smonta(){
+  screen({s:"smonta"});
+  if(!S.draft.smonta) S.draft.smonta = {k:0, sit:"", em:[], int:70, th:"", bel:80, dis:[], pro:"", con:"", alt:"", altBel:60, bel2:50, int2:50, q:0};
+  const D = S.draft.smonta, k = D.k;
+  const go = (n) => { D.k = n; save(); smontaStep(); };
+  function smontaStep(){
+    const k = D.k;
+    const titles = ["La situazione","Cosa senti","Il pensiero","Le trappole","Le prove a favore","Le prove contro","Un pensiero equilibrato","E adesso?"];
+    let body = "";
+    if(k === 0) body = `<p class="muted">Dove eri, con chi, cosa è successo? Solo i fatti, in poche parole.</p><label class="field"><textarea id="f" placeholder="Es. Sabato sera, a casa. La mia amica non ha risposto al messaggio.">${esc(D.sit)}</textarea></label>`;
+    if(k === 1) body = `<p class="muted">Che emozioni senti? Poi dai un voto all'intensità.</p><div class="opts">${EMOZIONI.map(e => `<button class="opt ${D.em.includes(e) ? "on" : ""}" data-e="${e}">${e}</button>`).join("")}</div>${rangeField("r", "Quanto è forte?", D.int, 100, ["per niente", "al massimo"])}`;
+    if(k === 2) body = `<p class="muted">Cosa ti passava per la testa? Scegli il pensiero più pesante, quello «caldo».</p><div class="qcard"><p>Se non ti viene, chiediti:</p><span class="small">Cosa dice di me questa cosa? Della mia vita? Del mio futuro? Qual è la cosa peggiore che temo?</span></div><label class="field"><textarea id="f" placeholder="Es. Non le importa niente di me. Nessuno mi cerca mai.">${esc(D.th)}</textarea></label>${rangeField("r", "Quanto ci credi?", D.bel, 100, ["per niente", "è verità assoluta"])}`;
+    if(k === 3) body = `<div class="quote">${esc(D.th)}</div><p class="muted">Riconosci qualcuna di queste trappole? Tocca quelle che vedi (anche nessuna).</p><div class="list">${TRAPPOLE.map(t => `<button class="row ${D.dis.includes(t.id) ? "on" : ""}" data-d="${t.id}" style="${D.dis.includes(t.id) ? "outline:3px solid var(--deep);outline-offset:2px;background:var(--soft)" : ""}"><span class="num">${t.e}</span><span class="t"><b>${esc(t.n)}</b><span class="sub">${esc(t.d)}</span></span><span class="go">${D.dis.includes(t.id) ? "✓" : ""}</span></button>`).join("")}</div>`;
+    if(k === 4) body = `<div class="quote">${esc(D.th)}</div><p class="muted">Quali <b>fatti</b> sostengono questo pensiero? Fatti che anche un'altra persona vedrebbe, non interpretazioni.</p><label class="field"><textarea id="f" placeholder="Es. Non mi ha risposto da sei ore.">${esc(D.pro)}</textarea></label>`;
+    if(k === 5){
+      const tr = D.dis.map(d => TRAPPOLE.find(t => t.id === d)).filter(Boolean);
+      body = `<div class="quote">${esc(D.th)}</div><p class="muted">Ora cerca i fatti che <b>non</b> tornano con questo pensiero. È la parte più importante.</p>
+      <div class="qcard"><p id="q">${esc(CONTRO_Q[D.q % CONTRO_Q.length])}</p><button class="link small" id="nq">Un'altra domanda</button></div>
+      ${tr.length ? `<div class="qcard"><p>Dalle trappole che hai visto:</p>${tr.map(t => `<span class="small">${t.e} ${esc(t.q)}</span><br>`).join("")}</div>` : ""}
+      <label class="field"><textarea id="f" placeholder="Es. Di solito risponde la sera. La settimana scorsa è stata lei a invitarmi.">${esc(D.con)}</textarea></label>`;
+    }
+    if(k === 6) body = `<p class="muted">Metti insieme le prove a favore e quelle contro. Non serve un pensiero «positivo»: serve un pensiero <b>giusto</b>, che tenga conto di tutto e a cui tu possa credere.</p>
+      <div class="card soft small"><b>A favore:</b> ${esc(D.pro || "—")}<br><b>Contro:</b> ${esc(D.con || "—")}</div>
+      <button class="link small" id="schema">Usa uno schema: «Anche se…, è anche vero che…»</button>
+      <label class="field"><textarea id="f" placeholder="Es. Anche se non mi ha ancora risposto, è anche vero che di solito si fa sentire. Forse è solo impegnata.">${esc(D.alt)}</textarea></label>
+      ${rangeField("r", "Quanto ci credi, a questo nuovo pensiero?", D.altBel, 100, ["per niente", "del tutto"])}`;
+    if(k === 7) body = `<p class="muted">Rileggi il pensiero di partenza.</p><div class="quote">${esc(D.th)}</div>
+      ${rangeField("r", "Quanto ci credi adesso?", D.bel2, 100, ["per niente", "è verità assoluta"])}
+      ${rangeField("r2", "Quanto è forte l'emozione adesso?", D.int2, 100, ["per niente", "al massimo"])}`;
+    const can = k === 2 ? D.th.trim().length > 0 : true;
+    const v = $(`<div class="pop">
+      ${backBtn("Esci (la bozza resta salvata)")}
+      <span class="label">Smonta il pensiero · passo ${k + 1} di ${SM_N}</span>
+      <div class="meter"><i style="width:${(k + 1) / SM_N * 100}%"></i></div>
+      <h2 style="font-size:28px;margin-bottom:10px">${titles[k]}</h2>
+      ${body}
+      ${riskBox()}
+      <div class="btns2"><button class="btn btn-ghost" id="prev" ${k === 0 ? "disabled" : ""}>‹ Indietro</button><button class="btn btn-deep" id="next" ${can ? "" : "disabled"}>${k === SM_N - 1 ? "Salva" : "Avanti ›"}</button></div>
+      ${k === 0 && (D.th || D.sit) ? `<p style="margin-top:14px"><button class="link small" id="reset">Ricomincia da capo</button></p>` : ""}
+    </div>`);
+    const f = v.querySelector("#f");
+    const field = ["sit", null, "th", null, "pro", "con", "alt", null][k];
+    if(f && field) f.oninput = () => { D[field] = f.value; if(k === 2) v.querySelector("#next").disabled = !f.value.trim(); save(); };
+    v.querySelectorAll("[data-e]").forEach(b => b.onclick = () => { const e = b.dataset.e; D.em = D.em.includes(e) ? D.em.filter(x => x !== e) : D.em.concat(e); b.classList.toggle("on"); save(); });
+    v.querySelectorAll("[data-d]").forEach(b => b.onclick = () => { const d = b.dataset.d; D.dis = D.dis.includes(d) ? D.dis.filter(x => x !== d) : D.dis.concat(d); save(); smontaStep(); });
+    const rk = {1:"int", 2:"bel", 6:"altBel", 7:"bel2"}[k];
+    if(rk) wireRange(v, "r", x => { D[rk] = x; save(); });
+    if(k === 7) wireRange(v, "r2", x => { D.int2 = x; save(); });
+    const nq = v.querySelector("#nq"); if(nq) nq.onclick = () => { D.q++; v.querySelector("#q").textContent = CONTRO_Q[D.q % CONTRO_Q.length]; save(); };
+    const sc = v.querySelector("#schema"); if(sc) sc.onclick = () => { if(!f.value.trim()){ f.value = "Anche se " + ", è anche vero che "; D.alt = f.value; save(); } f.focus(); f.setSelectionRange(9, 9); };
+    const rs = v.querySelector("#reset"); if(rs) rs.onclick = () => { S.draft.smonta = null; save(); smonta(); };
+    v.querySelector("#bk").onclick = () => history.back();
+    v.querySelector("#prev").onclick = () => go(Math.max(0, k - 1));
+    v.querySelector("#next").onclick = () => {
+      if(k < SM_N - 1) return go(k + 1);
+      const r = {id:uid(), type:"smonta", d:new Date().toISOString(), sit:D.sit, em:D.em, int:D.int, int2:D.int2, th:D.th, bel:D.bel, bel2:D.bel2, dis:D.dis, pro:D.pro, con:D.con, alt:D.alt, altBel:D.altBel};
+      S.records.push(r); S.draft.smonta = null; save(); smontaFine(r);
+    };
+    watchRisk(v);
+    mount(v);
+  }
+  smontaStep();
+}
+function smontaFine(r){
+  const giu = r.bel - r.bel2;
+  const v = $(`<div class="pop">
+    <div class="page-h"><span class="label">Smonta il pensiero · fatto</span><h2>${giu >= 10 ? "Il pensiero pesa meno." : "Hai fatto un lavoro vero."}</h2></div>
+    <div class="react">${mascot(giu >= 10 ? "cheer" : "happy", 110)}</div>
+    <div class="card"><span class="label">Quanto ci credevi</span>${beforeAfter(r.bel, r.bel2, "Ci credevi")}<span class="label" style="display:block;margin-top:12px">Quanto era forte l'emozione</span>${beforeAfter(r.int, r.int2, "Intensità")}</div>
+    <div class="card soft"><p style="margin:0">${giu >= 10 ? "Questo è il punto: i pensieri sembrano fatti, ma quando li guardi da vicino spesso perdono forza. Rileggi il tuo pensiero equilibrato quando torna quello vecchio." : "A volte un pensiero non si smuove la prima volta. Va bene: si può ripetere, o provare con un'altra lente. Anche solo averlo scritto ti ha dato un po' di distanza."}</p></div>
+    ${r.alt ? `<span class="label">Il tuo pensiero equilibrato</span><div class="quote">${esc(r.alt)}</div>` : ""}
+    <div class="btns"><button class="btn btn-deep" id="lenti">Guardalo con le lenti</button><button class="btn btn-ghost" id="home">Torna a Oggi</button></div>
+  </div>`);
+  v.querySelector("#lenti").onclick = () => { S.draft.lenti = {k:1, th:r.th, before:r.bel2, ans:{}, after:r.bel2, best:null, mode:"onde"}; save(); lenti(); };
+  v.querySelector("#home").onclick = home;
+  mount(v);
+}
+
+/* ---------- LE LENTI ---------- */
+function lenti(){
+  screen({s:"lenti"});
+  if(!S.draft.lenti) S.draft.lenti = {k:0, th:"", before:80, ans:{}, after:60, best:null, mode:"onde"};
+  const D = S.draft.lenti, N = LENTI.length;
+  const go = (n) => { D.k = n; save(); step(); };
+  function step(){
+    const k = D.k;
+    let head = "", body = "", can = true;
+    if(k === 0){
+      head = `<span class="label">Le lenti</span><h2 style="font-size:28px;margin:6px 0 10px">Quale pensiero ti pesa?</h2>`;
+      body = `<p class="muted">Scrivilo così come te lo dice la mente, anche se è duro. Poi lo guardiamo con ${N} lenti diverse.</p>
+        <label class="field"><textarea id="f" placeholder="Es. Sono un fallimento. Non cambierà mai niente.">${esc(D.th)}</textarea></label>
+        ${rangeField("r", "Quanto ci credi adesso?", D.before, 100, ["per niente", "è verità assoluta"])}`;
+      can = D.th.trim().length > 0;
+    } else if(k <= N){
+      const L = LENTI[k - 1];
+      head = `<span class="label">Lente ${k} di ${N} · ${esc(L.s)}</span><div class="meter"><i style="width:${k / N * 100}%"></i></div><h2 style="font-size:28px;margin-bottom:10px">${L.e} ${esc(L.n)}</h2>`;
+      if(L.k === "narratore") body = `<p class="muted">Un pensiero è una storia che la mente racconta, non un fatto. Guarda cosa succede se lo dici così:</p>
+        <div class="quote">Sto avendo il pensiero che «${esc(D.th)}»</div>
+        <div class="quote">Noto che la mia mente mi sta raccontando la storia: «${esc(D.th)}»</div>
+        <p class="muted">Suona diverso? Ora prova a dare un nome a questa storia, come al titolo di un vecchio film che la mente rimanda in onda spesso. E quando torna, puoi dirle con gentilezza: <b>«Grazie, mente»</b>.</p>
+        <label class="field"><span>Il nome della storia</span><input type="text" id="f" placeholder="Es. La storia del «non sono abbastanza»" value="${esc(D.ans.narratore || "")}"></label>`;
+      else if(L.k === "buffa") body = `<p class="muted">Leggi il pensiero con una voce buffa: quella di un cartone animato o di un personaggio che ti fa sorridere. Oppure guardalo ballare qui sotto. Non cambia le parole, cambia quanto le prendi sul serio.</p>
+        <div class="silly ${D.mode}" id="sil">${sillyText(D.th)}</div>
+        <div class="opts">${[["onde","A onde"],["lento","Al rallentatore"],["minuscolo","Minuscolo"]].map(([m, l]) => `<button class="opt ${D.mode === m ? "on" : ""}" data-m="${m}">${l}</button>`).join("")}</div>
+        <p class="small muted">Se ti sembra che questa lente prenda in giro qualcosa di serio, saltala: va benissimo.</p>
+        <label class="field"><span>Cosa hai notato?</span><input type="text" id="f" placeholder="Es. Fa meno paura" value="${esc(D.ans.buffa || "")}"></label>`;
+      else if(L.k === "cielo") body = `<p class="muted">I pensieri sono eventi della mente, come nuvole: arrivano, restano un po' e passano. Tu non sei la nuvola. Sei il cielo.</p>
+        <div class="sky"><div class="cloud" id="cl">${esc(D.th)}</div><span class="sun" id="sun"></span></div>
+        <div class="btns"><button class="btn btn-main" id="pass">Lascia che passi</button></div>
+        <label class="field" style="margin-top:16px"><span>Com'è stato guardarlo passare?</span><input type="text" id="f" placeholder="Es. Il pensiero c'è, ma non sono io" value="${esc(D.ans.cielo || "")}"></label>`;
+      else body = `<div class="quote">${esc(D.th)}</div><p>${esc(L.q)}</p><label class="field"><textarea id="f" placeholder="${esc(L.ph)}">${esc(D.ans[L.id] || "")}</textarea></label>`;
+    } else {
+      head = `<span class="label">Le lenti · fine</span><h2 style="font-size:28px;margin:6px 0 10px">E adesso?</h2>`;
+      const used = LENTI.filter(l => D.ans[l.id]);
+      body = `<div class="quote">${esc(D.th)}</div>
+        ${rangeField("r", "Quanto ci credi adesso?", D.after, 100, ["per niente", "è verità assoluta"])}
+        <span style="font-weight:700">Quale lente ti ha aiutato di più?</span>
+        <div class="opts" style="margin-top:8px">${LENTI.map(l => `<button class="opt ${D.best === l.id ? "on" : ""}" data-b="${l.id}">${l.e} ${esc(l.n)}</button>`).join("")}</div>
+        ${used.length ? "" : `<p class="small muted">Non hai scritto nelle lenti, ma anche solo guardarle conta.</p>`}`;
+    }
+    const v = $(`<div class="pop">
+      ${backBtn("Esci (la bozza resta salvata)")}
+      ${head}${body}
+      ${riskBox()}
+      <div class="btns2"><button class="btn btn-ghost" id="prev" ${k === 0 ? "disabled" : ""}>‹ Indietro</button><button class="btn btn-deep" id="next" ${can ? "" : "disabled"}>${k === 0 ? "Inizia" : k > N ? "Salva" : "Avanti ›"}</button></div>
+      ${k >= 1 && k <= N ? `<p style="margin-top:14px;text-align:center"><button class="link small" id="end">Basta lenti, vai alla fine</button></p>` : ""}
+      ${k === 0 && D.th ? `<p style="margin-top:14px"><button class="link small" id="reset">Ricomincia con un altro pensiero</button></p>` : ""}
+    </div>`);
+    const f = v.querySelector("#f");
+    if(f) f.oninput = () => {
+      if(k === 0){ D.th = f.value; v.querySelector("#next").disabled = !f.value.trim(); }
+      else D.ans[LENTI[k - 1].id] = f.value;
+      save();
+    };
+    if(k === 0) wireRange(v, "r", x => { D.before = x; D.after = x; save(); });
+    if(k > N) wireRange(v, "r", x => { D.after = x; save(); });
+    v.querySelectorAll("[data-m]").forEach(b => b.onclick = () => { D.mode = b.dataset.m; save(); v.querySelector("#sil").className = "silly " + D.mode; v.querySelectorAll("[data-m]").forEach(x => x.classList.toggle("on", x === b)); });
+    v.querySelectorAll("[data-b]").forEach(b => b.onclick = () => { D.best = b.dataset.b; save(); v.querySelectorAll("[data-b]").forEach(x => x.classList.toggle("on", x === b)); });
+    const ps = v.querySelector("#pass");
+    if(ps) ps.onclick = () => {
+      const cl = v.querySelector("#cl");
+      if(cl.classList.contains("go")){ cl.classList.remove("go"); v.querySelector("#sun").textContent = ""; ps.textContent = "Lascia che passi"; return; }
+      cl.classList.add("go"); ps.textContent = "Fallo tornare";
+      timers.push(setTimeout(() => { const s = v.querySelector("#sun"); if(s) s.textContent = "Il cielo è ancora qui. Anche tu."; }, 3200));
+    };
+    const rs = v.querySelector("#reset"); if(rs) rs.onclick = () => { S.draft.lenti = null; save(); lenti(); };
+    const en = v.querySelector("#end"); if(en) en.onclick = () => go(N + 1);
+    v.querySelector("#bk").onclick = () => history.back();
+    v.querySelector("#prev").onclick = () => go(Math.max(0, k - 1));
+    v.querySelector("#next").onclick = () => {
+      if(k <= N) return go(k + 1);
+      const ans = {}; Object.keys(D.ans).forEach(x => { if(String(D.ans[x]).trim()) ans[x] = String(D.ans[x]).trim(); });
+      const r = {id:uid(), type:"lenti", d:new Date().toISOString(), th:D.th, before:D.before, after:D.after, ans, best:D.best};
+      S.records.push(r); S.draft.lenti = null; save(); lentiFine(r);
+    };
+    watchRisk(v);
+    mount(v);
+  }
+  step();
+}
+function sillyText(t){
+  let i = 0;
+  return String(t).split(/(\s+)/).map(w => /^\s+$/.test(w) ? " " : `<span class="w">${[...w].map(c => `<span class="c" style="animation-delay:${(i++ * 0.06).toFixed(2)}s">${esc(c)}</span>`).join("")}</span>`).join("");
+}
+function lentiFine(r){
+  const giu = r.before - r.after, best = LENTI.find(l => l.id === r.best);
+  const v = $(`<div class="pop">
+    <div class="page-h"><span class="label">Le lenti · fatto</span><h2>${giu >= 10 ? "Visto da qui, pesa meno." : "Hai guardato il pensiero da vicino."}</h2></div>
+    <div class="react">${mascot(giu >= 10 ? "cheer" : "calm", 110)}</div>
+    <div class="card">${beforeAfter(r.before, r.after, "Ci credevi")}</div>
+    <div class="card soft"><p style="margin:0">${best ? `La lente che ti ha aiutato di più è <b>${best.e} ${esc(best.n)}</b>. Ricordatela: la prossima volta che questo pensiero torna, puoi partire da lì.` : "Il pensiero forse tornerà: i pensieri fanno così. Ma adesso sai che puoi guardarlo anche da un altro lato."}</p></div>
+    <div class="btns"><button class="btn btn-deep" id="home">Torna a Oggi</button><button class="btn btn-ghost" id="dia">Vedi nel diario</button></div>
+  </div>`);
+  v.querySelector("#home").onclick = home;
+  v.querySelector("#dia").onclick = diario;
+  mount(v);
+}
+function trappole(){
+  screen({s:"trappole"});
+  const v = $(`<div class="pop">
+    ${backBtn("Indietro")}
+    <div class="page-h"><span class="label">CBT · Burns</span><h2>Le 10 trappole della mente</h2><p>Quando stiamo male la mente cade sempre negli stessi errori. Imparare a riconoscerli è metà del lavoro.</p></div>
+    ${TRAPPOLE.map(t => `<div class="card"><h3>${t.e} ${esc(t.n)}</h3><p>${esc(t.d)}</p><p class="muted"><i>${esc(t.x)}</i></p><div class="qcard" style="margin:0"><p style="margin:0">${esc(t.q)}</p></div></div>`).join("")}
+    <button class="btn btn-deep" id="go">Smonta un pensiero</button>
+  </div>`);
+  v.querySelector("#bk").onclick = () => history.back();
+  v.querySelector("#go").onclick = smonta;
+  mount(v);
+}
+
+/* ---------- STRUMENTI GUIDATI A PASSI ---------- */
+function guida(id){
+  screen({s:"guida", id});
+  const G = GUIDE[id], T = TOOLS[id];
+  let k = G.intro || G.warn ? -1 : 0;
+  const notes = {};
+  function step(){
+    clearTimers();
+    let body;
+    if(k === -1) body = `<div class="react">${mascot("calm", 100)}</div>${G.intro ? `<div class="card soft"><p style="margin:0">${esc(G.intro)}</p></div>` : ""}${G.warn ? `<div class="card" style="background:var(--bad-bg)"><b>Prima di iniziare</b><p style="margin:6px 0 0">${esc(G.warn)}</p></div>` : ""}`;
+    else if(k < G.steps.length){
+      const s = G.steps[k];
+      body = `<span class="label">Passo ${k + 1} di ${G.steps.length}</span><div class="meter"><i style="width:${(k + 1) / G.steps.length * 100}%"></i></div>
+        <div class="react">${mascot(id === "tip" && k === 1 ? "cheer" : "calm", 90)}</div>
+        <div class="card"><h3>${esc(s.h)}</h3><p>${esc(s.b)}</p>${s.go ? `<button class="btn btn-main" id="sub">Apri il respiro guidato</button>` : ""}</div>
+        ${s.t ? `<div class="timer" id="tm">${fmtT(s.t)} · <button class="link small" id="st">Avvia il timer</button></div>` : ""}
+        ${G.write ? `<label class="field"><span>Se vuoi, scrivi la tua risposta</span><textarea id="f" placeholder="…">${esc(notes[k] || "")}</textarea></label>${riskBox()}` : ""}`;
+    } else {
+      body = `<div class="react">${mascot("happy", 110)}</div><div class="card soft"><h3>Fatto.</h3><p style="margin:0">Come va adesso, anche solo un pochino? Non deve essere passato tutto: anche un piccolo cambiamento conta.</p></div>
+        ${G.doors ? `<div class="sec-h"><h3>E ora, quale porta?</h3></div><div class="list">
+          <button class="row" data-door="home"><span class="num">🚪</span><span class="t"><b>Torno alle mie cose</b><span class="sub">Con un po' più di presenza</span></span></button>
+          <button class="row" data-door="espansione"><span class="num">🫶</span><span class="t"><b>La porta del corpo</b><span class="sub">Fai spazio a una sensazione difficile</span></span></button>
+          <button class="row" data-door="lenti"><span class="num">🔎</span><span class="t"><b>La porta dei pensieri</b><span class="sub">Guarda un pensiero con le lenti</span></span></button>
+          <button class="row" data-door="passo"><span class="num">👣</span><span class="t"><b>La porta dell'azione</b><span class="sub">Un piccolo passo, piacere o padronanza</span></span></button></div>` : ""}`;
+    }
+    const last = k >= G.steps.length;
+    const v = $(`<div class="pop">
+      ${backBtn("Esci")}
+      <div class="page-h"><span class="label">${esc(T.s)}</span><h2>${T.e} ${esc(T.n)}</h2></div>
+      ${body}
+      ${last ? `<div class="btns" style="margin-top:16px"><button class="btn btn-deep" id="fine">Fine</button></div>` : `<div class="btns2"><button class="btn btn-ghost" id="prev" ${k <= (G.intro || G.warn ? -1 : 0) ? "disabled" : ""}>‹ Indietro</button><button class="btn btn-deep" id="next">${k === -1 ? "Inizia" : "Avanti ›"}</button></div>`}
+    </div>`);
+    v.querySelector("#bk").onclick = () => history.back();
+    const p = v.querySelector("#prev"); if(p) p.onclick = () => { k--; step(); };
+    const n = v.querySelector("#next"); if(n) n.onclick = () => { k++; step(); };
+    const fi = v.querySelector("#fine"); if(fi) fi.onclick = () => history.back();
+    const sb = v.querySelector("#sub"); if(sb) sb.onclick = respiro;
+    const f = v.querySelector("#f"); if(f) f.oninput = () => { notes[k] = f.value; };
+    v.querySelectorAll("[data-door]").forEach(b => b.onclick = () => b.dataset.door === "home" ? home() : runTool(b.dataset.door));
+    const st = v.querySelector("#st");
+    if(st) st.onclick = () => {
+      let left = G.steps[k].t; const tm = v.querySelector("#tm");
+      tm.textContent = fmtT(left);
+      const iv = setInterval(() => { left--; tm.textContent = left > 0 ? fmtT(left) : "Tempo finito. Avanti quando vuoi."; if(left <= 0) clearInterval(iv); }, 1000);
+      timers.push(iv);
+    };
+    watchRisk(v);
+    mount(v);
+  }
+  step();
+}
+const fmtT = (s) => Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+
+/* ---------- RESPIRO LENTO ---------- */
+function respiro(){
+  screen({s:"respiro"});
+  let mins = 2, running = false;
+  const v = $(`<div class="pop">
+    ${backBtn("Esci")}
+    <div class="page-h"><span class="label">DBT · ACT</span><h2>🫧 Respiro lento</h2><p>Inspira mentre la bolla si gonfia (4 secondi), espira mentre si sgonfia (6 secondi). Se ti distrai, torna semplicemente alla bolla.</p></div>
+    <div class="breath"><div class="ring"></div><div class="ball" id="ball"></div><div class="say" id="say">Quando vuoi</div></div>
+    <div class="timer" id="tm">2:00</div>
+    <div class="opts" style="justify-content:center">${[1, 2, 5].map(m => `<button class="opt ${m === mins ? "on" : ""}" data-min="${m}">${m} min</button>`).join("")}</div>
+    <button class="btn btn-deep" id="go">Inizia</button>
+  </div>`);
+  const ball = v.querySelector("#ball"), say = v.querySelector("#say"), tm = v.querySelector("#tm"), btn = v.querySelector("#go");
+  v.querySelectorAll("[data-min]").forEach(b => b.onclick = () => { if(running) return; mins = +b.dataset.min; tm.textContent = fmtT(mins * 60); v.querySelectorAll("[data-min]").forEach(x => x.classList.toggle("on", x === b)); });
+  function stop(msg){ clearTimers(); running = false; ball.style.transitionDuration = "1s"; ball.style.transform = "scale(.8)"; say.textContent = msg || "Quando vuoi"; btn.textContent = "Ricomincia"; }
+  btn.onclick = () => {
+    if(running) return stop("In pausa");
+    running = true; btn.textContent = "Pausa";
+    let left = mins * 60;
+    const cycle = () => {
+      ball.style.transitionDuration = "4s"; ball.style.transform = "scale(2)"; say.textContent = "Inspira";
+      timers.push(setTimeout(() => { ball.style.transitionDuration = "6s"; ball.style.transform = "scale(.8)"; say.textContent = "Espira"; }, 4000));
+    };
+    cycle(); timers.push(setInterval(cycle, 10000));
+    timers.push(setInterval(() => { left--; tm.textContent = fmtT(Math.max(0, left)); if(left <= 0) stop("Ben fatto."); }, 1000));
+  };
+  v.querySelector("#bk").onclick = () => history.back();
+  mount(v);
+}
+
+/* ---------- GETTA L'ANCORA ---------- */
+function ancora(){
+  screen({s:"ancora"});
+  let k = 0; const got = {}, nomi = {crisi:"", emo:"", pens:"", az:""};
+  const ST = [
+    {h:"Piedi a terra", b:"Spingi i piedi contro il pavimento. Senti che ti sostiene, che regge il tuo peso. Raddrizza un po' la schiena. Sei qui.", t:15},
+    {h:"5 cose che vedi", b:"Guardati intorno e trova cinque cose. Toccane una qui sotto per ognuna. Notane il colore, la forma.", n:5},
+    {h:"5 cose che senti", b:"Ascolta: cinque suoni. Vicini o lontani, forti o deboli. Anche il tuo respiro conta.", n:5},
+    {h:"5 cose che tocchi", b:"Cinque sensazioni sulla pelle: i vestiti, la sedia, l'aria, le mani una sull'altra, il telefono.", n:5},
+    {h:"Respira", b:"Ora respira lento, con l'espirazione un po' più lunga. Tre, quattro volte. Il respiro è la tua àncora.", t:30},
+    {h:"Dai un nome", b:"Fai un passo indietro e guarda cosa sta succedendo. Completa le frasi, anche con una parola sola."}
+  ];
+  function step(){
+    clearTimers();
+    const s = ST[k], last = k === ST.length - 1, fine = k >= ST.length;
+    let body;
+    if(fine) body = `<div class="react">${mascot("calm", 110)}</div><div class="card soft"><h3>La tempesta non è finita per forza, ma tu hai i piedi per terra.</h3><p style="margin:0">Puoi ripetere l'àncora tutte le volte che serve. Se ti senti ancora in pericolo, chiedi aiuto adesso.</p></div>
+      <div class="btns"><button class="btn btn-deep" id="fine">Fine</button><button class="btn btn-ghost" data-crisi>Numeri di aiuto</button></div>`;
+    else body = `<span class="label">Passo ${k + 1} di ${ST.length}</span><div class="meter"><i style="width:${(k + 1) / ST.length * 100}%"></i></div>
+      <div class="card"><h3>${esc(s.h)}</h3><p>${esc(s.b)}</p>
+      ${s.n ? `<div class="dots">${Array.from({length:s.n}, (_, i) => `<button class="dot ${got[k] > i ? "on" : ""}" data-i="${i}" aria-label="Fatto ${i + 1}">${i + 1}</button>`).join("")}</div>` : ""}
+      ${last ? `<label class="field"><span>In questo momento sto affrontando…</span><input type="text" data-n="crisi" value="${esc(nomi.crisi)}"></label>
+        <label class="field"><span>Le emozioni che sento sono…</span><input type="text" data-n="emo" value="${esc(nomi.emo)}"></label>
+        <label class="field"><span>La mia mente mi sta dicendo…</span><input type="text" data-n="pens" value="${esc(nomi.pens)}"></label>
+        <label class="field"><span>Una cosa che posso fare adesso è…</span><input type="text" data-n="az" value="${esc(nomi.az)}"></label>` : ""}
+      </div>
+      ${s.t ? `<div class="timer" id="tm">${fmtT(s.t)}</div>` : ""}
+      ${riskBox()}
+      <div class="btns2"><button class="btn btn-ghost" id="prev" ${k === 0 ? "disabled" : ""}>‹ Indietro</button><button class="btn btn-deep" id="next">${last ? "Fatto" : "Avanti ›"}</button></div>`;
+    const v = $(`<div class="pop">
+      ${backBtn("Esci")}
+      <div class="page-h"><span class="label">ACT · Harris</span><h2>⚓ Getta l'ancora</h2></div>
+      ${body}
+    </div>`);
+    v.querySelector("#bk").onclick = () => history.back();
+    const fi = v.querySelector("#fine"); if(fi) fi.onclick = () => history.back();
+    const p = v.querySelector("#prev"); if(p) p.onclick = () => { k--; step(); };
+    const n = v.querySelector("#next"); if(n) n.onclick = () => { k++; step(); };
+    v.querySelectorAll(".dot").forEach(b => b.onclick = () => { got[k] = Math.max(got[k] || 0, +b.dataset.i + 1); v.querySelectorAll(".dot").forEach((d, i) => d.classList.toggle("on", i < got[k])); });
+    v.querySelectorAll("[data-n]").forEach(x => x.oninput = () => { nomi[x.dataset.n] = x.value; });
+    if(s && s.t){ let left = s.t; const tm = v.querySelector("#tm"); const iv = setInterval(() => { left--; tm.textContent = left > 0 ? fmtT(left) : "Avanti quando vuoi."; if(left <= 0) clearInterval(iv); }, 1000); timers.push(iv); }
+    watchRisk(v);
+    mount(v);
+  }
+  step();
+}
+
+/* ---------- UN PICCOLO PASSO ---------- */
+function passo(){
+  screen({s:"passo"});
+  let sel = null, pred = 3;
+  function view(){
+    const p = S.pending;
+    let body;
+    if(p) body = `<div class="react">${mascot("hi", 100)}</div>
+      <div class="card"><span class="label">Il tuo passo</span><h3 style="margin:6px 0">${esc(p.a)}</h3><p class="muted">Avevi previsto <b>${p.pred}/10</b> di sollievo.</p></div>
+      <div class="card soft"><p style="margin:0">Fallo adesso, senza aspettare la voglia: quando l'umore è basso la voglia arriva <b>dopo</b> aver iniziato, non prima. Poi torna qui.</p></div>
+      ${rangeField("real", "Com'è andata davvero? Quanto ti ha fatto bene?", 5, 10, ["0 · per niente", "10 · moltissimo"])}
+      <div class="btns"><button class="btn btn-deep" id="done">L'ho fatto</button><button class="btn btn-ghost" id="nope">Non ce l'ho fatta</button></div>`;
+    else body = `<p class="muted">Scegli una cosa piccola, da fare in 5 minuti. Non deve piacerti per forza: anche le cose «da fare» danno un po' di soddisfazione.</p>
+      ${MICRO.map(c => `<div class="sec-h"><h3>${c.e} ${esc(c.n)}</h3></div><div class="opts">${c.a.map(a => `<button class="opt ${sel === a ? "on" : ""}" data-a="${esc(a)}">${esc(a)}</button>`).join("")}</div>`).join("")}
+      ${valoriPassi().length ? `<div class="sec-h"><h3>🧭 Dai tuoi valori</h3></div><div class="opts">${valoriPassi().map(a => `<button class="opt ${sel === a ? "on" : ""}" data-a="${esc(a)}">${esc(a)}</button>`).join("")}</div>` : ""}
+      <label class="field"><span>Oppure scrivi il tuo</span><input type="text" id="mio" placeholder="Es. Innaffiare le piante" value="${sel && !MICRO.some(c => c.a.includes(sel)) && !valoriPassi().includes(sel) ? esc(sel) : ""}"></label>
+      <div class="card"><span class="label">Prima di farlo</span>${rangeField("pred", "Quanto pensi che ti farà stare meglio?", pred, 10, ["0 · per niente", "10 · moltissimo"])}<p class="hint" style="margin:0">Poi confronteremo la previsione con com'è andata davvero.</p></div>
+      <button class="btn btn-deep" id="go" ${sel ? "" : "disabled"}>Lo faccio adesso</button>`;
+    const v = $(`<div class="pop">
+      ${backBtn("Esci")}
+      <div class="page-h"><span class="label">Attivazione comportamentale</span><h2>👣 Un piccolo passo</h2></div>
+      ${body}
+    </div>`);
+    v.querySelector("#bk").onclick = () => history.back();
+    v.querySelectorAll("[data-a]").forEach(b => b.onclick = () => { sel = b.dataset.a; v.querySelectorAll("[data-a]").forEach(x => x.classList.toggle("on", x === b)); const m = v.querySelector("#mio"); if(m) m.value = ""; v.querySelector("#go").disabled = false; });
+    const mio = v.querySelector("#mio"); if(mio) mio.oninput = () => { sel = mio.value.trim() || null; v.querySelectorAll("[data-a]").forEach(x => x.classList.remove("on")); v.querySelector("#go").disabled = !sel; };
+    wireRange(v, "pred", x => pred = x);
+    let real = 5; wireRange(v, "real", x => real = x);
+    const g = v.querySelector("#go"); if(g) g.onclick = () => { S.pending = {id:uid(), a:sel, pred, d:new Date().toISOString()}; save(); view(); };
+    const dn = v.querySelector("#done"); if(dn) dn.onclick = () => { const r = Object.assign({}, S.pending, {real}); S.passi.push(r); S.pending = null; save(); fine(r); };
+    const np = v.querySelector("#nope"); if(np) np.onclick = () => { S.passi.push(Object.assign({}, S.pending, {real:null})); S.pending = null; save(); nonFatto(); };
+    mount(v);
+  }
+  function fine(r){
+    const meglio = r.real > r.pred;
+    const v = $(`<div class="pop">
+      <div class="page-h"><span class="label">Un piccolo passo · fatto</span><h2>${meglio ? "È andata meglio del previsto!" : "L'hai fatto. Conta."}</h2></div>
+      <div class="react">${mascot("cheer", 110)}</div>
+      <div class="card"><div class="bars"><div class="bar"><span>Previsto</span><span class="tr"><i style="width:${r.pred * 10}%"></i></span><b>${r.pred}</b></div><div class="bar"><span>Davvero</span><span class="tr"><i class="after" style="width:${r.real * 10}%"></i></span><b>${r.real}</b></div></div></div>
+      <div class="card soft"><p style="margin:0">${meglio ? "Ecco una cosa che la depressione non dice: quando l'umore è basso la mente prevede sempre che niente aiuterà. I tuoi dati dicono un'altra cosa." : "Anche se non è cambiato molto, hai fatto una cosa nonostante la fatica. È così che si rimette in moto la giornata: un passo, poi un altro."}</p></div>
+      <div class="btns"><button class="btn btn-deep" id="ancora">Un altro passo</button><button class="btn btn-ghost" id="home">Torna a Oggi</button></div>
+    </div>`);
+    v.querySelector("#ancora").onclick = () => { sel = null; view(); };
+    v.querySelector("#home").onclick = home;
+    mount(v);
+  }
+  function nonFatto(){
+    const v = $(`<div class="pop">
+      <div class="page-h"><span class="label">Un piccolo passo</span><h2>Va bene. Davvero.</h2></div>
+      <div class="react">${mascot("listen", 110)}</div>
+      <div class="card soft"><p style="margin:0">Non è un fallimento: era solo un passo ancora troppo grande per adesso. Proviamo con qualcosa di ancora più piccolo? Per esempio: alzarsi e bere un bicchiere d'acqua.</p></div>
+      <div class="btns"><button class="btn btn-deep" id="ancora">Scegli un passo più piccolo</button><button class="btn btn-ghost" id="gent">Prenditi cura di te</button></div>
+    </div>`);
+    v.querySelector("#ancora").onclick = () => { sel = null; view(); };
+    v.querySelector("#gent").onclick = () => guida("gentilezza");
+    mount(v);
+  }
+  view();
+}
+function valoriPassi(){ return VALORI_AREE.map(a => (S.values[a.k + "_p"] || "").trim()).filter(Boolean); }
+
+/* ---------- SPEZZA IN PEZZETTI ---------- */
+function pezzi(){
+  screen({s:"pezzi"});
+  const v = $(`<div class="pop">
+    ${backBtn("Esci")}
+    <div class="page-h"><span class="label">CBT · Burns</span><h2>🪜 Spezza in pezzetti</h2><p>Un compito enorme diviso in pezzi da 5–10 minuti. Ne fai uno, lo spunti, e intanto il mostro diventa più piccolo.</p></div>
+    <div class="card"><label class="field"><span>Un compito che ti pesa</span><input type="text" id="nt" placeholder="Es. Rispondere alle email di lavoro"></label><button class="btn btn-deep" id="add">Aggiungi</button></div>
+    <div id="tasks">${S.tasks.map(t => { const d = t.steps.filter(s => s.done).length; return `<div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:start;gap:8px"><h3 style="overflow-wrap:anywhere">${esc(t.t)}</h3><button class="del" data-del="${t.id}" aria-label="Elimina compito">✕</button></div>
+      <span class="label">${d} di ${t.steps.length} pezzi${t.steps.length && d === t.steps.length ? " · finito! 🎉" : ""}</span>
+      <div>${t.steps.map((s, i) => `<label class="task ${s.done ? "done" : ""}"><input type="checkbox" data-t="${t.id}" data-i="${i}" ${s.done ? "checked" : ""}><span>${esc(s.t)}</span><span></span></label>`).join("")}</div>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:10px"><input type="text" data-new="${t.id}" placeholder="Un pezzo piccolo, es. aprire la prima"><button class="btn btn-ghost" data-addp="${t.id}" style="width:auto;padding:10px 14px">+</button></div>
+    </div>`; }).join("")}</div>
+  </div>`);
+  v.querySelector("#bk").onclick = () => history.back();
+  v.querySelector("#add").onclick = () => { const t = v.querySelector("#nt").value.trim(); if(!t) return; S.tasks.unshift({id:uid(), t, steps:[]}); save(); pezzi(); };
+  v.querySelectorAll("[data-addp]").forEach(b => {
+    const inp = v.querySelector(`[data-new="${b.dataset.addp}"]`);
+    const add = () => { const t = inp.value.trim(); if(!t) return; S.tasks.find(x => x.id === b.dataset.addp).steps.push({t, done:false}); save(); pezzi(); };
+    b.onclick = add; inp.onkeydown = (e) => { if(e.key === "Enter") add(); };
+  });
+  v.querySelectorAll("[data-t]").forEach(c => c.onchange = () => { const t = S.tasks.find(x => x.id === c.dataset.t); t.steps[+c.dataset.i].done = c.checked; save(); pezzi(); });
+  v.querySelectorAll("[data-del]").forEach(b => b.onclick = () => { if(!confirm("Eliminare questo compito?")) return; S.tasks = S.tasks.filter(x => x.id !== b.dataset.del); save(); pezzi(); });
+  mount(v);
+}
+
+/* ---------- VALORI e SENSO ---------- */
+function valori(){
+  screen({s:"valori"});
+  const v = $(`<div class="pop">
+    ${backBtn("Esci")}
+    <div class="page-h"><span class="label">ACT · Harris</span><h2>🧭 La bussola dei valori</h2><p>I valori non sono traguardi da raggiungere: sono direzioni, come il nord. Non «arrivi» mai a essere una persona gentile, ma puoi andare in quella direzione oggi stesso.</p></div>
+    ${VALORI_AREE.map(a => `<div class="card"><h3>${a.e} ${esc(a.n)}</h3>
+      <label class="field"><span class="small">${esc(a.q)}</span><textarea data-k="${a.k}" placeholder="Per me conta…">${esc(S.values[a.k] || "")}</textarea></label>
+      <label class="field"><span class="small">Un passo piccolissimo in questa direzione</span><input type="text" data-k="${a.k}_p" placeholder="Es. Scrivere a mia sorella" value="${esc(S.values[a.k + "_p"] || "")}"></label></div>`).join("")}
+    <p class="small muted">Si salva da solo. I passi che scrivi qui compaiono anche in «Un piccolo passo».</p>
+  </div>`);
+  v.querySelector("#bk").onclick = () => history.back();
+  v.querySelectorAll("[data-k]").forEach(x => x.oninput = () => { S.values[x.dataset.k] = x.value; save(); });
+  mount(v);
+}
+function senso(){
+  screen({s:"senso"});
+  const F = [
+    {k:"fare", e:"🛠️", n:"Qualcosa da fare o da creare", q:"Un lavoro, un progetto, un gesto per qualcuno, qualcosa che solo tu puoi fare a modo tuo."},
+    {k:"amare", e:"💛", n:"Qualcuno o qualcosa da amare", q:"Una persona, un animale, la natura, la musica, un luogo. Qualcosa che, quando lo vivi, ti fa sentire la vita."},
+    {k:"atteggiamento", e:"🌱", n:"Come porto ciò che non posso cambiare", q:"Ci sono dolori che non si possono evitare. Anche lì resta una libertà: scegliere con che atteggiamento attraversarli. Che persona vuoi essere, dentro questa difficoltà?"},
+    {k:"attesa", e:"🕯️", n:"Chi o cosa mi aspetta?", q:"Frankl vide che chi sentiva di avere qualcuno o qualcosa che lo aspettava, una persona o un'opera da finire, trovava la forza di resistere. Chi o cosa ti aspetta?"}
+  ];
+  const v = $(`<div class="pop">
+    ${backBtn("Esci")}
+    <div class="page-h"><span class="label">Logoterapia · Frankl</span><h2>✨ Cosa ti chiede la vita</h2><p>Viktor Frankl, psichiatra sopravvissuto ai campi di concentramento, notò che chi aveva un «perché» sopportava quasi ogni «come». E propose di rovesciare la domanda: non «cosa mi dà la vita?», ma «cosa mi chiede la vita, adesso?». Il senso non si inventa: si scopre, un giorno alla volta.</p></div>
+    ${F.map(f => `<div class="card"><h3>${f.e} ${esc(f.n)}</h3><p class="small muted">${esc(f.q)}</p><textarea data-k="${f.k}" placeholder="…">${esc(S.senso[f.k] || "")}</textarea></div>`).join("")}
+    ${riskBox()}
+    <p class="small muted">Si salva da solo. Puoi tornare a rileggerlo quando vuoi.</p>
+  </div>`);
+  v.querySelector("#bk").onclick = () => history.back();
+  v.querySelectorAll("[data-k]").forEach(x => x.oninput = () => { S.senso[x.dataset.k] = x.value; save(); });
+  watchRisk(v);
+  mount(v);
+}
+
+/* ---------- PIANO DI SICUREZZA ---------- */
+function piano(){
+  screen({s:"piano"});
+  const P = S.plan;
+  const v = $(`<div class="pop">
+    ${backBtn("Indietro")}
+    <div class="page-h"><span class="label">Il mio piano di sicurezza</span><h2>🛟 Per i momenti peggiori</h2><p>Compilalo quando stai abbastanza bene, magari con una persona di fiducia o con il tuo terapeuta. Nei momenti di crisi pensare è difficile: qui trovi già scritto cosa fare.</p></div>
+    ${PIANO_F.map(f => `<div class="card"><h3>${esc(f.n)}</h3><textarea data-k="${f.k}" placeholder="${esc(f.ph)}">${esc(P[f.k] || "")}</textarea></div>`).join("")}
+    <div class="card"><h3>Persone a cui posso chiedere aiuto</h3><p class="small muted">Compaiono nella schermata «Aiuto», con il pulsante per chiamarle.</p>
+      <div>${P.contacts.map((c, i) => `<div class="task"><span>📞</span><span><b>${esc(c.n)}</b> · ${esc(c.t)}</span><button class="del" data-del="${i}" aria-label="Elimina contatto">✕</button></div>`).join("")}</div>
+      <div style="display:grid;gap:8px;margin-top:10px"><input type="text" id="cn" placeholder="Nome"><input type="tel" id="ct" placeholder="Numero di telefono"><button class="btn btn-ghost" id="cadd">Aggiungi persona</button></div>
+    </div>
+    <p class="small muted">Si salva da solo.</p>
+  </div>`);
+  v.querySelector("#bk").onclick = () => history.back();
+  v.querySelectorAll("[data-k]").forEach(x => x.oninput = () => { P[x.dataset.k] = x.value; save(); });
+  v.querySelector("#cadd").onclick = () => { const n = v.querySelector("#cn").value.trim(), t = v.querySelector("#ct").value.trim(); if(!n || !t) return; P.contacts.push({n, t}); save(); piano(); };
+  v.querySelectorAll("[data-del]").forEach(b => b.onclick = () => { P.contacts.splice(+b.dataset.del, 1); save(); piano(); });
+  mount(v);
+}
+
+/* ---------- SCATOLA DELLA SPERANZA ---------- */
+function scatola(){
+  screen({s:"scatola"});
+  const v = $(`<div class="pop">
+    ${topBar()}
+    <div class="page-h"><span class="label">La scatola della speranza</span><h2>Le cose che contano</h2><p>Riempila nei giorni buoni con motivi, ricordi, persone e messaggi per te. Aprila nei giorni brutti, quando la mente dimentica.</p></div>
+    <div class="btns">
+      <button class="btn btn-deep" id="open" ${S.box.length ? "" : "disabled"}>📦 Apri la scatola</button>
+      <button class="btn btn-ghost" id="add">Aggiungi qualcosa</button>
+    </div>
+    <div class="sec-h"><h3>Dentro la scatola</h3><span class="label">${S.box.length}</span></div>
+    <div class="list">${S.box.length ? S.box.map(b => { const t = BOX_TIPI.find(x => x.id === b.k) || BOX_TIPI[0]; return `<div class="row" style="grid-template-columns:44px 1fr auto">${b.img ? `<img class="thumb" src="${b.img}" alt="">` : `<span class="num">${t.e}</span>`}<span class="t"><b style="overflow-wrap:anywhere">${esc(b.t || t.n)}</b><span class="sub">${esc(t.n)}${b.tel ? " · " + esc(b.tel) : ""}</span></span><button class="del" data-del="${b.id}" aria-label="Elimina">✕</button></div>`; }).join("") : `<div class="card soft"><p style="margin:0">La scatola è vuota. Comincia con una cosa sola: un motivo per andare avanti, anche piccolo. Per esempio: «il caffè della domenica con mia nonna».</p></div>`}</div>
+  </div>`);
+  wireTop(v);
+  v.querySelector("#open").onclick = boxopen;
+  v.querySelector("#add").onclick = boxadd;
+  v.querySelectorAll("[data-del]").forEach(b => b.onclick = () => { if(!confirm("Togliere questa cosa dalla scatola?")) return; S.box = S.box.filter(x => x.id !== b.dataset.del); save(); scatola(); });
+  v.appendChild(tabBar("scatola"));
+  mount(v);
+}
+function boxadd(){
+  screen({s:"boxadd"});
+  let k = "motivo", img = null;
+  const v = $(`<div class="pop">
+    ${backBtn("Scatola")}
+    <div class="page-h"><span class="label">La scatola della speranza</span><h2>Aggiungi qualcosa</h2></div>
+    <span style="font-weight:700">Cos'è?</span>
+    <div class="opts" style="margin-top:8px">${BOX_TIPI.map(t => `<button class="opt ${t.id === k ? "on" : ""}" data-k="${t.id}">${t.e} ${esc(t.n)}</button>`).join("")}</div>
+    <label class="field"><span id="lab">Scrivilo qui</span><textarea id="t" placeholder="Es. Voglio vedere crescere mio nipote."></textarea></label>
+    <label class="field" id="telf" style="display:none"><span>Numero di telefono (facoltativo)</span><input type="tel" id="tel" placeholder="Per chiamarla con un tocco"></label>
+    <label class="btn btn-ghost" for="ph">📷 Aggiungi una foto (facoltativa)</label><input type="file" id="ph" accept="image/*" hidden>
+    <div id="prev" style="margin:12px 0"></div>
+    <div class="msg" id="msg"></div>
+    <button class="btn btn-deep" id="sv">Metti nella scatola</button>
+  </div>`);
+  const ph = {motivo:"Es. Voglio vedere crescere mio nipote.", ricordo:"Es. Il viaggio al mare con gli amici, quando abbiamo riso fino alle tre.", persona:"Es. Giulia, che mi ascolta sempre.", messaggio:"Scrivi al te dei giorni brutti, dai giorni buoni. Es. Ricordati che hai già superato momenti così.", aiuta:"Es. Camminare al parco, la playlist «calma», chiamare mamma."};
+  v.querySelectorAll("[data-k]").forEach(b => b.onclick = () => { k = b.dataset.k; v.querySelectorAll("[data-k]").forEach(x => x.classList.toggle("on", x === b)); v.querySelector("#t").placeholder = ph[k]; v.querySelector("#telf").style.display = k === "persona" ? "grid" : "none"; });
+  v.querySelector("#ph").onchange = (e) => {
+    const f = e.target.files[0]; if(!f) return;
+    const r = new FileReader();
+    r.onload = () => { const im = new Image(); im.onload = () => {
+      const m = 640, sc = Math.min(1, m / Math.max(im.width, im.height)), c = document.createElement("canvas");
+      c.width = Math.round(im.width * sc); c.height = Math.round(im.height * sc);
+      c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+      img = c.toDataURL("image/jpeg", 0.7);
+      v.querySelector("#prev").innerHTML = `<img src="${img}" alt="" style="max-width:100%;max-height:220px;border-radius:12px">`;
+    }; im.src = r.result; };
+    r.readAsDataURL(f);
+  };
+  v.querySelector("#bk").onclick = scatola;
+  v.querySelector("#sv").onclick = () => {
+    const t = v.querySelector("#t").value.trim();
+    if(!t && !img){ v.querySelector("#msg").textContent = "Scrivi qualcosa o aggiungi una foto."; return; }
+    const it = {id:uid(), k, t, img, tel:k === "persona" ? v.querySelector("#tel").value.trim() : ""};
+    S.box.unshift(it);
+    if(!save()){ S.box.shift(); v.querySelector("#msg").textContent = "Spazio pieno sul telefono: prova senza foto o togli qualche foto vecchia."; return; }
+    scatola();
+  };
+  watchRisk(v);
+  mount(v);
+}
+function boxopen(){
+  screen({s:"boxopen"});
+  if(!S.box.length) return scatola();
+  let i = Math.floor(Math.random() * S.box.length);
+  function show(){
+    const b = S.box[i], t = BOX_TIPI.find(x => x.id === b.k) || BOX_TIPI[0];
+    const v = $(`<div class="pop">
+      ${backBtn("Scatola")}
+      <div class="react">${mascot("calm", 90)}</div>
+      <div class="boxcard"><span class="label">${t.e} ${esc(t.n)}</span>${b.img ? `<img src="${b.img}" alt="" style="margin-top:12px">` : ""}<p class="big" style="margin-top:10px">${esc(b.t)}</p>
+        ${b.tel ? `<a class="btn btn-deep" href="tel:${esc(b.tel.replace(/[^\d+]/g, ""))}">📞 Chiama</a>` : ""}</div>
+      <div class="btns">${S.box.length > 1 ? `<button class="btn btn-main" id="next">Un'altra</button>` : ""}<button class="btn btn-ghost" id="fine">Chiudi la scatola</button></div>
+    </div>`);
+    v.querySelector("#bk").onclick = scatola;
+    const n = v.querySelector("#next"); if(n) n.onclick = () => { i = (i + 1) % S.box.length; show(); };
+    v.querySelector("#fine").onclick = scatola;
+    mount(v);
+  }
+  show();
+}
+
+/* ---------- IMPOSTAZIONI ---------- */
+function settings(note){
+  screen({s:"settings"});
+  const v = $(`<div class="pop">
+    ${backBtn("Indietro")}
+    <div class="page-h"><span class="label">Impostazioni</span><h2>Colori e dati</h2></div>
+    <div class="sec-h"><h3>Colori</h3><span class="label">Tocca per provarli</span></div>
+    <div class="pals">${PALETTES.map(p => `<button class="pal ${p.id === S.palette ? "on" : ""}" data-id="${p.id}">
+        <span class="sw" style="background:${p.bg}"><i style="background:${p.deep}"></i><b style="color:${p.ink}">Aa</b></span>
+        <span class="pt2"><b>${esc(p.name)}</b><span>${esc(p.sub)}</span></span>
+      </button>`).join("")}</div>
+    <div class="sec-h"><h3>I tuoi dati</h3></div>
+    <p class="small muted">Tutto resta solo su questo telefono: niente account, niente server. Se cambi telefono, esporta un backup e ripristinalo sul nuovo.</p>
+    <div class="stack">
+      <button class="btn btn-ghost" id="exp">Esporta backup</button>
+      <label class="btn btn-ghost" for="imp">Ripristina backup</label><input type="file" id="imp" accept="application/json,.json" hidden>
+      <button class="btn btn-ghost" id="piano">🛟 Il mio piano di sicurezza</button>
+      <button class="btn btn-ghost" id="fonti">📚 Da quali libri viene Lucciola</button>
+      <button class="btn btn-ghost" id="intro">Rivedi la presentazione</button>
+      <button class="btn btn-ghost" id="wipe" style="color:var(--bad)">Cancella tutti i dati</button>
+      <span class="msg" id="msg">${esc(note || "")}</span>
+    </div>
+    <footer class="foot"><span>Lucciola non è un dispositivo medico, non fa diagnosi e non sostituisce un professionista. In caso di pericolo chiama il 112.</span></footer>
+  </div>`);
+  v.querySelector("#bk").onclick = () => history.back();
+  v.querySelectorAll(".pal").forEach(b => b.onclick = () => { S.palette = b.dataset.id; save(); applyPalette(); settings(); });
+  v.querySelector("#exp").onclick = () => {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(S, null, 1)], {type:"application/json"}));
+    a.download = "lucciola-backup-" + today() + ".json"; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  };
+  v.querySelector("#imp").onchange = (e) => {
+    const f = e.target.files[0]; if(!f) return;
+    f.text().then(t => { S = Object.assign(fresh(), JSON.parse(t)); if(!S.plan.contacts) S.plan.contacts = []; save(); applyPalette(); settings("Backup ripristinato."); })
+      .catch(() => settings("File non valido: nessun dato modificato."));
+  };
+  v.querySelector("#piano").onclick = piano;
+  v.querySelector("#fonti").onclick = fonti;
+  v.querySelector("#intro").onclick = () => { S.onboarded = false; save(); home(); };
+  v.querySelector("#wipe").onclick = () => { if(!confirm("Cancellare davvero diario, scatola, piano e tutto il resto? Non si può annullare. Se vuoi tenerli, prima esporta un backup.")) return; const pal = S.palette; S = fresh(); S.palette = pal; S.onboarded = true; save(); settings("Dati cancellati."); };
+  mount(v);
+}
+
+applyPalette();
+try{ history.replaceState({s:"home", i:0}, ""); }catch(e){}
+home();
+window.APP = {mascot, PALETTES};   // usato da scripts/icone.mjs e scripts/verifica.mjs
+})();
+</script>
+<script>if("serviceWorker" in navigator && location.protocol.indexOf("http") === 0){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
+</body></html>
