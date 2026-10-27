@@ -52,6 +52,12 @@ Dai libri vengono solo i metodi; tutti i testi sono originali.
 
 I dati restano salvati nel browser di ogni dispositivo e non vengono toccati dagli aggiornamenti.
 
+## Backup
+
+- **Automatico giornaliero** (attivo di default): alla prima apertura di ogni giorno l'app salva una copia dei dati in IndexedDB (`lucciola-backup`) e tiene le ultime 7. La copia del giorno non viene sovrascritta, quindi resta un punto di ritorno anche dopo «Cancella tutti i dati». Si ripristina da Impostazioni → I tuoi dati.
+- **File giornaliero** (opzionale): i browser non permettono di salvare file da soli, quindi una volta al giorno la home mostra un promemoria con il pulsante «Salva file».
+- **Manuale**: Esporta / Ripristina backup (file `.json`).
+
 ## Installare l'app
 
 - iPhone: apri il sito in Safari → Condividi → "Aggiungi alla schermata Home".

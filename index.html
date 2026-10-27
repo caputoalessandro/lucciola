@@ -72,6 +72,8 @@ b{font-weight:700}
 /* barra superiore */
 .top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;row-gap:12px;margin-bottom:20px}
 .brand{display:flex;align-items:center;gap:6px}
+.brand-t{display:flex;flex-direction:column;line-height:1}
+.tagline{font-family:var(--f-display);font-style:italic;font-size:13px;color:var(--muted);opacity:.8;margin-top:3px;white-space:nowrap}
 .logo{font-family:var(--f-display);font-style:italic;font-weight:600;font-size:30px;letter-spacing:-.01em;color:var(--glow);text-shadow:0 0 22px color-mix(in srgb, var(--glow) 40%, transparent);white-space:nowrap}
 .stats{display:flex;flex-wrap:wrap;gap:8px}
 .chip{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:14px;font-weight:700;color:var(--ink)}
@@ -154,6 +156,8 @@ textarea{min-height:110px}
 .opts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
 .opt{border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);padding:8px 14px;font-size:15px;font-weight:700}
 .opt.on{background:var(--gold);color:var(--on-gold);border-color:transparent}
+.snap{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--hair)}
+.snap:first-child{border-top:0}
 .opt:active{transform:translateY(1px)}
 .choice{display:grid;gap:10px;margin-bottom:16px}
 .choice .row{grid-template-columns:44px 1fr}
@@ -550,6 +554,11 @@ I18N.en = {
   palettes:{bosco:["Forest","Night green and amber light"], notte:["Night","Deep blue and moonlight silver"], brace:["Embers","Warm brown and rust leaves"], pergamena:["Parchment","Old paper, for daylight"]},
   saluti:["Hi, I'm here.", "Slowly.", "One step at a time.", "Breathe, I'm here.", "How's today?", "A little is enough."],
   ui:{
+    tagline:"a small light in the dark",
+    autoBackupH:"Automatic daily backup", autoBackupP:"Every day Lucciola keeps a copy of your data on this device (the last 7 days). If something goes wrong, you can go back to an earlier day.", on:"On", off:"Off",
+    copiesL:"Copies on this device", noCopies:"No copies yet: the first one is made today.", restoreDay:"Restore", confirmRestore:"Go back to the data from {d}? What you've written since then will be replaced.", restoredDay:"Data from {d} restored.",
+    fileDailyH:"Also save a file every day", fileDailyP:"Copies on the device are lost if you uninstall the app or clear the browser data. A file can be kept somewhere else (Drive, iCloud, email). Browsers don't let apps save files on their own, so once a day Lucciola asks you: one tap.",
+    fileTodayL:"Today's backup", fileTodayP:"One tap to save today's file. Keep it somewhere safe.", fileTodayBtn:"Save file", fileLater:"Not today",
     help:"Help", settings:"Settings", back:"Back", exit:"Exit", exitDraft:"Exit (your draft is saved)", tabToday:"Today", tabDiary:"Diary", tabTools:"Tools", tabBox:"Box",
     welcomeH:"Hi, I'm Lucciola.", welcome1:"I'm a small light for hard moments. Inside there are tools from psychology (cognitive therapy, ACT, mindfulness, DBT) to look at heavy thoughts from another angle and remind you that even the darkest moments pass.",
     welcome2:"<b>I'm not therapy</b> and I don't replace a doctor or a psychologist. If you've been struggling for a long time, talking to a professional can make a difference.",
@@ -808,6 +817,11 @@ I18N.it = {
   palettes:{bosco:["Bosco","Verde notte e luce d'ambra"], notte:["Notte","Blu profondo e argento lunare"], brace:["Brace","Bruno caldo e foglie di ruggine"], pergamena:["Pergamena","Carta antica, per la luce del giorno"]},
   saluti:["Ciao, sono qui.", "Piano piano.", "Un passo alla volta.", "Respira, ci sono.", "Oggi com'è?", "Anche poco va bene."],
   ui:{
+    tagline:"una piccola luce nel buio",
+    autoBackupH:"Backup automatico giornaliero", autoBackupP:"Ogni giorno Lucciola tiene una copia dei tuoi dati su questo dispositivo (gli ultimi 7 giorni). Se qualcosa va storto, puoi tornare a un giorno prima.", on:"Attivo", off:"Spento",
+    copiesL:"Copie su questo dispositivo", noCopies:"Ancora nessuna copia: la prima si fa oggi.", restoreDay:"Ripristina", confirmRestore:"Tornare ai dati di {d}? Quello che hai scritto da allora verrà sostituito.", restoredDay:"Dati di {d} ripristinati.",
+    fileDailyH:"Salva anche un file ogni giorno", fileDailyP:"Le copie sul dispositivo si perdono se disinstalli l'app o cancelli i dati del browser. Un file puoi tenerlo altrove (Drive, iCloud, email). I browser non lasciano salvare file da soli, quindi una volta al giorno Lucciola te lo chiede: un tocco.",
+    fileTodayL:"Il backup di oggi", fileTodayP:"Un tocco per salvare il file di oggi. Tienilo in un posto sicuro.", fileTodayBtn:"Salva file", fileLater:"Non oggi",
     help:"Aiuto", settings:"Impostazioni", back:"Indietro", exit:"Esci", exitDraft:"Esci (la bozza resta salvata)", tabToday:"Oggi", tabDiary:"Diario", tabTools:"Strumenti", tabBox:"Scatola",
     welcomeH:"Ciao, sono Lucciola.", welcome1:"Sono una piccola luce per i momenti difficili. Dentro ci sono strumenti presi dalla psicologia (terapia cognitiva, ACT, mindfulness, DBT) per guardare i pensieri pesanti da un altro punto di vista e ricordarti che anche i momenti più bui passano.",
     welcome2:"<b>Non sono una terapia</b> e non sostituisco un medico o uno psicologo. Se stai male da tanto tempo, parlarne con un professionista può cambiare le cose.",
@@ -887,7 +901,7 @@ I18N.it = {
 /* ---------- stato salvato ---------- */
 const KEY = "lucciola.v1";     // non cambiarla mai dopo la prima pubblicazione: è dove stanno i dati dell'utente
 const app = document.getElementById("app");
-function fresh(){ return {lang:"en", country:"", palette:"bosco", onboarded:false, moods:[], records:[], passi:[], pending:null, tasks:[], box:[], values:{}, senso:{}, plan:{contacts:[]}, draft:{}, custom:[]}; }
+function fresh(){ return {lang:"en", country:"", palette:"bosco", onboarded:false, moods:[], records:[], passi:[], pending:null, tasks:[], box:[], values:{}, senso:{}, plan:{contacts:[]}, draft:{}, custom:[], autoBackup:true, backupFile:false, lastFile:""}; }
 function load(){ try{ const r = localStorage.getItem(KEY); if(r) return Object.assign(fresh(), JSON.parse(r)); }catch(e){} return fresh(); }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); return true; }catch(e){ return false; } }
 let S = load();
@@ -931,6 +945,38 @@ const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&":"&am
 const pick = (a) => a[Math.floor(Math.random() * a.length)];
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 function today(d){ d = d || new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+
+/* ---------- backup automatico: una copia al giorno in IndexedDB, ultime 7 ---------- */
+const SNAP_DB = "lucciola-backup", SNAP_KEEP = 7;
+function snapTx(mode, fn){
+  return new Promise((res, rej) => {
+    if(!window.indexedDB) return rej(new Error("no idb"));
+    const r = indexedDB.open(SNAP_DB, 1);
+    r.onupgradeneeded = () => r.result.createObjectStore("snap");
+    r.onerror = () => rej(r.error);
+    r.onsuccess = () => { const db = r.result, tx = db.transaction("snap", mode), q = fn(tx.objectStore("snap"));
+      tx.oncomplete = () => { db.close(); res(q && q.result); }; tx.onerror = tx.onabort = () => { db.close(); rej(tx.error); }; };
+  });
+}
+const snapList = () => snapTx("readonly", st => st.getAllKeys()).then(k => (k || []).sort().reverse()).catch(() => []);
+const snapGet = (d) => snapTx("readonly", st => st.get(d));
+function autoBackup(){
+  if(S.autoBackup === false || !S.onboarded) return Promise.resolve();
+  const d = today();
+  return snapTx("readwrite", st => {   // la copia del giorno non si sovrascrive: resta il punto di ritorno anche dopo una cancellazione
+    const k = st.getAllKeys();
+    k.onsuccess = () => { const all = k.result.slice(); if(!all.includes(d)){ st.put(JSON.stringify(S), d); all.push(d); }
+      all.sort().reverse().slice(SNAP_KEEP).forEach(x => st.delete(x)); };
+  }).catch(() => {});
+}
+function applyData(str){ S = Object.assign(fresh(), JSON.parse(str)); if(!S.plan.contacts) S.plan.contacts = []; save(); setLang(); applyPalette(); }
+function exportFile(){
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(S, null, 1)], {type:"application/json"}));
+  a.download = "lucciola-backup-" + today() + ".json"; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+const dayLabel = (d) => new Date(d + "T12:00").toLocaleDateString(S.lang === "it" ? "it-IT" : "en-GB", {weekday:"short", day:"numeric", month:"short"});
 function fmtDay(iso){ try{ return new Date(iso).toLocaleDateString(L.locale, {day:"numeric", month:"long"}); }catch(e){ return iso; } }
 function fmtWhen(iso){ try{ const d = new Date(iso); return d.toLocaleDateString(L.locale, {weekday:"short", day:"numeric", month:"short"}) + " · " + d.toLocaleTimeString(L.locale, {hour:"2-digit", minute:"2-digit"}); }catch(e){ return iso; } }
 function daysBetween(a, b){ const d = (x) => { const tt = new Date(x); tt.setHours(0,0,0,0); return tt; }; return Math.round((d(b) - d(a)) / 864e5); }
@@ -1084,11 +1130,11 @@ function tabBar(active){
 }
 function topBar(){
   return `<header class="top">
-    <div class="brand">${mascot("happy", 40)}<h1 class="logo">Lucciola</h1></div>
+    <div class="brand">${mascot("happy", 40)}<div class="brand-t"><h1 class="logo">Lucciola</h1><span class="tagline">${esc(t("tagline"))}</span></div></div>
     <div class="stats"><button class="chip sos" data-crisi aria-label="${esc(t("help"))}">${ICON.heart}${esc(t("help"))}</button><button class="chip icon-btn" id="gear" aria-label="${esc(t("settings"))}">${ICON.gear}</button></div>
   </header>`;
 }
-function wireTop(v){ const g = v.querySelector("#gear"); if(g) g.onclick = settings; }
+function wireTop(v){ const g = v.querySelector("#gear"); if(g) g.onclick = () => settings(); }
 const backBtn = (label) => `<button class="back" id="bk">${ICON.back} ${esc(label || t("back"))}</button>`;
 function rangeField(id, label, val, max, ends, word){
   return `<div class="range"><span style="font-weight:700">${esc(label)}</span>
@@ -1133,6 +1179,7 @@ function home(){
     <button class="danger" data-crisi>${sic("crisi")}<span><b>${esc(t("dangerH"))}</b><span>${esc(t("dangerSub"))}</span></span></button>
     ${p ? `<section class="card" style="margin-top:20px"><span class="label">${esc(t("pendingL"))}</span><h3 style="margin:6px 0 4px">${esc(p.a)}</h3><p class="muted small">${esc(t("pendingP", {n:p.pred}))}</p><button class="btn btn-deep" id="pend">${esc(t("pendingBtn"))}</button></section>` : ""}
     ${ins ? `<section class="insight" style="margin-top:20px"><span class="label">${esc(t("insightL"))}</span><p style="margin:6px 0 0">${ins}</p></section>` : ""}
+    ${S.backupFile && S.onboarded && S.lastFile !== today() ? `<section class="card" style="margin-top:20px"><span class="label">${esc(t("fileTodayL"))}</span><p class="muted small" style="margin:6px 0 10px">${esc(t("fileTodayP"))}</p><div class="row2"><button class="btn btn-deep" id="bkf">${esc(t("fileTodayBtn"))}</button><button class="btn btn-ghost" id="bkl">${esc(t("fileLater"))}</button></div></section>` : ""}
     <div class="divider">${esc(t("orIfOk"))}</div>
     <div class="row2"><button class="btn btn-ghost" id="umore">${esc(t("logMood"))}</button><button class="btn btn-ghost" id="box">${esc(t("fillBox"))}</button></div>
     <footer class="foot"><span>${esc(t("footNot"))}</span><span>${esc(t("footDanger", {em:emNum()}))}</span></footer>
@@ -1145,6 +1192,8 @@ function home(){
   v.querySelector("#umore").onclick = checkin;
   v.querySelector("#box").onclick = boxadd;
   const pe = v.querySelector("#pend"); if(pe) pe.onclick = passo;
+  const bf = v.querySelector("#bkf"); if(bf) bf.onclick = () => { exportFile(); S.lastFile = today(); save(); home(); };
+  const bl = v.querySelector("#bkl"); if(bl) bl.onclick = () => { S.lastFile = today(); save(); home(); };
   v.appendChild(tabBar("home"));
   mount(v);
 }
@@ -2003,6 +2052,15 @@ function settings(note){
       </button>`).join("")}</div>
     <div class="sec-h"><h3>${esc(t("yourData"))}</h3></div>
     <p class="small muted">${esc(t("dataP"))}</p>
+    <div class="card">
+      <h3 style="margin:0 0 4px">${esc(t("autoBackupH"))}</h3><p class="small muted" style="margin:0 0 10px">${esc(t("autoBackupP"))}</p>
+      <div class="opts" style="margin-bottom:8px"><button class="opt ${S.autoBackup !== false ? "on" : ""}" data-ab="1">${esc(t("on"))}</button><button class="opt ${S.autoBackup === false ? "on" : ""}" data-ab="0">${esc(t("off"))}</button></div>
+      <span class="label">${esc(t("copiesL"))}</span><div class="stack" id="snaps" style="margin-top:8px"></div>
+    </div>
+    <div class="card">
+      <h3 style="margin:0 0 4px">${esc(t("fileDailyH"))}</h3><p class="small muted" style="margin:0 0 10px">${esc(t("fileDailyP"))}</p>
+      <div class="opts" style="margin-bottom:0"><button class="opt ${S.backupFile ? "on" : ""}" data-bf="1">${esc(t("on"))}</button><button class="opt ${!S.backupFile ? "on" : ""}" data-bf="0">${esc(t("off"))}</button></div>
+    </div>
     <div class="stack">
       <button class="btn btn-ghost" id="exp">${esc(t("exportB"))}</button>
       <label class="btn btn-ghost" for="imp">${esc(t("importB"))}</label><input type="file" id="imp" accept="application/json,.json" hidden>
@@ -2018,15 +2076,20 @@ function settings(note){
   v.querySelectorAll("[data-lang]").forEach(b => b.onclick = () => { S.lang = b.dataset.lang; save(); setLang(); settings(); });
   v.querySelector("#cc").onchange = (e) => { S.country = e.target.value; save(); settings(); };
   v.querySelectorAll(".pal").forEach(b => b.onclick = () => { S.palette = b.dataset.id; save(); applyPalette(); settings(); });
-  v.querySelector("#exp").onclick = () => {
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([JSON.stringify(S, null, 1)], {type:"application/json"}));
-    a.download = "lucciola-backup-" + today() + ".json"; a.click();
-    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
-  };
+  v.querySelector("#exp").onclick = exportFile;
+  v.querySelectorAll("[data-ab]").forEach(b => b.onclick = () => { S.autoBackup = b.dataset.ab === "1"; save(); autoBackup().then(() => settings()); });
+  v.querySelectorAll("[data-bf]").forEach(b => b.onclick = () => { S.backupFile = b.dataset.bf === "1"; save(); settings(); });
+  snapList().then(ds => {
+    const box = v.querySelector("#snaps"); if(!box) return;
+    box.innerHTML = ds.length ? ds.map(d => `<div class="snap"><b>${esc(dayLabel(d))}</b><button class="opt" data-snap="${d}">${esc(t("restoreDay"))}</button></div>`).join("") : `<p class="small muted" style="margin:0">${esc(t("noCopies"))}</p>`;
+    box.querySelectorAll("[data-snap]").forEach(b => b.onclick = () => {
+      const d = b.dataset.snap; if(!confirm(t("confirmRestore", {d:dayLabel(d)}))) return;
+      snapGet(d).then(str => { applyData(str); settings(t("restoredDay", {d:dayLabel(d)})); }).catch(() => settings(t("badFile")));
+    });
+  });
   v.querySelector("#imp").onchange = (e) => {
     const f = e.target.files[0]; if(!f) return;
-    f.text().then(s => { S = Object.assign(fresh(), JSON.parse(s)); if(!S.plan.contacts) S.plan.contacts = []; save(); setLang(); applyPalette(); settings(t("restored")); })
+    f.text().then(s => { applyData(s); settings(t("restored")); })
       .catch(() => settings(t("badFile")));
   };
   v.querySelector("#piano").onclick = piano;
@@ -2040,6 +2103,8 @@ setLang();
 applyPalette();
 try{ history.replaceState({s:"home", i:0}, ""); }catch(e){}
 home();
+autoBackup();
+document.addEventListener("visibilitychange", () => { if(!document.hidden) autoBackup(); });
 window.APP = {mascot, PALETTES};   // usato da scripts/icone.mjs e scripts/verifica.mjs
 })();
 </script>
