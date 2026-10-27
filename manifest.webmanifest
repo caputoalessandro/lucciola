@@ -1,8 +1,8 @@
 {
   "name": "Lucciola",
   "short_name": "Lucciola",
-  "description": "Una piccola luce per i momenti difficili: strumenti da CBT, ACT, mindfulness e DBT, diario dell'umore e scatola della speranza.",
-  "lang": "it",
+  "description": "A small light for hard moments: tools from CBT, ACT, mindfulness and DBT, a mood diary and a hope box.",
+  "lang": "en",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

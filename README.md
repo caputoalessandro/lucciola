@@ -27,9 +27,12 @@ Dai libri vengono solo i metodi; tutti i testi sono originali.
 - Marsha M. Linehan, *Manuale DBT*: STOP, TIP, cinque sensi
 - Viktor E. Frankl, *Uno psicologo nei Lager*: il senso, «chi ti aspetta»
 
-## Numeri di aiuto
+## Lingue e paesi
 
-Sono nella costante `HELP` all'inizio dello script in `index.html`. **Verificali ogni tanto** (ultimo controllo: ottobre 2026): numeri e orari possono cambiare.
+- Interfaccia in **inglese** (predefinita) e **italiano**: si cambia nelle impostazioni o dal link nella presentazione. I testi stanno in `I18N.en` e `I18N.it` dentro `index.html`.
+- La schermata **Aiuto** mostra numero di emergenza e linee di crisi del paese, scelto in automatico dal fuso orario (poi dalla lingua del telefono) o a mano nelle impostazioni.
+- Paesi con numeri: Stati Uniti, Canada, Regno Unito, Irlanda, Australia, Nuova Zelanda, Italia, Germania, Austria, Svizzera, Francia, Spagna, Portogallo, Paesi Bassi, Belgio, Svezia, Norvegia, Danimarca, Finlandia, Polonia, Grecia, India, Giappone, Brasile, Messico, Sudafrica. Per gli altri: numero di emergenza e [findahelpline.com](https://findahelpline.com).
+- I numeri sono nella costante `HELP`. **Verificali ogni tanto** (ultimo controllo: ottobre 2026): numeri e orari possono cambiare.
 
 ## Contenuto
 
